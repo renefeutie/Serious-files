@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;font-family:'Inter',sans-serif;}body{overscroll-behavior:none;background-color:#f2fcf2;color:#151e18;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-container": "#bfecdc", "on-tertiary-fixed-variant": "#633f00", "on-error-container": "#93000a", "error-container": "#ffdad6", "tertiary": "#7f5200", "inverse-surface": "#29332c", "on-primary-fixed-variant": "#005236", "tertiary-container": "#a06800", "surface-tint": "#006c48", "on-primary-container": "#f2fff4", "outline": "#6e7a72", "on-primary-fixed": "#002113", "surface": "#f2fcf2", "surface-dim": "#d3ddd3", "on-error": "#ffffff", "secondary-fixed-dim": "#a4d0c0", "primary": "#006946", "tertiary-fixed-dim": "#ffb955", "on-tertiary": "#ffffff", "on-secondary": "#ffffff", "primary-fixed": "#94f6c4", "secondary": "#3d665a", "surface-container-low": "#ecf6ed", "primary-fixed-dim": "#78d9aa", "secondary-fixed": "#bfecdc", "on-tertiary-container": "#fffaf9", "on-background": "#151e18", "surface-container-highest": "#dbe5dc", "primary-container": "#16845b", "outline-variant": "#bdcac0", "tertiary-fixed": "#ffddb4", "background": "#f2fcf2", "surface-container-high": "#e1ebe1", "on-surface-variant": "#3e4942", "surface-bright": "#f2fcf2", "on-surface": "#151e18", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "surface-variant": "#dbe5dc", "on-tertiary-fixed": "#291800", "error": "#ba1a1a", "inverse-on-surface": "#e9f3ea", "on-secondary-fixed-variant": "#254e42", "surface-container": "#e6f1e7", "on-secondary-fixed": "#002019", "inverse-primary": "#78d9aa", "on-secondary-container": "#436c5f" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "margin-lg": "3rem", "space-md": "1rem", "space-lg": "1.5rem", "margin": "1rem", "space-xl": "2rem", "gutter-lg": "2rem", "gutter-md": "1.5rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-md": "2rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "display": ["Inter"], "headline-lg": ["Inter"], "title-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Inter"], "currency-display": ["Inter"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"], "body-md": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["1.625rem", { "lineHeight": "2.125rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "currency-display": ["1.25rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["0.75rem", { "lineHeight": "1.125rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-lg": ["0.9375rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><div class="flex items-center gap-space-xs"><img alt="Logo MboaFacile" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VsbvE771uFZONvqSZe2IElvmr6LVacMjBNAxagKooGGVFWaruQ0nw57Lmw_KXAECJoUlGP_hzZxuvb8IpnkaCqhCTi197TOuLgaTTvo7mgYhk2RObjRRm7hHhf3L-uV2ROWWXmhcdG-zlC-qV9XbaxJVyeq_MxD_k8RVTLpmHs9UPGFt6uaPGJzaW_LCUdLysCr0MnL2F6pixhZrpbIzTuayfbTa0FN4JnRshk2FnjWgyvIr79wY_GjhI1"/><h1 class="font-title-md text-title-md text-on-surface truncate max-w-[180px]">Trouver Un Professionnel</h1></div></div><div class="flex items-center gap-space-xs"><button class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">share</span></button><a class="w-11 h-11 flex items-center justify-center" data-path="compte" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzVJXNLiHJHSRN1qlVaXDaZ0erVYr-ayB2S7bcBMwABnZcwZ9xdFi8-S7iNMB349iTHenx0LtSD9zZDWHKGcEYBBjuDHVAyQgQhfzVacSbi2ryaWqOV8fvYav9tT5NgWvE8WE1u9_7fFnjSQxhiCaKntMYjEm-8Ry4mrUpbj9HmhxypcBYR2GrSEXh6xzVm5TfuVLGIJ-D29sKLCb9i6kWLNZmF1QXj0yGGsUG9Jivp06mR5T1WBgdqA"/></a></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-24">
+<!-- Profile Visual Scenery Header -->
+<div class="relative w-full">
+<!-- Cover Picture -->
+<div class="w-full h-44 bg-cover bg-center" data-alt="A clean, organized electrical and HVAC workshop in Douala Cameroon with modern tools, insulated copper conduits, circuit breakers neatly arranged on a workbench, warm tropical sunlight filtering through a high window, professional documentary photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPIzYGGzXiOE6Oo3bOrKAM-i14seP-l_VW2MNKlADenV_w_4JxnBzxN5aNUs5vJAmsea2QbpfNbbjTHfh4yA5Bq4SxIurMn2NkwcERRPE8DQ0tszivmJJHozrYb9BkLsjqMiZuYkEvU19UlwDR22KKgFLRiX0hx7pAqZ48YLhVutAab0aVAsjEqMhqywFet_aWzdsFgJA2PDU7HgYg_ijvR0da_Z-QRYc-4wpqjljqpBcQPs8wwGT2Vg')">
+<div class="w-full h-full bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+</div>
+<!-- Floating Avatar with Trust Halo -->
+<div class="px-gutter -mt-14 relative z-10 flex items-end justify-between">
+<div class="relative">
+<div class="w-24 h-24 rounded-2xl bg-surface-container-lowest p-1 shadow-md">
+<img class="w-full h-full object-cover rounded-xl" data-alt="Close up warm studio portrait of Eric Talla, a friendly African male electrician in his early 30s wearing a clean dark green polo shirt with tool strap, confident and reassuring smile, Douala urban professional photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbdkEH3oGv7EOEN_Onf8UkFeCBSLqUcz1CVcsR4ffbecNtqeIfgi4DiPiZ_iVMstwtLcaox_V7Ho_9VBYrv9y6FtDufFWigtDZI1DR0FnVOL4VsXWf1APuP2JX9i7zsIImHzcgBHKnA8bD7MDMvYOauFge4TkgM9MqUN7kvn3qYXHldBliw2RPcrCin_u3vt3KeKM35ziHDkjXdqR1msE5R9PcA82Fa_p-s2GE8JHY3AdjaioUqdKTfw"/>
+</div>
+<div class="absolute -bottom-1.5 -right-1.5 bg-primary text-on-primary rounded-full p-1 shadow flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mb-1">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container text-label-sm font-label-sm px-2.5 py-1 rounded-full shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          Disponible aujourd'hui
+        </span>
+</div>
+</div>
+</div>
+<!-- Artisan Identity & Credibility Block -->
+<div class="px-gutter pt-3 flex flex-col gap-space-sm">
+<div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="text-label-sm font-label-sm uppercase tracking-wider font-semibold">Artisan Certifié MboaFacile</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface text-slate-900 mt-0.5">Talla Éric</h2>
+<p class="text-body-md font-body-md text-secondary font-medium">Électricité Générale &amp; Génie Climatique</p>
+</div>
+<!-- Rating & Location Badges -->
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1">
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-bold text-on-surface text-label-md font-label-md">4.9</span>
+<span class="text-outline underline decoration-dotted cursor-pointer">(38 avis vérifiés)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-primary">location_on</span>
+<span>Douala (Akwa, Bonanjo, Bonapriso...)</span>
+</div>
+</div>
+<!-- Trust Seals Horizontal Row -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1 no-scrollbar">
+<span class="inline-flex items-center gap-1.5 bg-surface-container text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-full shrink-0">
+<span class="material-symbols-outlined text-[16px] text-primary">badge</span>
+        CNI &amp; Casier vérifiés
+      </span>
+<span class="inline-flex items-center gap-1.5 bg-surface-container text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-full shrink-0">
+<span class="material-symbols-outlined text-[16px] text-primary">security</span>
+        Assurance Décennale
+      </span>
+<span class="inline-flex items-center gap-1.5 bg-surface-container text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-full shrink-0">
+<span class="material-symbols-outlined text-[16px] text-primary">workspace_premium</span>
+        +7 ans d'expérience
+      </span>
+</div>
+<!-- Express Contact Split Buttons -->
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<a class="h-12 bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container rounded-lg font-label-lg font-label-lg flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all" href="https://wa.me/237600000000" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+        WhatsApp Pro
+      </a>
+<a class="h-12 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-lg font-label-lg font-label-lg flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all" href="tel:+237600000000">
+<span class="material-symbols-outlined text-[20px]">call</span>
+        Appel direct
+      </a>
+</div>
+</div>
+<!-- Interactive Ergonomic Tabs -->
+<div class="mt-5 px-gutter sticky top-16 z-30 bg-surface/95 backdrop-blur-md py-2">
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar">
+<button class="tab-trigger px-4 py-2 rounded-full text-label-md font-label-md shrink-0 transition-all bg-primary-container text-on-primary-container shadow-sm" id="tab-btn-presentation" onclick="switchTab('presentation')" type="button">
+        Présentation
+      </button>
+<button class="tab-trigger px-4 py-2 rounded-full text-label-md font-label-md shrink-0 transition-all bg-surface-container text-on-surface-variant hover:bg-surface-container-high" id="tab-btn-services" onclick="switchTab('services')" type="button">
+        Services &amp; Tarifs
+      </button>
+<button class="tab-trigger px-4 py-2 rounded-full text-label-md font-label-md shrink-0 transition-all bg-surface-container text-on-surface-variant hover:bg-surface-container-high" id="tab-btn-realisations" onclick="switchTab('realisations')" type="button">
+        Réalisations (4)
+      </button>
+<button class="tab-trigger px-4 py-2 rounded-full text-label-md font-label-md shrink-0 transition-all bg-surface-container text-on-surface-variant hover:bg-surface-container-high" id="tab-btn-avis" onclick="switchTab('avis')" type="button">
+        Avis (38)
+      </button>
+<button class="tab-trigger px-4 py-2 rounded-full text-label-md font-label-md shrink-0 transition-all bg-surface-container text-on-surface-variant hover:bg-surface-container-high" id="tab-btn-zone" onclick="switchTab('zone')" type="button">
+        Zone d'intervention
+      </button>
+</div>
+</div>
+<!-- Dynamic Content Panes Container -->
+<div class="px-gutter pt-3 flex flex-col gap-space-md">
+<!-- PANE 1: Présentation (Default Open) -->
+<section class="tab-pane flex flex-col gap-space-md" id="pane-presentation">
+<!-- Bio Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-space-sm">
+<h3 class="text-title-md font-title-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">person_outline</span>
+          À propos d'Éric
+        </h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+          Artisan électricien passionné avec plus de 7 ans d'expérience dans les installations résidentielles et tertiaires à Douala. Spécialiste de la recherche de panne, remise aux normes, dépannage express et pose de climatisations inverter. Devis gratuit et transparent avant toute intervention.
+        </p>
+<div class="pt-2 grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-low p-3 rounded-lg flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm text-outline">Temps de réponse moyen</span>
+<span class="text-title-md font-title-md text-primary">Moins de 15 min</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm text-outline">Garantie intervention</span>
+<span class="text-title-md font-title-md text-primary">30 jours inclus</span>
+</div>
+</div>
+</div>
+<!-- Working Hours & Practical Details -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-space-sm">
+<h3 class="text-title-md font-title-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">schedule</span>
+          Informations pratiques
+        </h3>
+<div class="flex flex-col gap-2.5 text-body-sm font-body-sm">
+<div class="flex items-center justify-between py-1 bg-surface-container-low px-3 rounded-lg">
+<span class="text-on-surface-variant">Lundi — Samedi</span>
+<span class="font-bold text-on-surface">07h30 – 18h30</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-secondary-container/40 px-3 rounded-lg">
+<span class="text-on-secondary-container font-medium">Dimanche</span>
+<span class="font-bold text-primary">Urgences &amp; Pannes uniquement</span>
+</div>
+<div class="flex items-start gap-2 pt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">translate</span>
+<div>
+<span class="font-medium text-on-surface">Langues parlées :</span>
+<p class="text-body-sm font-body-sm">Français courant, Anglais professionnel, Duala.</p>
+</div>
+</div>
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">payments</span>
+<div>
+<span class="font-medium text-on-surface">Paiements acceptés :</span>
+<p class="text-body-sm font-body-sm">Orange Money, MTN Mobile Money, Espèces avec reçu digital.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Trust Highlight Banner -->
+<div class="bg-secondary-container text-on-secondary-container rounded-xl p-4 flex items-center gap-3">
+<div class="p-2.5 rounded-full bg-surface-container-lowest shrink-0 text-primary shadow-sm">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-secondary-container">Charte MboaFacile</h4>
+<p class="text-body-sm font-body-sm opacity-90">Tarifs verrouillés au devis, pas de surprise sur place.</p>
+</div>
+</div>
+</section>
+<!-- PANE 2: Services & Tarifs -->
+<section class="tab-pane hidden flex flex-col gap-space-sm" id="pane-services">
+<div class="flex items-center justify-between pb-1">
+<h3 class="text-title-md font-title-md text-on-surface">Grille tarifaire indicative</h3>
+<span class="text-label-sm font-label-sm text-outline">Devis préalable gratuit</span>
+</div>
+<!-- Service Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Diagnostic panne de courant</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Recherche de court-circuit, vérification fusibles et tableau principal.</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-display text-currency-display text-primary block">5 000</span>
+<span class="text-label-sm font-label-sm text-outline uppercase">FCFA</span>
+</div>
+</div>
+<div class="flex items-center gap-3 text-label-sm font-label-sm text-outline-variant pt-1">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">timer</span>
+            ~45 min
+          </span>
+<span>•</span>
+<span class="text-primary font-medium">Déductible si réparation immédiate</span>
+</div>
+</div>
+<!-- Service Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Installation disjoncteur différentiel</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Protection anti-électrocution aux normes NFC 15-100.</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-display text-currency-display text-primary block">8 500</span>
+<span class="text-label-sm font-label-sm text-outline uppercase">FCFA</span>
+</div>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">
+          Main d'œuvre seule (+ matériel certifié fourni sur facture)
+        </div>
+</div>
+<!-- Service Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Entretien complet climatiseur</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Nettoyage filtres, condenseur, contrôle du gaz R410/R32 et évacuation.</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-display text-currency-display text-primary block">12 000</span>
+<span class="text-label-sm font-label-sm text-outline uppercase">FCFA / unité</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[15px]">eco</span>
+          Gain immédiat d'énergie et de fraîcheur
+        </div>
+</div>
+<!-- Service Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Câblage complet &amp; pose de tableau</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Chantier neuf ou rénovation totale d'appartement/villa.</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-title-md text-title-md text-primary font-semibold">Sur Devis</span>
+</div>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">
+          Visite technique offerte sous 24h avec plan d'implantation.
+        </div>
+</div>
+</section>
+<!-- PANE 3: Réalisations -->
+<section class="tab-pane hidden flex flex-col gap-space-sm" id="pane-realisations">
+<div class="flex items-center justify-between pb-1">
+<h3 class="text-title-md font-title-md text-on-surface">Chantiers vérifiés récents</h3>
+<span class="text-label-sm font-label-sm text-outline">4 photos réelles</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Project 1 -->
+<div class="flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition-transform" data-alt="Modern brand new electrical panel installation in an apartment in Bonapriso Douala with perfectly aligned modular circuit breakers, neat color coded cables, and clean labeling, clear lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSL1z4VP7GUWM6a6txAw0HSfKJOTbeCf2WkuGYTSkEKmcuVOXW-riXrX7O35dMSreX5Ujie_r1LBmon41OqSUw7-sd1NFRbMn8BaGOM4WVyKd5zgtbVa-6qiipZE2Qzd3MGOOEGDEJ5YRrLBH_OC3nnHKHftZ_K4E9jffct-f1t7AHnClw2zDZKtp9KwW8bAA9FVHLxBc2LYXKW8zjWxH226NEtfMEGO91xKUK10DQFjho47f4yT3lUg"/>
+<div class="p-2.5 flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm font-bold text-on-surface line-clamp-1">Tableau 36 modules neuf</span>
+<span class="text-body-sm font-body-sm text-outline">Bonapriso • Fév 2024</span>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition-transform" data-alt="Modern split air conditioner inverter unit neatly mounted on a white wall in an Akwa office Douala with tidy hidden piping trunking, professional HVAC finishing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwe9QA_4oBFqoYRzGTdRIDXCKQiPaCxKmc0ElTlydVw016UFma9TFWFARe884MzGJA2J8mFfHeq703aCVF_1oki4SgoWpN-5Y5Kw4yVYmSCpZ5Elkoe7XcFoUGkRTqM0UnItFCjQPB9YXFf9ueMlL9vLriWcWgqQMnF61cgukkGUzA8LhgojNADJpUGu3iM44FjTOb2dQAkzfwgHJ6_IrOhGZaRXsw32Mqy947jNaUdN9dMqTcQmP4PQ"/>
+<div class="p-2.5 flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm font-bold text-on-surface line-clamp-1">Pose Bi-Split Inverter</span>
+<span class="text-body-sm font-body-sm text-outline">Akwa • Janv 2024</span>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition-transform" data-alt="Renovation of modern LED spot recessed ceiling lighting and architectural cove lights in a stylish living room villa in Bonanjo Douala Cameroon." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5cFa56Nr2w003KRo0Wr2sDub88I1k53kvXReqfnstGkmNTvwBif_LjVf8f-zo787VFWvEx5by19-dqbp3r_8NFoGNPi_OuXxLAiT-BG2NTO8q8Y_Eu1UL5wL8uSGbFsYW7ElOt1c1Dob39jRo75-jlq3UOlAsNP5DdSPnNtuzbTXPtu3paa9Ibg1LnGcVyY8kLAKd_DHtS4R9k9LLIhcmSTGt0eSqTA9GPwTBpaIHnfd8tRdxokc9Pg"/>
+<div class="p-2.5 flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm font-bold text-on-surface line-clamp-1">Rénovation Spots LED</span>
+<span class="text-body-sm font-body-sm text-outline">Bonanjo • Déc 2023</span>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition-transform" data-alt="Industrial electrical distribution cabinet with safety disconnectors and digital voltage monitor for a commercial bakery in Deido Douala." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCbpO63Pl9GWouHZrF5prpgJkKxK99k3kZ2Y_mSZ_ebj2CguPC2Kkr9h26lBXN68VZlrciwbK8uEDCCHlXHYPJHK-dmf8CzYljQ3Sy-At5z14ifLYxIpJoNsHckLQqxxcpm91KjMuL8LS0tQR98V3jdtLemprk5DkBgB_y33VF2Qx9XVAzN8nRVTFvuvn6tzKY7tmN8UTpNvW8H9fz1zo06Dqmlhg5VDhyBv49mcd02UXc8yyUGZKwuA"/>
+<div class="p-2.5 flex flex-col gap-0.5">
+<span class="text-label-sm font-label-sm font-bold text-on-surface line-clamp-1">Armoire Tertiaire</span>
+<span class="text-body-sm font-body-sm text-outline">Deido • Nov 2023</span>
+</div>
+</div>
+</div>
+</section>
+<!-- PANE 4: Avis clients -->
+<section class="tab-pane hidden flex flex-col gap-space-md" id="pane-avis">
+<!-- Ratings breakdown card -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center justify-center pr-4">
+<span class="text-display font-display text-on-surface leading-none">4.9</span>
+<div class="flex text-tertiary-container my-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">38 avis certifiés</span>
+</div>
+<!-- Progress bars -->
+<div class="flex-1 flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-label-sm font-label-sm">
+<span class="w-4 text-on-surface">5★</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-primary h-full w-[92%] rounded-full"></div>
+</div>
+<span class="w-7 text-right text-outline">92%</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm">
+<span class="w-4 text-on-surface">4★</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-primary-container h-full w-[8%] rounded-full"></div>
+</div>
+<span class="w-7 text-right text-outline">8%</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm">
+<span class="w-4 text-on-surface">3★</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-primary-container h-full w-0 rounded-full"></div>
+</div>
+<span class="w-7 text-right text-outline">0%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Verified Review Item 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-label-lg font-label-lg">
+              NM
+            </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface">Nadine M.</span>
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Akwa, Douala • Il y a 3 jours</span>
+</div>
+</div>
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          « Intervention rapide en moins d'une heure pour un disjoncteur qui sautait constamment. Travail très soigné et prix tout à fait honnête. Je recommande vivement ! »
+        </p>
+<div class="inline-flex items-center gap-1 text-label-sm font-label-sm text-secondary bg-surface-container-low px-2 py-0.5 rounded w-fit">
+<span class="material-symbols-outlined text-[14px]">build</span>
+          Prestation : Dépannage court-circuit
+        </div>
+</div>
+<!-- Verified Review Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-label-lg font-label-lg">
+              JK
+            </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface">Jean-Paul K.</span>
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Bonapriso • Il y a 2 semaines</span>
+</div>
+</div>
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          « Pose de 3 splits dans notre agence. Ponctualité exemplaire, finition très propre et devis respecté à la lettre. »
+        </p>
+<div class="inline-flex items-center gap-1 text-label-sm font-label-sm text-secondary bg-surface-container-low px-2 py-0.5 rounded w-fit">
+<span class="material-symbols-outlined text-[14px]">ac_unit</span>
+          Prestation : Climatisation tertiaire
+        </div>
+</div>
+</section>
+<!-- PANE 5: Zone couverte -->
+<section class="tab-pane hidden flex flex-col gap-space-sm" id="pane-zone">
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-space-sm">
+<h3 class="text-title-md font-title-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">explore</span>
+          Périmètre d'action à Douala
+        </h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Éric intervient avec son équipement complet dans un rayon de 15 km sans frais de déplacement supplémentaires pour les quartiers prioritaires suivants :
+        </p>
+<!-- Neighborhood tags -->
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="bg-secondary-container text-on-secondary-container font-label-md font-label-md px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Akwa
+          </span>
+<span class="bg-secondary-container text-on-secondary-container font-label-md font-label-md px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Bonanjo
+          </span>
+<span class="bg-secondary-container text-on-secondary-container font-label-md font-label-md px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Bonapriso
+          </span>
+<span class="bg-secondary-container text-on-secondary-container font-label-md font-label-md px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Deido
+          </span>
+<span class="bg-secondary-container text-on-secondary-container font-label-md font-label-md px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Bali
+          </span>
+<span class="bg-surface-container text-on-surface-variant font-label-md font-label-md px-3 py-1.5 rounded-full">
+            Bonamoussadi (+ 2 000 FCFA transport)
+          </span>
+<span class="bg-surface-container text-on-surface-variant font-label-md font-label-md px-3 py-1.5 rounded-full">
+            Kotto (+ 2 500 FCFA transport)
+          </span>
+</div>
+<!-- Visual Map Placeholder -->
+<div class="w-full h-44 rounded-lg bg-cover bg-center mt-2 relative overflow-hidden shadow-inner" data-location="Douala, Cameroon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXTyItXiMFD7CwMa1QXYO-f0PO9J9vPQVHfjgH3GehbFUMTc2nuo8xKqROAdc7oShwS4A6vl_aQpUlvgUjR6hSYqrrZb97stuoHO100SWJfPApk4-wSqy8IdLsub8bnylf39cDxyi8V0wYdUUt7Ti9O-DGeLiKrUaTtF7anR9lknc_xBT7JRtgHOD0ZaQyOpkHbFuzO5VDPxXMursMJ-ujNOmiYG3XOvb9LmZjLJbN-XuBgQBj40gqGA')">
+<div class="absolute inset-0 bg-primary/10 backdrop-brightness-95 flex items-center justify-center">
+<span class="bg-surface-container-lowest/90 px-3 py-1.5 rounded-full text-label-sm font-label-sm text-primary flex items-center gap-1.5 shadow">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+              Akwa &amp; Littoral couvert
+            </span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Bottom Conversion Action Bar -->
+<div class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-surface-container-highest px-gutter py-3 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+<div class="max-w-md mx-auto flex items-center justify-between gap-3">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-outline">Tarif indicatif</span>
+<div class="flex items-baseline gap-1">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Dès</span>
+<span class="text-currency-display font-currency-display text-on-surface font-bold text-primary">5 000</span>
+<span class="text-label-sm font-label-sm text-outline uppercase font-semibold">FCFA</span>
+</div>
+</div>
+<button class="flex-1 h-12 bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg font-label-lg font-label-lg px-4 flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" onclick="openQuoteModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">request_quote</span>
+        Demander un devis
+      </button>
+</div>
+</div>
+<!-- Interactive Quote Request Drawer Modal -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-end justify-center transition-opacity" id="quote-modal">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-t-2xl p-gutter flex flex-col gap-space-md shadow-2xl max-h-[751px] overflow-y-auto">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Demande de devis express</h3>
+<p class="text-body-sm font-body-sm text-outline">Artisan : Talla Éric (Électricité &amp; Froid)</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface" onclick="closeQuoteModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-sm" onsubmit="handleQuoteSubmit(event)">
+<div class="flex flex-col gap-1">
+<label class="text-label-md font-label-md text-on-surface">Quel est votre besoin ?</label>
+<select class="h-12 bg-surface rounded-lg px-3 text-body-md font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+<option>Diagnostic / Panne de courant</option>
+<option>Pose ou entretien de climatiseur</option>
+<option>Installation ou remplacement de tableau électrique</option>
+<option>Autre prestation sur mesure</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-md font-label-md text-on-surface">Votre quartier à Douala</label>
+<input class="h-12 bg-surface rounded-lg px-3 text-body-md font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ex : Akwa, Rue Pau, face hôtel..." required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-md font-label-md text-on-surface">Numéro de téléphone (WhatsApp)</label>
+<input class="h-12 bg-surface rounded-lg px-3 text-body-md font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ex : 699 00 00 00" required="" type="tel"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-md font-label-md text-on-surface">Détails du problème (optionnel)</label>
+<textarea class="bg-surface rounded-lg p-3 text-body-md font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary resize-none" placeholder="Décrivez les signes de la panne ou la marque de votre clim..." rows="2"></textarea>
+</div>
+<div class="pt-2">
+<button class="w-full h-12 bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg font-label-lg font-label-lg flex items-center justify-center gap-2 shadow-sm" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+            Envoyer la demande gratuitement
+          </button>
+<p class="text-center text-label-sm font-label-sm text-outline mt-2">
+            Réponse garantie en moins de 15 minutes.
+          </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+  function switchTab(tabId) {
+    // Hide all panes
+    const panes = document.querySelectorAll('.tab-pane');
+    panes.forEach(pane => pane.classList.add('hidden'));
+
+    // Show target pane
+    const targetPane = document.getElementById('pane-' + tabId);
+    if (targetPane) {
+      targetPane.classList.remove('hidden');
+    }
+
+    // Reset button styling
+    const buttons = document.querySelectorAll('.tab-trigger');
+    buttons.forEach(btn => {
+      btn.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+      btn.classList.add('bg-surface-container', 'text-on-surface-variant');
+    });
+
+    // Active button styling
+    const activeBtn = document.getElementById('tab-btn-' + tabId);
+    if (activeBtn) {
+      activeBtn.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+      activeBtn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
+  function openQuoteModal() {
+    const modal = document.getElementById('quote-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeQuoteModal() {
+    const modal = document.getElementById('quote-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function handleQuoteSubmit(e) {
+    e.preventDefault();
+    alert('Votre demande a été transmise à Éric Talla ! Il vous contactera sur WhatsApp d’ici 15 minutes.');
+    closeQuoteModal();
+  }
+</script></main></body></html>

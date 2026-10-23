@@ -1,0 +1,6 @@
+{
+  "name": "MboaFacile - Artisans & Services Certifiés au Cameroun",
+  "description": "Plateforme n°1 des services de proximité et artisans certifiés à Douala et Yaoundé. Demande de devis gratuit, dépannage express et interventions garanties.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

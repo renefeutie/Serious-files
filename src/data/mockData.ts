@@ -1,0 +1,752 @@
+export interface ServiceItem {
+  id: string;
+  title: string;
+  desc: string;
+  price: number;
+  priceUnit: string;
+  duration: string;
+  note?: string;
+  badge?: string;
+}
+
+export interface RealisationItem {
+  id: string;
+  title: string;
+  location: string;
+  date: string;
+  image: string;
+}
+
+export interface ReviewItem {
+  id: string;
+  author: string;
+  avatarInitials: string;
+  rating: number;
+  date: string;
+  location: string;
+  comment: string;
+  serviceTitle: string;
+}
+
+export interface CoveredDistrict {
+  name: string;
+  extraFee?: number;
+}
+
+export interface Artisan {
+  id: string;
+  name: string;
+  job: string;
+  category: string;
+  avatar: string;
+  coverImage: string;
+  rating: number;
+  reviewsCount: number;
+  district: string;
+  city: string;
+  distanceKm: number;
+  verified: boolean;
+  cniVerified: boolean;
+  guaranteeDays: number;
+  responseTime: string;
+  startingPrice: number;
+  startingPriceLabel: string;
+  phone: string;
+  whatsapp: string;
+  bio: string;
+  experienceYears: number;
+  availableToday: boolean;
+  interventionRadiusKm: number;
+  languages: string[];
+  paymentMethods: string[];
+  skills: string[];
+  pricingType: 'fixed' | 'quote' | 'depannage';
+  services: ServiceItem[];
+  realisations: RealisationItem[];
+  reviews: ReviewItem[];
+  coveredDistricts: CoveredDistrict[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  prosCount: number;
+  accentColor: string;
+  bgLight: string;
+  description: string;
+}
+
+export interface UserRequest {
+  id: string;
+  title: string;
+  serviceCategory: string;
+  artisanName: string;
+  artisanJob: string;
+  artisanAvatar: string;
+  district: string;
+  propertyType: string;
+  urgency: string;
+  estimatedBudget: string;
+  status: 'en_attente' | 'devis_recu' | 'en_route' | 'termine';
+  statusLabel: string;
+  statusColor: string;
+  date: string;
+  timeSlot: string;
+  phone: string;
+  amount?: number;
+  description: string;
+}
+
+export const DOUALA_DISTRICTS = [
+  'Akwa',
+  'Bonapriso',
+  'Bonanjo',
+  'Bali',
+  'Deido',
+  'Bonamoussadi',
+  'Makepe',
+  'Kotto',
+  'Logpom',
+  'Bepanda',
+  'Ndogbong',
+  'New Bell',
+  'Yassa / Japoma',
+  'Denver / Santa Barbara',
+];
+
+export const CATEGORIES: Category[] = [
+  {
+    id: 'electricite',
+    name: 'Électricité',
+    icon: 'bolt',
+    prosCount: 98,
+    accentColor: '#a06800',
+    bgLight: '#ffddb4',
+    description: 'Dépannage tableau, disjoncteur, prises et pose solaire',
+  },
+  {
+    id: 'plomberie',
+    name: 'Plomberie',
+    icon: 'plumbing',
+    prosCount: 142,
+    accentColor: '#006946',
+    bgLight: '#bfecdc',
+    description: 'Fuites, débouchage WC, tuyauterie cuivre/PVC & chauffe-eau',
+  },
+  {
+    id: 'froid',
+    name: 'Clim & Froid',
+    icon: 'ac_unit',
+    prosCount: 85,
+    accentColor: '#16845b',
+    bgLight: '#ecf6ed',
+    description: 'Entretien split, recharge gaz R410/R32, frigos et chambres froides',
+  },
+  {
+    id: 'electronique',
+    name: 'High-Tech & IT',
+    icon: 'smartphone',
+    prosCount: 120,
+    accentColor: '#3d665a',
+    bgLight: '#bfecdc',
+    description: 'Réparation écrans iPhone/Samsung, PC, cartes mères et chargeurs',
+  },
+  {
+    id: 'menuiserie',
+    name: 'Menuiserie',
+    icon: 'carpenter',
+    prosCount: 64,
+    accentColor: '#7f5200',
+    bgLight: '#ffddb4',
+    description: 'Portes, placards, meubles sur mesure, alu et bois massif',
+  },
+  {
+    id: 'nettoyage',
+    name: 'Nettoyage',
+    icon: 'cleaning_services',
+    prosCount: 73,
+    accentColor: '#006946',
+    bgLight: '#ecf6ed',
+    description: 'Lavage canapés, fin de chantier, bureaux et maisons',
+  },
+  {
+    id: 'serrurerie',
+    name: 'Serrurerie',
+    icon: 'lock_open',
+    prosCount: 41,
+    accentColor: '#3d665a',
+    bgLight: '#dbe5dc',
+    description: 'Ouverture de porte blindée, changement barillet express',
+  },
+  {
+    id: 'peinture',
+    name: 'Peinture',
+    icon: 'format_paint',
+    prosCount: 89,
+    accentColor: '#a06800',
+    bgLight: '#ffddb4',
+    description: 'Peinture acrylique, ravalement de façade et staff/faux-plafond',
+  },
+];
+
+export const ARTISANS: Artisan[] = [
+  {
+    id: 'talla-eric',
+    name: 'Talla Éric',
+    job: 'Électricien Bâtiment & Génie Climatique',
+    category: 'electricite',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDbdkEH3oGv7EOEN_Onf8UkFeCBSLqUcz1CVcsR4ffbecNtqeIfgi4DiPiZ_iVMstwtLcaox_V7Ho_9VBYrv9y6FtDufFWigtDZI1DR0FnVOL4VsXWf1APuP2JX9i7zsIImHzcgBHKnA8bD7MDMvYOauFge4TkgM9MqUN7kvn3qYXHldBliw2RPcrCin_u3vt3KeKM35ziHDkjXdqR1msE5R9PcA82Fa_p-s2GE8JHY3AdjaioUqdKTfw',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPIzYGGzXiOE6Oo3bOrKAM-i14seP-l_VW2MNKlADenV_w_4JxnBzxN5aNUs5vJAmsea2QbpfNbbjTHfh4yA5Bq4SxIurMn2NkwcERRPE8DQ0tszivmJJHozrYb9BkLsjqMiZuYkEvU19UlwDR22KKgFLRiX0hx7pAqZ48YLhVutAab0aVAsjEqMhqywFet_aWzdsFgJA2PDU7HgYg_ijvR0da_Z-QRYc-4wpqjljqpBcQPs8wwGT2Vg',
+    rating: 4.9,
+    reviewsCount: 38,
+    district: 'Akwa',
+    city: 'Douala',
+    distanceKm: 1.8,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 30,
+    responseTime: '< 15 min',
+    startingPrice: 5000,
+    startingPriceLabel: 'Dès 5 000 FCFA',
+    phone: '+237699452180',
+    whatsapp: '237699452180',
+    bio: "Artisan électricien certifié avec plus de 7 ans d'expérience dans les installations résidentielles et tertiaires à Douala. Spécialiste de la recherche de panne, remise aux normes NFC 15-100, dépannage express et pose de climatisations inverter. Devis gratuit et transparent avant toute intervention.",
+    experienceYears: 7,
+    availableToday: true,
+    interventionRadiusKm: 15,
+    languages: ['Français', 'Anglais technique', 'Duala'],
+    paymentMethods: ['Orange Money', 'MTN Mobile Money', 'Espèces avec reçu'],
+    skills: ['Tableau électrique', 'Pose disjoncteur', 'Entretien Split', 'Garantie 30j Mboa'],
+    pricingType: 'fixed',
+    services: [
+      {
+        id: 's1',
+        title: 'Diagnostic panne de courant & court-circuit',
+        desc: 'Recherche de panne au multimètre, test des fusibles et sécurisation du tableau principal.',
+        price: 5000,
+        priceUnit: 'FCFA',
+        duration: '~45 min',
+        badge: 'Le plus demandé',
+        note: 'Déductible si réparation immédiate effectuée sur place.',
+      },
+      {
+        id: 's2',
+        title: 'Installation disjoncteur différentiel 30mA',
+        desc: 'Protection anti-électrocution essentielle, calibrage et pose soignée aux normes NFC.',
+        price: 8500,
+        priceUnit: 'FCFA',
+        duration: '~1h',
+        note: "Main d'œuvre seule (+ matériel certifié Legrand/Schneider disponible sur facture).",
+      },
+      {
+        id: 's3',
+        title: 'Entretien complet & désinfection climatiseur split',
+        desc: 'Nettoyage des filtres au spray bactéricide, lavage unité extérieure, contrôle pression gaz.',
+        price: 12000,
+        priceUnit: 'FCFA / unité',
+        duration: '~1h15',
+        badge: 'Gain de fraîcheur',
+        note: 'Diminue la consommation électrique de 20 à 30%.',
+      },
+      {
+        id: 's4',
+        title: 'Rénovation complète tableau ou câblage villa',
+        desc: 'Étude technique sur plan, passage de gaines ignifugées, équilibrage des phases triphasées.',
+        price: 35000,
+        priceUnit: 'FCFA (Sur devis)',
+        duration: '1 à 3 jours',
+        note: 'Visite technique préalable offerte sous 24h avec schéma unifilaire.',
+      },
+    ],
+    realisations: [
+      {
+        id: 'r1',
+        title: 'Tableau 36 modules neuf triphasé',
+        location: 'Bonapriso, Douala',
+        date: 'Février 2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSL1z4VP7GUWM6a6txAw0HSfKJOTbeCf2WkuGYTSkEKmcuVOXW-riXrX7O35dMSreX5Ujie_r1LBmon41OqSUw7-sd1NFRbMn8BaGOM4WVyKd5zgtbVa-6qiipZE2Qzd3MGOOEGDEJ5YRrLBH_OC3nnHKHftZ_K4E9jffct-f1t7AHnClw2zDZKtp9KwW8bAA9FVHLxBc2LYXKW8zjWxH226NEtfMEGO91xKUK10DQFjho47f4yT3lUg',
+      },
+      {
+        id: 'r2',
+        title: 'Pose Bi-Split Inverter bureau d’avocats',
+        location: 'Akwa, Douala',
+        date: 'Janvier 2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBwe9QA_4oBFqoYRzGTdRIDXCKQiPaCxKmc0ElTlydVw016UFma9TFWFARe884MzGJA2J8mFfHeq703aCVF_1oki4SgoWpN-5Y5Kw4yVYmSCpZ5Elkoe7XcFoUGkRTqM0UnItFCjQPB9YXFf9ueMlL9vLriWcWgqQMnF61cgukkGUzA8LhgojNADJpUGu3iM44FjTOb2dQAkzfwgHJ6_IrOhGZaRXsw32Mqy947jNaUdN9dMqTcQmP4PQ',
+      },
+      {
+        id: 'r3',
+        title: 'Rénovation spots LED basse consommation villa',
+        location: 'Bonanjo, Douala',
+        date: 'Décembre 2024',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB5cFa56Nr2w003KRo0Wr2sDub88I1k53kvXReqfnstGkmNTvwBif_LjVf8f-zo787VFWvEx5by19-dqbp3r_8NFoGNPi_OuXxLAiT-BG2NTO8q8Y_Eu1UL5wL8uSGbFsYW7ElOt1c1Dob39jRo75-jlq3UOlAsNP5DdSPnNtuzbTXPtu3paa9Ibg1LnGcVyY8kLAKd_DHtS4R9k9LLIhcmSTGt0eSqTA9GPwTBpaIHnfd8tRdxokc9Pg',
+      },
+      {
+        id: 'r4',
+        title: 'Armoire électrique industrielle boulangerie',
+        location: 'Deido, Douala',
+        date: 'Novembre 2024',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCCbpO63Pl9GWouHZrF5prpgJkKxK99k3kZ2Y_mSZ_ebj2CguPC2Kkr9h26lBXN68VZlrciwbK8uEDCCHlXHYPJHK-dmf8CzYljQ3Sy-At5z14ifLYxIpJoNsHckLQqxxcpm91KjMuL8LS0tQR98V3jdtLemprk5DkBgB_y33VF2Qx9XVAzN8nRVTFvuvn6tzKY7tmN8UTpNvW8H9fz1zo06Dqmlhg5VDhyBv49mcd02UXc8yyUGZKwuA',
+      },
+    ],
+    reviews: [
+      {
+        id: 'rev1',
+        author: 'Nadine M.',
+        avatarInitials: 'NM',
+        rating: 5,
+        date: 'Il y a 3 jours',
+        location: 'Akwa, Douala',
+        comment: '« Intervention rapide en moins d’une heure pour un disjoncteur qui sautait constamment. Diagnostic clair avec multimètre, travail très propre et tarif conforme à l’annonce. Je recommande sans hésiter ! »',
+        serviceTitle: 'Dépannage court-circuit',
+      },
+      {
+        id: 'rev2',
+        author: 'Jean-Paul K.',
+        avatarInitials: 'JK',
+        rating: 5,
+        date: 'Il y a 2 semaines',
+        location: 'Bonapriso, Douala',
+        comment: '« Pose de 3 splits dans notre agence. Ponctualité exemplaire, passage des goulottes ultra propre et devis respecté au centime près. Très professionnel. »',
+        serviceTitle: 'Climatisation tertiaire',
+      },
+      {
+        id: 'rev3',
+        author: 'Dr. Samuel Eyoum',
+        avatarInitials: 'SE',
+        rating: 5,
+        date: 'Il y a 1 mois',
+        location: 'Bonanjo, Douala',
+        comment: '« Remise aux normes du tableau de mon cabinet médical. Explications limpides, matériaux de qualité et attestation fournie. Bravo ! »',
+        serviceTitle: 'Rénovation tableau',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Akwa', extraFee: 0 },
+      { name: 'Bonanjo', extraFee: 0 },
+      { name: 'Bonapriso', extraFee: 0 },
+      { name: 'Deido', extraFee: 0 },
+      { name: 'Bali', extraFee: 0 },
+      { name: 'Bonamoussadi', extraFee: 1500 },
+      { name: 'Makepe', extraFee: 1500 },
+      { name: 'Kotto / Logpom', extraFee: 2000 },
+    ],
+  },
+  {
+    id: 'kamdem-express',
+    name: 'Kamdem & Fils Express',
+    job: 'Plomberie Sanitaire & Débouchage Urgent',
+    category: 'plomberie',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcVyZ0LyvSru0n_NSLHeO-GJ86dxKDMdeXPN3E4gnTGrCIS3wb_MkAkR-cMli5BK-ZjQiVZEUydSk-xg_X248OdK3_Q8NO4rx7F1PkqeKLjeBvW_2HtNTm-8Hpv_bbR4TRX-PfQZcezEFVUIW1dqVuSbC6rGmtwDHQxmzEnAb95qkCcrrn1Q-QWVihELPZG_eU7nrhonWMVeWXutOk5Yf0cFbxayrqL_TQuNfsTBlPGxGFn1dPMf2WAg',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmuYFvl3zB0a-FKMuPs5bU9i861MZdMU6z6_UAdPUflp5lKGv6skkvOu6efVzQ4oAa-gMM30Kn-af5fe0Tu0jQB7fhjtGTMlSWaLKhYfg4HhZafX-W6-_P3YG0kpE_xHQanZBVKRtEgtLn8enydKlZBiE7tNkQDmUt6fHr6Tc4BaUoQJzL168G77etMQafU-PBhsJwwY0lpX6mjeiduYd32QnZi6wa1Cvh_x5ld7mGUabqd2U-qOxN-g',
+    rating: 4.8,
+    reviewsCount: 52,
+    district: 'Bonamoussadi',
+    city: 'Douala',
+    distanceKm: 3.5,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 30,
+    responseTime: '< 15 min',
+    startingPrice: 7500,
+    startingPriceLabel: 'Dès 7 500 FCFA',
+    phone: '+237677321045',
+    whatsapp: '237677321045',
+    bio: "Entreprise familiale de plomberie sanitaire implantée à Bonamoussadi depuis 9 ans. Nous intervenons en urgence 7j/7 pour toutes fuites d'eau, canalisations engorgées, remplacement de robinetterie et installation de surpresseurs et cuves d'eau.",
+    experienceYears: 9,
+    availableToday: true,
+    interventionRadiusKm: 20,
+    languages: ['Français', 'Anglais'],
+    paymentMethods: ['MTN Mobile Money', 'Orange Money', 'Espèces'],
+    skills: ['Fuite tuyauterie', 'Débouchage WC', 'Installation Chauffe-eau', 'Forfait Garanti'],
+    pricingType: 'fixed',
+    services: [
+      {
+        id: 'kp1',
+        title: 'Débouchage express canalisation / WC / évier',
+        desc: 'Intervention au furet mécanique ou pompe à vide haute pression.',
+        price: 7500,
+        priceUnit: 'FCFA',
+        duration: '~40 min',
+        badge: 'Urgence',
+        note: 'Résultat garanti immédiatement.',
+      },
+      {
+        id: 'kp2',
+        title: 'Réparation fuite apparente tuyauterie PPR/Cuivre',
+        desc: 'Remplacement de raccord, soudure étain ou sertissage multicouche avec test d’étanchéité.',
+        price: 8000,
+        priceUnit: 'FCFA',
+        duration: '~1h',
+        note: 'Fournitures de base incluses.',
+      },
+      {
+        id: 'kp3',
+        title: 'Pose ou remplacement chauffe-eau électrique',
+        desc: 'Fixation sécurisée, groupe de sécurité neuf, raccordement eau chaude/froide et mise en service.',
+        price: 15000,
+        priceUnit: 'FCFA',
+        duration: '~2h',
+        note: 'Garantie de pose 6 mois.',
+      },
+    ],
+    realisations: [
+      {
+        id: 'kpr1',
+        title: 'Rénovation plomberie salle de bain duplex',
+        location: 'Bonamoussadi, Douala',
+        date: 'Janvier 2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmuYFvl3zB0a-FKMuPs5bU9i861MZdMU6z6_UAdPUflp5lKGv6skkvOu6efVzQ4oAa-gMM30Kn-af5fe0Tu0jQB7fhjtGTMlSWaLKhYfg4HhZafX-W6-_P3YG0kpE_xHQanZBVKRtEgtLn8enydKlZBiE7tNkQDmUt6fHr6Tc4BaUoQJzL168G77etMQafU-PBhsJwwY0lpX6mjeiduYd32QnZi6wa1Cvh_x5ld7mGUabqd2U-qOxN-g',
+      },
+    ],
+    reviews: [
+      {
+        id: 'kprev1',
+        author: 'Guy B.',
+        avatarInitials: 'GB',
+        rating: 5,
+        date: 'Il y a 5 jours',
+        location: 'Bonamoussadi',
+        comment: '« Arrivé en 25 minutes un dimanche matin pour un tuyau percé sous la dalle. Fuite stoppée net. Tarif très honnête. »',
+        serviceTitle: 'Réparation fuite urgente',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Bonamoussadi', extraFee: 0 },
+      { name: 'Makepe', extraFee: 0 },
+      { name: 'Kotto', extraFee: 0 },
+      { name: 'Akwa', extraFee: 1500 },
+      { name: 'Deido', extraFee: 1000 },
+    ],
+  },
+  {
+    id: 'mbarga-frigo',
+    name: 'Mbarga Frigo Pro',
+    job: 'Frigoriste & Climatisation Centrale',
+    category: 'froid',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZ_g0LhMDZvV0hAfm49Twb_ozq2J18SG2knalAXxjSKT1piLsFcymp-H6Mkk_ybNClDSAP2ah5rYWykpaXKDGVCLZUoN_EQFt_XglVlMEu5QXKB1Mob2r21vOtGDPFTheM9oCvlOBi887dv4rkLvFtJFXav3G-7mKtZljyP41LrtvAPPJaiZyBmQrtb592PPzg5zJCjZRsW4-6uQaMOlA0EsW_5Ek6PLEVc3kXGHKpskEF5hnVyB2z_A',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBwe9QA_4oBFqoYRzGTdRIDXCKQiPaCxKmc0ElTlydVw016UFma9TFWFARe884MzGJA2J8mFfHeq703aCVF_1oki4SgoWpN-5Y5Kw4yVYmSCpZ5Elkoe7XcFoUGkRTqM0UnItFCjQPB9YXFf9ueMlL9vLriWcWgqQMnF61cgukkGUzA8LhgojNADJpUGu3iM44FjTOb2dQAkzfwgHJ6_IrOhGZaRXsw32Mqy947jNaUdN9dMqTcQmP4PQ',
+    rating: 4.7,
+    reviewsCount: 26,
+    district: 'Bepanda / Deido',
+    city: 'Douala',
+    distanceKm: 2.9,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 45,
+    responseTime: '< 30 min',
+    startingPrice: 15000,
+    startingPriceLabel: 'Dès 15 000 FCFA',
+    phone: '+237699118833',
+    whatsapp: '237699118833',
+    bio: "Technicien frigoriste certifié. Dépannage et recharge gaz des climatiseurs, chambres froides commerciales, congélateurs et armoires réfrigérées pour particuliers, poissonneries et restaurants à Douala.",
+    experienceYears: 8,
+    availableToday: false,
+    interventionRadiusKm: 25,
+    languages: ['Français', 'Duala'],
+    paymentMethods: ['Orange Money', 'MTN Mobile Money', 'Espèces'],
+    skills: ['Recharge Gaz R410', 'Chambres froides', 'Nettoyage antibactérien'],
+    pricingType: 'quote',
+    services: [
+      {
+        id: 'mf1',
+        title: 'Recharge gaz climatiseur Split R410A / R32',
+        desc: 'Tirage au vide, détection de micro-fuite à l’azote et recharge complète à la balance électronique.',
+        price: 15000,
+        priceUnit: 'FCFA',
+        duration: '~1h',
+        badge: 'Froid intense',
+      },
+      {
+        id: 'mf2',
+        title: 'Dépannage compresseur qui ne démarre plus',
+        desc: 'Changement de condensateur de démarrage, relais ou thermostat digital.',
+        price: 12000,
+        priceUnit: 'FCFA',
+        duration: '~45 min',
+      },
+    ],
+    realisations: [],
+    reviews: [
+      {
+        id: 'mfrev1',
+        author: 'Mme Tchinda',
+        avatarInitials: 'MT',
+        rating: 5,
+        date: 'Il y a 1 semaine',
+        location: 'Deido',
+        comment: '« Mon frigo de boulangerie ne descendait plus sous 12°C. Mbarga est intervenu rapidement avec son manomètre, recharge impeccable et le lendemain tout était parfait. »',
+        serviceTitle: 'Dépannage armoire froide',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Bepanda', extraFee: 0 },
+      { name: 'Deido', extraFee: 0 },
+      { name: 'Akwa', extraFee: 1000 },
+      { name: 'Bonapriso', extraFee: 1500 },
+    ],
+  },
+  {
+    id: 'douala-tech-care',
+    name: 'Douala Tech Care',
+    job: 'Réparateur Spécialisé Smartphones & PC',
+    category: 'electronique',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLIByF0Pr5n3knyluBh1imOFRcGLrUnBrYDVKZenKDOgNMnoehy3huth9jktwZIIIaF5DZZy8QvZHmqmIFcmNdNnklslhr1ZvZZpAuWDO4jZqHnq2znGZR0wfg-brqODQ5AD6yOr18qp_86QThm0w1uwOEQWeEUKRT-ePPWL2lYd5xZYHkng6Dc_M72oo-Zb5aGiTSfxoz4hEhN1XbOu08YiAeQxjH2INu_EOwB-Ib2PpeNchD_sLmGw',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAdpH7r8qu9EWeb6xWp1HjCLNESkWsEModMx9HO_9QPKWBk_jiji5GWBa1pexiQJ8ncYMCSDQHaIP7pKKNbrtFQ-t9BcNcTIWsZhWuDJb2KmuHygtgEOA19pDaloAiRcXBHcqHW9ciqiPzmT4uupuSE698Bjm-i_VpBsUntAxSgLW9dY3mMIYe5dDqZqhc3SszilwjQY3MHjLnRILHpGykSdlQZdolQfOwVju753yX9hL5MTRqBpkmrJA',
+    rating: 5.0,
+    reviewsCount: 19,
+    district: 'Makepe',
+    city: 'Douala',
+    distanceKm: 4.1,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 90,
+    responseTime: '< 20 min',
+    startingPrice: 3500,
+    startingPriceLabel: 'Dès 3 500 FCFA',
+    phone: '+237655447788',
+    whatsapp: '237655447788',
+    bio: "Micro-soudures, changement d'écrans OLED originaux, connecteurs de charge, déblocages et récupération de données sur iPhone, Samsung, Tecno, Infinix et ordinateurs portables. Atelier climatisé à Makèpè avec banc d'essai.",
+    experienceYears: 6,
+    availableToday: true,
+    interventionRadiusKm: 15,
+    languages: ['Français', 'Anglais'],
+    paymentMethods: ['Orange Money', 'MTN MoMo', 'Espèces'],
+    skills: ["Pièces d'origine", 'Micro-soudure', 'Garantie 90j'],
+    pricingType: 'fixed',
+    services: [
+      {
+        id: 'dt1',
+        title: 'Changement connecteur de charge smartphone',
+        desc: 'Remplacement de la nappe dock USB-C ou Lightning avec test ampérage.',
+        price: 5000,
+        priceUnit: 'FCFA',
+        duration: '~35 min',
+      },
+      {
+        id: 'dt2',
+        title: 'Remplacement batterie originale iPhone / Samsung',
+        desc: 'Batterie haute densité certifiée 100% avec joint d’étanchéité neuf.',
+        price: 12000,
+        priceUnit: 'FCFA',
+        duration: '~30 min',
+        badge: 'Garantie 3 mois',
+      },
+    ],
+    realisations: [],
+    reviews: [
+      {
+        id: 'dtrev1',
+        author: 'Arsène T.',
+        avatarInitials: 'AT',
+        rating: 5,
+        date: 'Il y a 4 jours',
+        location: 'Makepe',
+        comment: '« Écran de mon iPhone 13 Pro changé en 45 minutes devant moi. Fonction TrueTone conservée, travail impeccable. »',
+        serviceTitle: 'Remplacement écran OLED',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Makepe', extraFee: 0 },
+      { name: 'Bonamoussadi', extraFee: 0 },
+      { name: 'Kotto', extraFee: 500 },
+      { name: 'Akwa', extraFee: 1500 },
+    ],
+  },
+  {
+    id: 'atangana-bois',
+    name: 'Atangana Ébénisterie',
+    job: 'Menuiserie Bois & Aluminium sur Mesure',
+    category: 'menuiserie',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCskoldUEP6trXT6xDlWzwEDgc76bwfot6RXQ0M7jSWo6l2cSJbFPA7haisKzmSPixSBMeO-T3WKh1UiayV2UHC8j8QbPLZ6PPDr61XSAhyZvNd20tYFWZZBlL9xQRYsuzBr2ZdSbqB-eQxDfziPOl-7oNNRW-R-bzWZVKYKRjd__5Sy7p6My14m6nZ8bSp7KGUS-wGBtjA1-3VarSK1eqAbxROGIDVa2t0OlHD0ihLFLLr170gsD6V-A',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPIzYGGzXiOE6Oo3bOrKAM-i14seP-l_VW2MNKlADenV_w_4JxnBzxN5aNUs5vJAmsea2QbpfNbbjTHfh4yA5Bq4SxIurMn2NkwcERRPE8DQ0tszivmJJHozrYb9BkLsjqMiZuYkEvU19UlwDR22KKgFLRiX0hx7pAqZ48YLhVutAab0aVAsjEqMhqywFet_aWzdsFgJA2PDU7HgYg_ijvR0da_Z-QRYc-4wpqjljqpBcQPs8wwGT2Vg',
+    rating: 4.9,
+    reviewsCount: 31,
+    district: 'Bonanjo',
+    city: 'Douala',
+    distanceKm: 2.3,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 60,
+    responseTime: '< 30 min',
+    startingPrice: 10000,
+    startingPriceLabel: 'Dès 10 000 FCFA',
+    phone: '+237670112233',
+    whatsapp: '237670112233',
+    bio: "Maître artisan menuisier. Réparation de serrures et portes bloquées, fabrication de meubles en bois massif (Bubinga, Iroko, Moabi), dressings encastrés et baies vitrées aluminium.",
+    experienceYears: 12,
+    availableToday: true,
+    interventionRadiusKm: 20,
+    languages: ['Français', 'Ewondo', 'Anglais'],
+    paymentMethods: ['Orange Money', 'MTN MoMo', 'Espèces'],
+    skills: ['Portes blindées', 'Bois massif local', 'Dressings sur mesure'],
+    pricingType: 'quote',
+    services: [
+      {
+        id: 'ab1',
+        title: 'Rabotage et réglage de porte qui frotte',
+        desc: 'Ajustement gonds, serrure et rabotage de précision.',
+        price: 8000,
+        priceUnit: 'FCFA',
+        duration: '~45 min',
+      },
+      {
+        id: 'ab2',
+        title: 'Pose de serrure 3 points haute sécurité',
+        desc: 'Fourniture et fixation robuste anti-effraction.',
+        price: 18000,
+        priceUnit: 'FCFA',
+        duration: '~1h30',
+      },
+    ],
+    realisations: [],
+    reviews: [
+      {
+        id: 'abrev1',
+        author: 'Patrick O.',
+        avatarInitials: 'PO',
+        rating: 5,
+        date: 'Il y a 3 semaines',
+        location: 'Bonanjo',
+        comment: '« Excellent travail sur notre porte principale. Fermeture fluide et alignement parfait. »',
+        serviceTitle: 'Pose serrure de sécurité',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Bonanjo', extraFee: 0 },
+      { name: 'Bonapriso', extraFee: 0 },
+      { name: 'Akwa', extraFee: 0 },
+      { name: 'Bali', extraFee: 0 },
+    ],
+  },
+  {
+    id: 'clean-douala',
+    name: 'Clean Douala Services',
+    job: 'Entretien Résidentiel, Canapés & Fin de Chantier',
+    category: 'nettoyage',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBzVJXNLiHJHSRN1qlVaXDaZ0erVYr-ayB2S7bcBMwABnZcwZ9xdFi8-S7iNMB349iTHenx0LtSD9zZDWHKGcEYBBjuDHVAyQgQhfzVacSbi2ryaWqOV8fvYav9tT5NgWvE8WE1u9_7fFnjSQxhiCaKntMYjEm-8Ry4mrUpbj9HmhxypcBYR2GrSEXh6xzVm5TfuVLGIJ-D29sKLCb9i6kWLNZmF1QXj0yGGsUG9Jivp06mR5T1WBgdqA',
+    coverImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAdpH7r8qu9EWeb6xWp1HjCLNESkWsEModMx9HO_9QPKWBk_jiji5GWBa1pexiQJ8ncYMCSDQHaIP7pKKNbrtFQ-t9BcNcTIWsZhWuDJb2KmuHygtgEOA19pDaloAiRcXBHcqHW9ciqiPzmT4uupuSE698Bjm-i_VpBsUntAxSgLW9dY3mMIYe5dDqZqhc3SszilwjQY3MHjLnRILHpGykSdlQZdolQfOwVju753yX9hL5MTRqBpkmrJA',
+    rating: 4.8,
+    reviewsCount: 44,
+    district: 'Bali',
+    city: 'Douala',
+    distanceKm: 2.1,
+    verified: true,
+    cniVerified: true,
+    guaranteeDays: 7,
+    responseTime: '< 20 min',
+    startingPrice: 8000,
+    startingPriceLabel: 'Dès 8 000 FCFA',
+    phone: '+237699775522',
+    whatsapp: '237699775522',
+    bio: "Équipe professionnelle de nettoyage équipée d'injecteurs-extracteurs industriels Kärcher. Nettoyage de canapés tissu/cuir, matelas anti-acariens, moquettes, vitres et remise à neuf d'appartements après travaux.",
+    experienceYears: 5,
+    availableToday: true,
+    interventionRadiusKm: 20,
+    languages: ['Français', 'Anglais'],
+    paymentMethods: ['Orange Money', 'MTN MoMo', 'Espèces'],
+    skills: ['Injection-Extraction', 'Matériel pro Kärcher', 'Désinfection écologique'],
+    pricingType: 'fixed',
+    services: [
+      {
+        id: 'cd1',
+        title: 'Shampouinage en profondeur canapé 3 places',
+        desc: 'Élimination des taches tenaces, auréoles et odeurs par injection-extraction vapeur.',
+        price: 15000,
+        priceUnit: 'FCFA',
+        duration: '~1h30',
+        badge: 'Résultat comme neuf',
+      },
+      {
+        id: 'cd2',
+        title: 'Nettoyage grand matelas 2 places anti-acariens',
+        desc: 'Désinfection thermique et traitement assainissant.',
+        price: 10000,
+        priceUnit: 'FCFA',
+        duration: '~45 min',
+      },
+    ],
+    realisations: [],
+    reviews: [
+      {
+        id: 'cdrev1',
+        author: 'Clarisse D.',
+        avatarInitials: 'CD',
+        rating: 5,
+        date: 'Il y a 10 jours',
+        location: 'Bali',
+        comment: '« Mon salon en tissu beige a retrouvé sa couleur d’origine. Très ponctuels, discrets et polis. »',
+        serviceTitle: 'Nettoyage salon complet',
+      },
+    ],
+    coveredDistricts: [
+      { name: 'Bali', extraFee: 0 },
+      { name: 'Bonapriso', extraFee: 0 },
+      { name: 'Akwa', extraFee: 0 },
+      { name: 'Bonanjo', extraFee: 0 },
+    ],
+  },
+];
+
+export const INITIAL_USER_REQUESTS: UserRequest[] = [
+  {
+    id: 'MB-2025-0842',
+    title: 'Court-circuit tableau disjoncteur qui saute',
+    serviceCategory: 'Électricité & Dépannage',
+    artisanName: 'Talla Éric',
+    artisanJob: 'Électricien Bâtiment',
+    artisanAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDbdkEH3oGv7EOEN_Onf8UkFeCBSLqUcz1CVcsR4ffbecNtqeIfgi4DiPiZ_iVMstwtLcaox_V7Ho_9VBYrv9y6FtDufFWigtDZI1DR0FnVOL4VsXWf1APuP2JX9i7zsIImHzcgBHKnA8bD7MDMvYOauFge4TkgM9MqUN7kvn3qYXHldBliw2RPcrCin_u3vt3KeKM35ziHDkjXdqR1msE5R9PcA82Fa_p-s2GE8JHY3AdjaioUqdKTfw',
+    district: 'Akwa (Rue Pau)',
+    propertyType: 'Appartement',
+    urgency: 'urgent',
+    estimatedBudget: '5 000 – 10 000 FCFA',
+    status: 'en_route',
+    statusLabel: 'Artisan en route • Arrivée estimée dans 20 min',
+    statusColor: '#006946',
+    date: 'Aujourd’hui',
+    timeSlot: '15h00 - 16h00',
+    phone: '+237 699 45 21 80',
+    amount: 8500,
+    description: 'Le disjoncteur principal coupe toute la maison dès que la climatisation du salon est allumée. Odeur légère de chaud près du coffret.',
+  },
+  {
+    id: 'MB-2025-0791',
+    title: 'Entretien annuel de 2 climatiseurs split',
+    serviceCategory: 'Clim & Froid',
+    artisanName: 'Mbarga Frigo Pro',
+    artisanJob: 'Frigoriste Certifié',
+    artisanAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZ_g0LhMDZvV0hAfm49Twb_ozq2J18SG2knalAXxjSKT1piLsFcymp-H6Mkk_ybNClDSAP2ah5rYWykpaXKDGVCLZUoN_EQFt_XglVlMEu5QXKB1Mob2r21vOtGDPFTheM9oCvlOBi887dv4rkLvFtJFXav3G-7mKtZljyP41LrtvAPPJaiZyBmQrtb592PPzg5zJCjZRsW4-6uQaMOlA0EsW_5Ek6PLEVc3kXGHKpskEF5hnVyB2z_A',
+    district: 'Makepe (Rond-point)',
+    propertyType: 'Villa',
+    urgency: '48h',
+    estimatedBudget: '20 000 – 30 000 FCFA',
+    status: 'devis_recu',
+    statusLabel: 'Devis reçu • 24 000 FCFA à valider',
+    statusColor: '#a06800',
+    date: 'Demain',
+    timeSlot: '09h00 - 11h00',
+    phone: '+237 699 11 88 33',
+    amount: 24000,
+    description: 'Nettoyage des filtres, désinfection et contrôle de la charge gaz R410A pour 2 unités Daikin 1.5 CV.',
+  },
+  {
+    id: 'MB-2025-0618',
+    title: 'Remplacement mitigeur cuisine et tuyau évacuation',
+    serviceCategory: 'Plomberie',
+    artisanName: 'Kamdem & Fils Express',
+    artisanJob: 'Plombier Sanitaire',
+    artisanAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcVyZ0LyvSru0n_NSLHeO-GJ86dxKDMdeXPN3E4gnTGrCIS3wb_MkAkR-cMli5BK-ZjQiVZEUydSk-xg_X248OdK3_Q8NO4rx7F1PkqeKLjeBvW_2HtNTm-8Hpv_bbR4TRX-PfQZcezEFVUIW1dqVuSbC6rGmtwDHQxmzEnAb95qkCcrrn1Q-QWVihELPZG_eU7nrhonWMVeWXutOk5Yf0cFbxayrqL_TQuNfsTBlPGxGFn1dPMf2WAg',
+    district: 'Bonamoussadi',
+    propertyType: 'Appartement',
+    urgency: 'flexible',
+    estimatedBudget: '7 500 FCFA',
+    status: 'termine',
+    statusLabel: 'Mission terminée & validée avec succès',
+    statusColor: '#3d665a',
+    date: '15 Octobre 2025',
+    timeSlot: '11h30',
+    phone: '+237 677 32 10 45',
+    amount: 7500,
+    description: 'Pose d’un nouveau robinet avec flexibles tressés inox et raccordement au siphon sans fuite.',
+  },
+];

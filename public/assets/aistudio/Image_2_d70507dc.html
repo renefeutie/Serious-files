@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;font-family:'Inter',sans-serif;}body{overscroll-behavior:none;background-color:#f2fcf2;color:#151e18;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-container": "#bfecdc", "on-tertiary-fixed-variant": "#633f00", "on-error-container": "#93000a", "error-container": "#ffdad6", "tertiary": "#7f5200", "inverse-surface": "#29332c", "on-primary-fixed-variant": "#005236", "tertiary-container": "#a06800", "surface-tint": "#006c48", "on-primary-container": "#f2fff4", "outline": "#6e7a72", "on-primary-fixed": "#002113", "surface": "#f2fcf2", "surface-dim": "#d3ddd3", "on-error": "#ffffff", "secondary-fixed-dim": "#a4d0c0", "primary": "#006946", "tertiary-fixed-dim": "#ffb955", "on-tertiary": "#ffffff", "on-secondary": "#ffffff", "primary-fixed": "#94f6c4", "secondary": "#3d665a", "surface-container-low": "#ecf6ed", "primary-fixed-dim": "#78d9aa", "secondary-fixed": "#bfecdc", "on-tertiary-container": "#fffaf9", "on-background": "#151e18", "surface-container-highest": "#dbe5dc", "primary-container": "#16845b", "outline-variant": "#bdcac0", "tertiary-fixed": "#ffddb4", "background": "#f2fcf2", "surface-container-high": "#e1ebe1", "on-surface-variant": "#3e4942", "surface-bright": "#f2fcf2", "on-surface": "#151e18", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "surface-variant": "#dbe5dc", "on-tertiary-fixed": "#291800", "error": "#ba1a1a", "inverse-on-surface": "#e9f3ea", "on-secondary-fixed-variant": "#254e42", "surface-container": "#e6f1e7", "on-secondary-fixed": "#002019", "inverse-primary": "#78d9aa", "on-secondary-container": "#436c5f" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "margin-lg": "3rem", "space-md": "1rem", "space-lg": "1.5rem", "margin": "1rem", "space-xl": "2rem", "gutter-lg": "2rem", "gutter-md": "1.5rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-md": "2rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "display": ["Inter"], "headline-lg": ["Inter"], "title-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Inter"], "currency-display": ["Inter"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"], "body-md": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["1.625rem", { "lineHeight": "2.125rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "currency-display": ["1.25rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["0.75rem", { "lineHeight": "1.125rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-lg": ["0.9375rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" onclick="document.getElementById('mboa-drawer').classList.remove('-translate-x-full');document.getElementById('mboa-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs"><img alt="Logo MboaFacile" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VsbvE771uFZONvqSZe2IElvmr6LVacMjBNAxagKooGGVFWaruQ0nw57Lmw_KXAECJoUlGP_hzZxuvb8IpnkaCqhCTi197TOuLgaTTvo7mgYhk2RObjRRm7hHhf3L-uV2ROWWXmhcdG-zlC-qV9XbaxJVyeq_MxD_k8RVTLpmHs9UPGFt6uaPGJzaW_LCUdLysCr0MnL2F6pixhZrpbIzTuayfbTa0FN4JnRshk2FnjWgyvIr79wY_GjhI1"/><span class="font-title-md text-title-md text-primary tracking-tight">MboaFacile</span></div></div><div class="flex items-center gap-space-xs"><button class="flex items-center gap-1 px-space-sm h-9 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-tertiary-container">location_on</span><span>Douala</span></button><a class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" data-path="explorer" href="#"><span class="material-symbols-outlined text-[22px]">search</span></a><a class="w-11 h-11 flex items-center justify-center" data-path="compte" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzVJXNLiHJHSRN1qlVaXDaZ0erVYr-ayB2S7bcBMwABnZcwZ9xdFi8-S7iNMB349iTHenx0LtSD9zZDWHKGcEYBBjuDHVAyQgQhfzVacSbi2ryaWqOV8fvYav9tT5NgWvE8WE1u9_7fFnjSQxhiCaKntMYjEm-8Ry4mrUpbj9HmhxypcBYR2GrSEXh6xzVm5TfuVLGIJ-D29sKLCb9i6kWLNZmF1QXj0yGGsUG9Jivp06mR5T1WBgdqA"/></a></div></div></header><div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden transition-opacity" id="mboa-drawer-backdrop" onclick="document.getElementById('mboa-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed top-0 bottom-0 left-0 w-[84%] max-w-[340px] z-50 bg-surface-container-lowest shadow-[0_20px_35px_-5px_rgba(32,41,35,0.16)] flex flex-col justify-between -translate-x-full transition-transform duration-300 ease-out pt-safe pb-safe" id="mboa-drawer"><div class="flex flex-col h-full"><div class="p-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Logo MboaFacile" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VsbvE771uFZONvqSZe2IElvmr6LVacMjBNAxagKooGGVFWaruQ0nw57Lmw_KXAECJoUlGP_hzZxuvb8IpnkaCqhCTi197TOuLgaTTvo7mgYhk2RObjRRm7hHhf3L-uV2ROWWXmhcdG-zlC-qV9XbaxJVyeq_MxD_k8RVTLpmHs9UPGFt6uaPGJzaW_LCUdLysCr0MnL2F6pixhZrpbIzTuayfbTa0FN4JnRshk2FnjWgyvIr79wY_GjhI1"/><span class="font-title-md text-title-md text-primary">MboaFacile</span></div><button class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors" onclick="document.getElementById('mboa-drawer').classList.add('-translate-x-full');document.getElementById('mboa-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-gutter pb-space-sm"><span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[14px]">verified</span>Services certifiés Douala</span></div><div class="flex-1 overflow-y-auto px-gutter py-space-xs space-y-1"><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="trouver-un-professionnel" href="#"><span class="material-symbols-outlined text-primary">engineering</span><span>Trouver un professionnel</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="categories" href="#"><span class="material-symbols-outlined text-primary">category</span><span>Catégories</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="demander-un-devis" href="#"><span class="material-symbols-outlined text-tertiary">request_quote</span><span>Demander un devis</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="comment-ca-marche" href="#"><span class="material-symbols-outlined text-primary">help_outline</span><span>Comment ça marche</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="securite-et-confiance" href="#"><span class="material-symbols-outlined text-primary">verified_user</span><span>Sécurité &amp; Confiance</span></a><div class="py-space-xs my-space-xs"><div class="h-px bg-surface-container-high w-full"></div></div><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-tertiary hover:bg-tertiary-fixed/40 font-label-lg text-label-lg" data-path="devenir-prestataire" href="#"><span class="material-symbols-outlined text-tertiary">handyman</span><span>Devenir prestataire</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="espace-client" href="#"><span class="material-symbols-outlined text-secondary">person</span><span>Espace Client</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="espace-pro" href="#"><span class="material-symbols-outlined text-secondary">badge</span><span>Espace Pro</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="centre-d-aide" href="#"><span class="material-symbols-outlined text-on-surface-variant">support_agent</span><span>Centre d'aide</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container font-body-sm text-body-sm" data-path="conditions-generales" href="#"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">policy</span><span>Conditions &amp; Légal</span></a></div></div></aside><main class="flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- Hero Section -->
+<section class="px-gutter pt-space-md pb-space-lg flex flex-col gap-space-md">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container w-fit shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-label-sm text-label-sm tracking-wide">N°1 des services de proximité au Cameroun</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">
+        Le bon professionnel, <span class="text-primary-container">sans perdre</span> votre temps.
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Trouvez des artisans et prestataires près de chez vous, comparez les services et demandez votre devis gratuitement.
+      </p>
+</div>
+<!-- Quick Search Widget Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col gap-space-sm">
+<!-- Search Input -->
+<div class="flex items-center gap-space-xs px-3 py-2.5 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">search</span>
+<input class="bg-transparent border-0 outline-none w-full font-body-md text-body-md text-on-surface placeholder:text-outline" id="heroSearchInput" placeholder="Quel service recherchez-vous ? (ex: Plomberie)" type="text"/>
+</div>
+<!-- District & City Selectors -->
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="flex items-center gap-1.5 px-3 py-2.5 rounded-lg bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary">location_city</span>
+<span class="font-label-md text-label-md text-on-surface">Douala</span>
+</div>
+<div class="relative">
+<select class="w-full h-full px-3 py-2.5 rounded-lg bg-surface-container-low font-label-md text-label-md text-on-surface outline-none appearance-none cursor-pointer">
+<option value="akwa">Quartier : Akwa</option>
+<option value="bonapriso">Bonapriso</option>
+<option value="bonamoussadi">Bonamoussadi</option>
+<option value="makepe">Makepe</option>
+<option value="deido">Deido</option>
+<option value="bepanda">Bepanda</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full h-12 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm" onclick="triggerProSearch()" type="button">
+<span class="material-symbols-outlined text-[20px]">manage_search</span>
+<span>Trouver un professionnel</span>
+</button>
+<!-- Instant Suggestions Badges -->
+<div class="pt-space-xs flex flex-col gap-1.5">
+<span class="font-label-sm text-label-sm text-outline">Populaire actuellement :</span>
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap active:bg-secondary-container active:text-on-secondary-container" onclick="setQuickSearch('Plombier')" type="button">Plombier</button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap active:bg-secondary-container active:text-on-secondary-container" onclick="setQuickSearch('Électricien')" type="button">Électricien</button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap active:bg-secondary-container active:text-on-secondary-container" onclick="setQuickSearch('Réparateur smartphone')" type="button">Réparateur smartphone</button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap active:bg-secondary-container active:text-on-secondary-container" onclick="setQuickSearch('Frigoriste')" type="button">Frigoriste</button>
+<button class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap active:bg-secondary-container active:text-on-secondary-container" onclick="setQuickSearch('Menuisier')" type="button">Menuisier</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Catégories Populaires -->
+<section class="px-gutter py-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Catégories Populaires</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Des spécialistes certifiés dans vos quartiers</p>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">18 Métiers</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Plomberie -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/plomberie" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[24px]">plumbing</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Plomberie</span>
+<span class="font-body-sm text-body-sm text-outline">142 pros</span>
+</div>
+</a>
+<!-- Électricité & Solaire -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/electricite" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary-container shrink-0">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Électricité</span>
+<span class="font-body-sm text-body-sm text-outline">98 pros</span>
+</div>
+</a>
+<!-- Téléphone & Ordi -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/electronique" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[24px]">smartphone</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">High-Tech &amp; IT</span>
+<span class="font-body-sm text-body-sm text-outline">120 pros</span>
+</div>
+</a>
+<!-- Électroménager & Froid -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/froid" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[24px]">ac_unit</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Clim &amp; Froid</span>
+<span class="font-body-sm text-body-sm text-outline">85 pros</span>
+</div>
+</a>
+<!-- Menuiserie & Bois -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/menuiserie" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined text-[24px]">carpenter</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Menuiserie</span>
+<span class="font-body-sm text-body-sm text-outline">64 pros</span>
+</div>
+</a>
+<!-- Nettoyage & Entretien -->
+<a class="bg-surface-container-lowest p-space-sm rounded-xl flex items-center gap-space-sm shadow-sm active:bg-surface-container transition-colors" data-path="categories/nettoyage" href="#">
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary-container text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-[24px] text-primary">cleaning_services</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Nettoyage</span>
+<span class="font-body-sm text-body-sm text-outline">73 pros</span>
+</div>
+</a>
+</div>
+<button class="w-full h-11 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-surface-container-high active:bg-surface-container-highest transition-colors" type="button">
+<span>Voir les 18 catégories</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</section>
+<!-- Section 3: Trouver par besoin immédiat -->
+<section class="px-gutter py-space-md flex flex-col gap-space-md">
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Votre besoin du moment</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Accédez à une solution adaptée à votre urgence</p>
+</div>
+<div class="grid grid-cols-1 gap-space-sm">
+<!-- Urgence -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-space-md relative overflow-hidden">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">e911_emergency</span>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Panne urgente</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">&lt; 2h à Douala</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fuite d'eau, court-circuit, serrure bloquée avec intervention express.</p>
+<a class="mt-1 font-label-md text-label-md text-primary flex items-center gap-1" data-path="urgences" href="#">
+<span>Dépannage immédiat</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Réparation Domicile -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px] text-primary">home_repair_service</span>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Réparation à domicile</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Devis sans frais</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Climatiseur, frigo, tuyauterie avec prix fixé à l'avance.</p>
+<a class="mt-1 font-label-md text-label-md text-primary flex items-center gap-1" data-path="reparation-domicile" href="#">
+<span>Demander une intervention</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Entreprise & Commerce -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">storefront</span>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Pour mon commerce</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Facture Pro</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Boutiques, bureaux, restaurants : contrats et maintenances sur mesure.</p>
+<a class="mt-1 font-label-md text-label-md text-primary flex items-center gap-1" data-path="services-pro" href="#">
+<span>Solutions Entreprises</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Grands travaux -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">event_note</span>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Chantiers &amp; Travaux</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Planification</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Rénovation complète, charpente, carrelage et peinture intérieure.</p>
+<a class="mt-1 font-label-md text-label-md text-primary flex items-center gap-1" data-path="chantiers" href="#">
+<span>Planifier mon devis</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Artisans vérifiés à la une -->
+<section class="px-gutter py-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Artisans certifiés à la une</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Contrôlés à Douala : CNI &amp; compétences</p>
+</div>
+<a class="font-label-md text-label-md text-primary flex items-center" data-path="artisans-verifies" href="#">
+<span>Voir tous</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Artisan 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photography of an African male electrician in Douala Cameroon wearing a neat dark work polo, holding a voltage tester, smiling warmly with high competence and warmth, natural sunlit workshop background, high resolution, vivid realistic colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCskoldUEP6trXT6xDlWzwEDgc76bwfot6RXQ0M7jSWo6l2cSJbFPA7haisKzmSPixSBMeO-T3WKh1UiayV2UHC8j8QbPLZ6PPDr61XSAhyZvNd20tYFWZZBlL9xQRYsuzBr2ZdSbqB-eQxDfziPOl-7oNNRW-R-bzWZVKYKRjd__5Sy7p6My14m6nZ8bSp7KGUS-wGBtjA1-3VarSK1eqAbxROGIDVa2t0OlHD0ihLFLLr170gsD6V-A"/>
+<span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px]">check</span>
+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Talla Éric</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Électricien Bâtiment &amp; Froid</span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+                Akwa, Douala
+              </span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-outline hover:text-error active:scale-90 transition-transform" onclick="toggleFavorite(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Profil Vérifié (CNI &amp; Références)
+          </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Intervention 45 min</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-1">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.9</span>
+<span class="font-body-sm text-body-sm text-outline">(38 avis)</span>
+</div>
+<div class="text-right">
+<span class="font-body-sm text-body-sm text-outline">Tarif : </span>
+<span class="font-currency-display text-currency-display text-on-surface">Dès 5 000 FCFA</span>
+</div>
+</div>
+<div class="pt-space-xs">
+<button class="w-full h-11 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 active:bg-on-primary-fixed-variant transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Demander un devis</span>
+</button>
+</div>
+</div>
+<!-- Artisan 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Professional African plumber in Cameroon inspecting modern copper water pipe connections, wearing blue utility workwear, bright daylight, confident friendly expression, crisp focus, authentic Douala setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmuYFvl3zB0a-FKMuPs5bU9i861MZdMU6z6_UAdPUflp5lKGv6skkvOu6efVzQ4oAa-gMM30Kn-af5fe0Tu0jQB7fhjtGTMlSWaLKhYfg4HhZafX-W6-_P3YG0kpE_xHQanZBVKRtEgtLn8enydKlZBiE7tNkQDmUt6fHr6Tc4BaUoQJzL168G77etMQafU-PBhsJwwY0lpX6mjeiduYd32QnZi6wa1Cvh_x5ld7mGUabqd2U-qOxN-g"/>
+<span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px]">check</span>
+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Kamdem &amp; Fils Plomberie</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Installation &amp; Dépannage Sanitaire</span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+                Bonamoussadi, Douala
+              </span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-outline hover:text-error active:scale-90 transition-transform" onclick="toggleFavorite(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Vérifié sur le terrain
+          </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Garantie 30 jours</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-1">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.8</span>
+<span class="font-body-sm text-body-sm text-outline">(52 avis)</span>
+</div>
+<div class="text-right">
+<span class="font-body-sm text-body-sm text-outline">Tarif : </span>
+<span class="font-currency-display text-currency-display text-on-surface">Sur devis gratuit</span>
+</div>
+</div>
+<div class="pt-space-xs">
+<button class="w-full h-11 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 active:bg-on-primary-fixed-variant transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Demander un devis</span>
+</button>
+</div>
+</div>
+<!-- Artisan 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Young Cameroonian electronics expert soldering an intricate smartphone motherboard in a modern clean repair studio in Douala, specialized precision tools, soft illumination, professional demeanor, top quality photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLIByF0Pr5n3knyluBh1imOFRcGLrUnBrYDVKZenKDOgNMnoehy3huth9jktwZIIIaF5DZZy8QvZHmqmIFcmNdNnklslhr1ZvZZpAuWDO4jZqHnq2znGZR0wfg-brqODQ5AD6yOr18qp_86QThm0w1uwOEQWeEUKRT-ePPWL2lYd5xZYHkng6Dc_M72oo-Zb5aGiTSfxoz4hEhN1XbOu08YiAeQxjH2INu_EOwB-Ib2PpeNchD_sLmGw"/>
+<span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px]">check</span>
+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Douala Tech Care</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Réparateur iPhone &amp; Samsung</span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+                Makepe, Douala
+              </span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-outline hover:text-error active:scale-90 transition-transform" onclick="toggleFavorite(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Vérifié MboaFacile
+          </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Pièces d'origine</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-1">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">5.0</span>
+<span class="font-body-sm text-body-sm text-outline">(19 avis)</span>
+</div>
+<div class="text-right">
+<span class="font-body-sm text-body-sm text-outline">Tarif : </span>
+<span class="font-currency-display text-currency-display text-on-surface">Dès 3 500 FCFA</span>
+</div>
+</div>
+<div class="pt-space-xs">
+<button class="w-full h-11 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 active:bg-on-primary-fixed-variant transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Demander un devis</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Comment ça marche -->
+<section class="px-gutter py-space-lg flex flex-col gap-space-md bg-surface-container-low my-space-xs">
+<div class="flex flex-col text-center items-center">
+<span class="px-3 py-1 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Simple &amp; Rapide</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-1">Comment ça marche ?</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[280px]">Votre solution en 4 étapes fluides, sans tracasseries.</p>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Step 1 -->
+<div class="flex items-start gap-space-md p-space-sm rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shrink-0">
+          1
+        </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Recherchez votre besoin</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Précisez le métier (clim, plomberie, serrurerie) et votre quartier exact.</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start gap-space-md p-space-sm rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shrink-0">
+          2
+        </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Comparez les profils certifiés</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Consultez leurs réalisations photos, tarifs indicatifs et avis vérifiés.</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start gap-space-md p-space-sm rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shrink-0">
+          3
+        </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Demandez un devis sans frais</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Recevez une estimation claire en moins de 2 minutes par messagerie sécurisée.</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex items-start gap-space-md p-space-sm rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shrink-0">
+          4
+        </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Réalisez vos travaux sereinement</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">L'artisan intervient chez vous, vous payez uniquement après validation du service.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Confiance & Sécurité à la camerounaise -->
+<section class="px-gutter py-space-md flex flex-col gap-space-md">
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sécurité &amp; Transparence</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Finies les mauvaises surprises et les chantiers inachevés</p>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-1">
+<div class="w-9 h-9 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-[20px] text-primary">badge</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">CNI &amp; Références</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Identité et domicile vérifiés physiquement.</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-1">
+<div class="w-9 h-9 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-[20px] text-primary">rate_review</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Avis 100% Réels</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Seuls les clients ayant terminé la mission notent.</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-1">
+<div class="w-9 h-9 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-[20px] text-primary">payments</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Tarifs Clairs en FCFA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Fourchettes annoncées avant le moindre travail.</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-1">
+<div class="w-9 h-9 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-[20px] text-primary">handshake</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Paiement Garanti</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Zéro avance suspecte demandée sans accord écrit.</span>
+</div>
+</div>
+</section>
+<!-- Section 7: Bannière Devenir Prestataire -->
+<section class="px-gutter py-space-md">
+<div class="rounded-xl bg-gradient-to-br from-tertiary to-tertiary-container text-on-tertiary p-space-md shadow-md flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">Espace Artisans</span>
+<span class="font-body-sm text-body-sm text-on-tertiary/90">Douala &amp; Yaoundé</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-tertiary leading-snug">
+        Vous êtes artisan qualifié ? Développez votre clientèle.
+      </h3>
+<p class="font-body-sm text-body-sm text-on-tertiary/90">
+        Rejoignez MboaFacile et recevez des demandes de devis qualifiées chaque jour dans votre quartier.
+      </p>
+<div class="pt-space-xs">
+<a class="w-full h-11 rounded-lg bg-surface-container-lowest text-tertiary font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform" data-path="devenir-prestataire" href="#">
+<span class="material-symbols-outlined text-[18px]">engineering</span>
+<span>Créer mon profil Pro</span>
+</a>
+</div>
+</div>
+</section>
+<!-- FAQ Interactive (Accordions) -->
+<section class="px-gutter py-space-md flex flex-col gap-space-md">
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Questions Fréquentes</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tout comprendre sur le fonctionnement de MboaFacile</p>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- FAQ 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md flex items-center justify-between text-left" onclick="toggleFaq('faq-1')" type="button">
+<span class="font-label-lg text-label-lg text-on-surface pr-2">La demande de devis est-elle vraiment gratuite ?</span>
+<span class="material-symbols-outlined text-outline text-[20px] transition-transform" id="faq-1-icon">expand_more</span>
+</button>
+<div class="px-space-md pb-space-md hidden font-body-sm text-body-sm text-on-surface-variant" id="faq-1-body">
+          Oui, à 100%. Vous pouvez contacter jusqu'à 3 artisans pour un même projet, comparer leurs propositions et vous décider sans aucun engagement financier.
+        </div>
+</div>
+<!-- FAQ 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md flex items-center justify-between text-left" onclick="toggleFaq('faq-2')" type="button">
+<span class="font-label-lg text-label-lg text-on-surface pr-2">Comment vérifiez-vous les artisans ?</span>
+<span class="material-symbols-outlined text-outline text-[20px] transition-transform" id="faq-2-icon">expand_more</span>
+</button>
+<div class="px-space-md pb-space-md hidden font-body-sm text-body-sm text-on-surface-variant" id="faq-2-body">
+          Chaque professionnel doit fournir sa Carte Nationale d'Identité (CNI), un justificatif de domicile ou localisation de son atelier à Douala, ainsi que les contacts de clients précédents pour attester de son savoir-faire.
+        </div>
+</div>
+<!-- FAQ 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md flex items-center justify-between text-left" onclick="toggleFaq('faq-3')" type="button">
+<span class="font-label-lg text-label-lg text-on-surface pr-2">Comment se déroule le paiement de la prestation ?</span>
+<span class="material-symbols-outlined text-outline text-[20px] transition-transform" id="faq-3-icon">expand_more</span>
+</button>
+<div class="px-space-md pb-space-md hidden font-body-sm text-body-sm text-on-surface-variant" id="faq-3-body">
+          Le règlement s'effectue directement avec l'artisan (en espèces, Orange Money ou MTN Mobile Money) une fois le dépannage ou les travaux terminés et validés par vos soins.
+        </div>
+</div>
+</div>
+</section>
+<!-- Footer Compact Mobile -->
+<footer class="px-gutter pt-space-lg flex flex-col gap-space-sm text-center items-center">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+<span class="font-title-md text-title-md">MboaFacile Cameroun</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[280px]">
+      Plateforme dédiée aux artisans de confiance à Douala (Akwa, Bonapriso, Bonamoussadi, Makepe...).
+    </p>
+<div class="flex items-center gap-space-md pt-space-xs text-outline font-label-sm text-label-sm">
+<a class="hover:text-primary" data-path="conditions-generales" href="#">Conditions</a>
+<span>•</span>
+<a class="hover:text-primary" data-path="confidentialite" href="#">Confidentialité</a>
+<span>•</span>
+<a class="hover:text-primary" data-path="centre-d-aide" href="#">Aide</a>
+</div>
+<span class="font-body-sm text-body-sm text-outline pt-space-xs">© 2025 MboaFacile. Tous droits réservés.</span>
+</footer>
+</div>
+<script>
+  function setQuickSearch(term) {
+    const input = document.getElementById('heroSearchInput');
+    if (input) {
+      input.value = term;
+      input.focus();
+    }
+  }
+
+  function triggerProSearch() {
+    const input = document.getElementById('heroSearchInput');
+    const query = input && input.value ? input.value : 'Tous les métiers';
+    // Visual feedback
+    const btn = event.currentTarget;
+    if (btn) {
+      btn.classList.add('opacity-80');
+      setTimeout(() => btn.classList.remove('opacity-80'), 200);
+    }
+  }
+
+  function toggleFavorite(btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (icon) {
+      if (icon.innerText === 'favorite_border') {
+        icon.innerText = 'favorite';
+        icon.style.fontVariationSettings = "'FILL' 1";
+        btn.classList.add('text-error');
+        btn.classList.remove('text-outline');
+      } else {
+        icon.innerText = 'favorite_border';
+        icon.style.fontVariationSettings = "'FILL' 0";
+        btn.classList.remove('text-error');
+        btn.classList.add('text-outline');
+      }
+    }
+  }
+
+  function toggleFaq(id) {
+    const body = document.getElementById(id + '-body');
+    const icon = document.getElementById(id + '-icon');
+    if (body && icon) {
+      const isHidden = body.classList.contains('hidden');
+      if (isHidden) {
+        body.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        body.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary-container font-label-md"><div class="flex items-center justify-around h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors text-primary-container font-label-md" data-path="accueil" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Accueil</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="explorer" href="#"><span class="material-symbols-outlined text-[24px]">grid_view</span><span class="font-label-sm text-label-sm">Explorer</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors relative" data-path="devis" href="#"><span class="material-symbols-outlined text-[24px]">description</span><span class="font-label-sm text-label-sm">Devis</span><span class="absolute top-1 right-2 w-2 h-2 rounded-full bg-tertiary-fixed-dim ring-2 ring-surface"></span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors relative" data-path="demandes" href="#"><span class="material-symbols-outlined text-[24px]">assignment</span><span class="font-label-sm text-label-sm">Demandes</span><span class="absolute top-1 right-2 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compte" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Compte</span></a></div></nav></body></html>

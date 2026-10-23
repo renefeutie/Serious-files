@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #006946;
+    --color-primary-container: #16845b;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #f2fff4;
+
+    --color-secondary: #3d665a;
+    --color-secondary-container: #bfecdc;
+    --color-on-secondary-container: #436c5f;
+    --color-secondary-fixed: #bfecdc;
+    --color-secondary-fixed-dim: #a4d0c0;
+
+    --color-tertiary: #7f5200;
+    --color-tertiary-container: #a06800;
+    --color-tertiary-fixed: #ffddb4;
+    --color-tertiary-fixed-dim: #ffb955;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #fffaf9;
+
+    --color-surface: #f2fcf2;
+    --color-surface-dim: #d3ddd3;
+    --color-surface-bright: #f2fcf2;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #ecf6ed;
+    --color-surface-container: #e6f1e7;
+    --color-surface-container-high: #e1ebe1;
+    --color-surface-container-highest: #dbe5dc;
+
+    --color-on-surface: #151e18;
+    --color-on-surface-variant: #3e4942;
+    --color-outline: #6e7a72;
+    --color-outline-variant: #bdcac0;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+    --color-inverse-surface: #29332c;
+    --color-inverse-on-surface: #e9f3ea;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f2fcf2;
+    color: #151e18;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+  }
+
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top, 0px), 12px);
+  }
+}
+
+/* Custom scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Material Symbols filled helper */
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Smooth transitions */
+button, a {
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}

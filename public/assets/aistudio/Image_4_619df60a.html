@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;font-family:'Inter',sans-serif;}body{overscroll-behavior:none;background-color:#f2fcf2;color:#151e18;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-container": "#bfecdc", "on-tertiary-fixed-variant": "#633f00", "on-error-container": "#93000a", "error-container": "#ffdad6", "tertiary": "#7f5200", "inverse-surface": "#29332c", "on-primary-fixed-variant": "#005236", "tertiary-container": "#a06800", "surface-tint": "#006c48", "on-primary-container": "#f2fff4", "outline": "#6e7a72", "on-primary-fixed": "#002113", "surface": "#f2fcf2", "surface-dim": "#d3ddd3", "on-error": "#ffffff", "secondary-fixed-dim": "#a4d0c0", "primary": "#006946", "tertiary-fixed-dim": "#ffb955", "on-tertiary": "#ffffff", "on-secondary": "#ffffff", "primary-fixed": "#94f6c4", "secondary": "#3d665a", "surface-container-low": "#ecf6ed", "primary-fixed-dim": "#78d9aa", "secondary-fixed": "#bfecdc", "on-tertiary-container": "#fffaf9", "on-background": "#151e18", "surface-container-highest": "#dbe5dc", "primary-container": "#16845b", "outline-variant": "#bdcac0", "tertiary-fixed": "#ffddb4", "background": "#f2fcf2", "surface-container-high": "#e1ebe1", "on-surface-variant": "#3e4942", "surface-bright": "#f2fcf2", "on-surface": "#151e18", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "surface-variant": "#dbe5dc", "on-tertiary-fixed": "#291800", "error": "#ba1a1a", "inverse-on-surface": "#e9f3ea", "on-secondary-fixed-variant": "#254e42", "surface-container": "#e6f1e7", "on-secondary-fixed": "#002019", "inverse-primary": "#78d9aa", "on-secondary-container": "#436c5f" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "margin-lg": "3rem", "space-md": "1rem", "space-lg": "1.5rem", "margin": "1rem", "space-xl": "2rem", "gutter-lg": "2rem", "gutter-md": "1.5rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-md": "2rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "display": ["Inter"], "headline-lg": ["Inter"], "title-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Inter"], "currency-display": ["Inter"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"], "body-md": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["1.625rem", { "lineHeight": "2.125rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "currency-display": ["1.25rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["0.75rem", { "lineHeight": "1.125rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-lg": ["0.9375rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" onclick="document.getElementById('mboa-drawer').classList.remove('-translate-x-full');document.getElementById('mboa-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs"><img alt="Logo MboaFacile" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VsbvE771uFZONvqSZe2IElvmr6LVacMjBNAxagKooGGVFWaruQ0nw57Lmw_KXAECJoUlGP_hzZxuvb8IpnkaCqhCTi197TOuLgaTTvo7mgYhk2RObjRRm7hHhf3L-uV2ROWWXmhcdG-zlC-qV9XbaxJVyeq_MxD_k8RVTLpmHs9UPGFt6uaPGJzaW_LCUdLysCr0MnL2F6pixhZrpbIzTuayfbTa0FN4JnRshk2FnjWgyvIr79wY_GjhI1"/><span class="font-title-md text-title-md text-primary tracking-tight">MboaFacile</span></div></div><div class="flex items-center gap-space-xs"><button class="flex items-center gap-1 px-space-sm h-9 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-tertiary-container">location_on</span><span>Douala</span></button><a class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" data-path="explorer" href="#"><span class="material-symbols-outlined text-[22px]">search</span></a><a class="w-11 h-11 flex items-center justify-center" data-path="compte" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzVJXNLiHJHSRN1qlVaXDaZ0erVYr-ayB2S7bcBMwABnZcwZ9xdFi8-S7iNMB349iTHenx0LtSD9zZDWHKGcEYBBjuDHVAyQgQhfzVacSbi2ryaWqOV8fvYav9tT5NgWvE8WE1u9_7fFnjSQxhiCaKntMYjEm-8Ry4mrUpbj9HmhxypcBYR2GrSEXh6xzVm5TfuVLGIJ-D29sKLCb9i6kWLNZmF1QXj0yGGsUG9Jivp06mR5T1WBgdqA"/></a></div></div></header><div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden transition-opacity" id="mboa-drawer-backdrop" onclick="document.getElementById('mboa-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed top-0 bottom-0 left-0 w-[84%] max-w-[340px] z-50 bg-surface-container-lowest shadow-[0_20px_35px_-5px_rgba(32,41,35,0.16)] flex flex-col justify-between -translate-x-full transition-transform duration-300 ease-out pt-safe pb-safe" id="mboa-drawer"><div class="flex flex-col h-full"><div class="p-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Logo MboaFacile" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VsbvE771uFZONvqSZe2IElvmr6LVacMjBNAxagKooGGVFWaruQ0nw57Lmw_KXAECJoUlGP_hzZxuvb8IpnkaCqhCTi197TOuLgaTTvo7mgYhk2RObjRRm7hHhf3L-uV2ROWWXmhcdG-zlC-qV9XbaxJVyeq_MxD_k8RVTLpmHs9UPGFt6uaPGJzaW_LCUdLysCr0MnL2F6pixhZrpbIzTuayfbTa0FN4JnRshk2FnjWgyvIr79wY_GjhI1"/><span class="font-title-md text-title-md text-primary">MboaFacile</span></div><button class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors" onclick="document.getElementById('mboa-drawer').classList.add('-translate-x-full');document.getElementById('mboa-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-gutter pb-space-sm"><span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[14px]">verified</span>Services certifiés Douala</span></div><div class="flex-1 overflow-y-auto px-gutter py-space-xs space-y-1"><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="trouver-un-professionnel" href="#"><span class="material-symbols-outlined text-primary">engineering</span><span>Trouver un professionnel</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="categories" href="#"><span class="material-symbols-outlined text-primary">category</span><span>Catégories</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="demander-un-devis" href="#"><span class="material-symbols-outlined text-tertiary">request_quote</span><span>Demander un devis</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="comment-ca-marche" href="#"><span class="material-symbols-outlined text-primary">help_outline</span><span>Comment ça marche</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="securite-et-confiance" href="#"><span class="material-symbols-outlined text-primary">verified_user</span><span>Sécurité &amp; Confiance</span></a><div class="py-space-xs my-space-xs"><div class="h-px bg-surface-container-high w-full"></div></div><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-tertiary hover:bg-tertiary-fixed/40 font-label-lg text-label-lg" data-path="devenir-prestataire" href="#"><span class="material-symbols-outlined text-tertiary">handyman</span><span>Devenir prestataire</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="espace-client" href="#"><span class="material-symbols-outlined text-secondary">person</span><span>Espace Client</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="espace-pro" href="#"><span class="material-symbols-outlined text-secondary">badge</span><span>Espace Pro</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface hover:bg-surface-container font-label-lg text-label-lg" data-path="centre-d-aide" href="#"><span class="material-symbols-outlined text-on-surface-variant">support_agent</span><span>Centre d'aide</span></a><a class="flex items-center gap-space-md h-12 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container font-body-sm text-body-sm" data-path="conditions-generales" href="#"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">policy</span><span>Conditions &amp; Légal</span></a></div></div></aside><main class="flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Sticky Search & Filter Control Deck -->
+<section class="sticky top-0 z-30 bg-surface/95 backdrop-blur-md px-gutter pt-space-xs pb-space-sm space-y-space-sm shadow-sm">
+<!-- Search Input Bar -->
+<div class="relative w-full flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-primary-container">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-12 pl-10 pr-24 bg-surface-container-lowest text-on-surface font-label-lg text-label-lg rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container/20 placeholder:text-outline transition-all" placeholder="Métier, service, artisan..." type="search" value="Électricien"/>
+<div class="absolute right-1.5 flex items-center gap-1">
+<button aria-label="Effacer la recherche" class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+<button class="relative h-9 px-2.5 rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center gap-1 active:scale-95 transition-transform" onclick="toggleFiltersModal(true)" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filtres</span>
+<span class="w-4 h-4 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center justify-center ml-0.5">3</span>
+</button>
+</div>
+</div>
+<!-- Quick Horizontal Tag Rail -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 -mx-gutter px-gutter no-scrollbar">
+<!-- Active Pill: Quartier -->
+<button class="flex-shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<span>Akwa / Bonapriso</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<!-- Active Pill: Ouvert -->
+<button class="flex-shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>Ouvert maintenant</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<!-- Active Pill: Vérifié -->
+<button class="flex-shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Profil Vérifié</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<!-- Inactive Pill: Budget -->
+<button class="flex-shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span>&lt; 10 000 FCFA</span>
+</button>
+<!-- Inactive Pill: Note -->
+<button class="flex-shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.5+ ★</span>
+</button>
+</div>
+<!-- Counters and Sort Row -->
+<div class="flex items-center justify-between pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<p class="font-label-md text-label-md text-on-surface-variant">
+<strong class="font-bold text-on-surface">24 artisans vérifiés</strong> à Douala
+        </p>
+</div>
+<!-- Compact Sort Dropdown Trigger -->
+<div class="relative">
+<button class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-low px-2 py-1 rounded-lg active:bg-surface-container" onclick="toggleSortMenu()" type="button">
+<span class="text-outline">Tri:</span>
+<span class="font-semibold text-primary" id="sortLabel">Les mieux notés</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<!-- Hidden Sort Popover -->
+<div class="hidden absolute right-0 mt-1.5 w-44 bg-surface-container-lowest rounded-xl shadow-xl py-1.5 z-40" id="sortMenu">
+<button class="w-full text-left px-3.5 py-2 font-label-md text-label-md hover:bg-surface-container flex items-center justify-between text-primary font-semibold" onclick="setSort('Les mieux notés')">
+<span>Les mieux notés</span>
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<button class="w-full text-left px-3.5 py-2 font-label-md text-label-md text-on-surface hover:bg-surface-container flex items-center justify-between" onclick="setSort('Plus proche')">
+<span>Plus proche (km)</span>
+</button>
+<button class="w-full text-left px-3.5 py-2 font-label-md text-label-md text-on-surface hover:bg-surface-container flex items-center justify-between" onclick="setSort('Tarif croissant')">
+<span>Tarif croissant</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Feed: Artisan Cards -->
+<section class="px-gutter pt-space-md pb-space-lg space-y-space-md">
+<!-- Artisan Card 1: Talla Eric (Featured/Top Match) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden transition-all duration-200">
+<div class="absolute top-0 right-0 w-28 h-28 bg-primary/5 rounded-bl-full pointer-events-none"></div>
+<!-- Top Row: Photo + Identity + Favorite -->
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="Close-up portrait of Eric Talla, a friendly professional Cameroonian electrician in his late thirties wearing clean work overalls, smiling confidently in Douala tropical sunlight with tools visible in background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO12-VaGQcATnWcO6ELlQZHpNB09cuKa4kFjJiRkj_1z7SEAcvJHzOlYx9GbZG_1hTEOyqIAagbmCf8Ua34yg4HV5kL2Qpthga7-0kv5M5cuOejF4XjrpIQzGoBJDa1EEsOQNSryEJPnQmayfEqPH-yDVJ37p-Zbhz9-7dLz05ER3CxWmHVtqs_mBtYoTTAKIwb3_v515dflYnqncmch3SmhfEJ2AoCPXsxmoszbATsTxMCMR7HuA_Yw"/>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm" title="Artisan Certifié CNI + Récépissé">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">Talla Éric</h2>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span>Certifié CNI</span>
+</span>
+</div>
+<p class="font-body-md text-body-md text-secondary font-medium truncate">Électricité Bâtiment &amp; Climatisation</p>
+<div class="flex items-center gap-1 text-on-surface-variant font-body-sm text-body-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+<span class="truncate">Akwa, Douala</span>
+<span class="text-outline">•</span>
+<span class="text-primary font-semibold">1.8 km</span>
+</div>
+</div>
+</div>
+<!-- Favorite Button (Active State) -->
+<button aria-label="Ajouter aux favoris" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-error hover:bg-surface-container active:scale-90 transition-transform" onclick="toggleHeart(this)" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<!-- Rating & Availability Capsule -->
+<div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-surface-container-low mb-space-sm">
+<div class="flex items-center gap-1.5">
+<div class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-currency-display text-currency-display font-bold ml-1 text-on-surface">4.9</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">(38 avis certifiés)</span>
+</div>
+<div class="flex items-center gap-1 text-primary font-label-sm text-label-sm bg-secondary-container/40 px-2 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+<span>Dispo cet après-midi</span>
+</div>
+</div>
+<!-- Services & Skill Badges -->
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Tableau électrique</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Pose disjoncteur</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Entretien Split</span>
+<span class="px-2 py-1 rounded-md bg-tertiary-fixed/40 font-label-sm text-label-sm text-on-tertiary-fixed-variant font-semibold">Garantie 30j Mboa</span>
+</div>
+<!-- Pricing Bar -->
+<div class="flex items-baseline justify-between pt-space-xs pb-space-sm">
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Dépannage &amp; Diagnostic dès</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-primary font-bold">5 000</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">FCFA</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">Devis gratuit</span>
+</div>
+<!-- Action Buttons Pair -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<a class="h-11 px-space-sm rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-1.5 hover:bg-surface-container-highest active:scale-95 transition-all" href="https://wa.me/237600000000" target="_blank">
+<span class="material-symbols-outlined text-[18px] text-primary">chat</span>
+<span>WhatsApp</span>
+</a>
+<button class="h-11 px-space-sm rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="openBookingSheet('Talla Éric', 'Électricien')" type="button">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+<span>Devis direct</span>
+</button>
+</div>
+</article>
+<!-- Artisan Card 2: Kamdem Plomberie Express -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden transition-all duration-200">
+<!-- Top Row: Photo + Identity + Favorite -->
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="Professional Cameroonian plumber Arthur Kamdem standing outside a modern residential compound in Bonamoussadi Douala, carrying plumbing pipe wrench with neat brand t-shirt and trustworthy expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcVyZ0LyvSru0n_NSLHeO-GJ86dxKDMdeXPN3E4gnTGrCIS3wb_MkAkR-cMli5BK-ZjQiVZEUydSk-xg_X248OdK3_Q8NO4rx7F1PkqeKLjeBvW_2HtNTm-8Hpv_bbR4TRX-PfQZcezEFVUIW1dqVuSbC6rGmtwDHQxmzEnAb95qkCcrrn1Q-QWVihELPZG_eU7nrhonWMVeWXutOk5Yf0cFbxayrqL_TQuNfsTBlPGxGFn1dPMf2WAg"/>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">Kamdem Express</h2>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Pro Vérifié</span>
+</span>
+</div>
+<p class="font-body-md text-body-md text-secondary font-medium truncate">Plomberie Sanitaire &amp; Débouchage</p>
+<div class="flex items-center gap-1 text-on-surface-variant font-body-sm text-body-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+<span class="truncate">Bonamoussadi, Douala</span>
+<span class="text-outline">•</span>
+<span class="text-on-surface-variant font-medium">4.2 km</span>
+</div>
+</div>
+</div>
+<!-- Favorite Button (Inactive) -->
+<button aria-label="Ajouter aux favoris" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-outline hover:text-error hover:bg-surface-container active:scale-90 transition-transform" onclick="toggleHeart(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<!-- Rating & Speed Indicator -->
+<div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-surface-container-low mb-space-sm">
+<div class="flex items-center gap-1.5">
+<div class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-currency-display text-currency-display font-bold ml-1 text-on-surface">4.8</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">(52 avis)</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary font-label-sm text-label-sm bg-tertiary-fixed/30 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">speed</span>
+<span>Répond en &lt; 15 min</span>
+</div>
+</div>
+<!-- Services List -->
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Fuite tuyauterie</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Débouchage WC</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Installation Chauffe-eau</span>
+</div>
+<!-- Pricing Bar -->
+<div class="flex items-baseline justify-between pt-space-xs pb-space-sm">
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Débouchage &amp; Fuite dès</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-primary font-bold">7 500</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">FCFA</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold bg-secondary-container/50 px-2 py-1 rounded">Forfait Garanti</span>
+</div>
+<!-- Action Buttons Pair -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<a class="h-11 px-space-sm rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-1.5 hover:bg-surface-container-highest active:scale-95 transition-all" href="https://wa.me/237600000001" target="_blank">
+<span class="material-symbols-outlined text-[18px] text-primary">chat</span>
+<span>WhatsApp</span>
+</a>
+<button class="h-11 px-space-sm rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="openBookingSheet('Kamdem Express', 'Plombier')" type="button">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+<span>Devis direct</span>
+</button>
+</div>
+</article>
+<!-- Artisan Card 3: Mbarga Frigoriste Pro -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden transition-all duration-200">
+<!-- Top Row: Photo + Identity + Favorite -->
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-full object-cover" data-alt="Portrait of Mbarga, an experienced Cameroonian HVAC refrigeration technician holding pressure gauges next to an air conditioning outdoor unit in Bepanda Douala, bathed in gentle morning light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ_g0LhMDZvV0hAfm49Twb_ozq2J18SG2knalAXxjSKT1piLsFcymp-H6Mkk_ybNClDSAP2ah5rYWykpaXKDGVCLZUoN_EQFt_XglVlMEu5QXKB1Mob2r21vOtGDPFTheM9oCvlOBi887dv4rkLvFtJFXav3G-7mKtZljyP41LrtvAPPJaiZyBmQrtb592PPzg5zJCjZRsW4-6uQaMOlA0EsW_5Ek6PLEVc3kXGHKpskEF5hnVyB2z_A"/>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">Mbarga Frigo Pro</h2>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Pro Vérifié</span>
+</span>
+</div>
+<p class="font-body-md text-body-md text-secondary font-medium truncate">Frigoriste &amp; Climatisation Centrale</p>
+<div class="flex items-center gap-1 text-on-surface-variant font-body-sm text-body-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">location_on</span>
+<span class="truncate">Bepanda / Deido, Douala</span>
+<span class="text-outline">•</span>
+<span class="text-on-surface-variant font-medium">3.1 km</span>
+</div>
+</div>
+</div>
+<!-- Favorite Button (Inactive) -->
+<button aria-label="Ajouter aux favoris" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-outline hover:text-error hover:bg-surface-container active:scale-90 transition-transform" onclick="toggleHeart(this)" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<!-- Rating & Availability Capsule -->
+<div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-surface-container-low mb-space-sm">
+<div class="flex items-center gap-1.5">
+<div class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-currency-display text-currency-display font-bold ml-1 text-on-surface">4.7</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">(26 avis)</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">schedule</span>
+<span>Demain dès 08h</span>
+</div>
+</div>
+<!-- Services Badges -->
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Recharge Gaz R410</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Chambres froides</span>
+<span class="px-2 py-1 rounded-md bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Nettoyage antibactérien</span>
+</div>
+<!-- Pricing Bar -->
+<div class="flex items-baseline justify-between pt-space-xs pb-space-sm">
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Recharge gaz clim dès</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-primary font-bold">15 000</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">FCFA</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">Devis sur mesure</span>
+</div>
+<!-- Action Buttons Pair -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<a class="h-11 px-space-sm rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-1.5 hover:bg-surface-container-highest active:scale-95 transition-all" href="https://wa.me/237600000002" target="_blank">
+<span class="material-symbols-outlined text-[18px] text-primary">chat</span>
+<span>WhatsApp</span>
+</a>
+<button class="h-11 px-space-sm rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all" onclick="openBookingSheet('Mbarga Frigo Pro', 'Frigoriste')" type="button">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+<span>Devis direct</span>
+</button>
+</div>
+</article>
+<!-- Douala Reassurance & Trust Banner -->
+<div class="p-space-md rounded-xl bg-secondary-container/40 flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">shield_with_heart</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-secondary-container">Garantie Intervention MboaFacile</h3>
+<p class="font-body-sm text-body-sm text-on-secondary-container/80 mt-0.5">
+          Tous nos professionnels à Douala ont fait l'objet d'une vérification d'identité physique et d'un contrôle de références. Paiement protégé jusqu'à fin de prestation.
+        </p>
+</div>
+</div>
+<!-- Clean Mobile Pagination -->
+<div class="flex items-center justify-between pt-space-sm pb-space-md">
+<button class="h-10 px-space-md rounded-lg bg-surface-container-low text-outline font-label-md text-label-md flex items-center gap-1 cursor-not-allowed opacity-50" disabled="" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+<span>Précédent</span>
+</button>
+<div class="flex items-center gap-1">
+<span class="w-8 h-8 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center font-bold">1</span>
+<button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md flex items-center justify-center">3</button>
+<span class="text-outline px-1">...</span>
+<button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md flex items-center justify-center">8</button>
+</div>
+<button class="h-10 px-space-md rounded-lg bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1 hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+<span>Suivant</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Interactive Slide-Up Filters Drawer / Bottom Sheet Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden transition-opacity" id="filtersModalBackdrop" onclick="toggleFiltersModal(false)"></div>
+<div class="fixed inset-x-0 bottom-0 z-50 max-h-[751px] bg-surface-container-lowest rounded-t-2xl shadow-2xl flex flex-col translate-y-full transition-transform duration-300 ease-out pb-safe" id="filtersModal">
+<!-- Modal Drag Handle & Header -->
+<div class="p-gutter pb-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<div class="w-10 h-1 bg-surface-container-highest rounded-full mx-auto mb-2 self-center"></div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Filtrer les résultats</h2>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">3 actifs</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high" onclick="toggleFiltersModal(false)" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-gutter py-space-sm space-y-space-lg">
+<!-- 1. Quartier Selector (Douala Specifics) -->
+<fieldset class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<legend class="font-title-md text-title-md font-semibold text-on-surface">Quartiers de Douala</legend>
+<button class="font-label-sm text-label-sm text-primary hover:underline" type="button">Tout cocher</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Choisissez une ou plusieurs zones d'intervention :</p>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Akwa</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Bonapriso</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Bonanjo</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Bali</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Deido</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Bonamoussadi</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Makepe</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer transition-colors">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary-container accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Logpom / Kotto</span>
+</label>
+</div>
+</fieldset>
+<!-- 2. Budget Range Slider -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-title-md text-title-md font-semibold text-on-surface" for="budgetSlider">Budget maximum</label>
+<span class="font-currency-display text-currency-display font-bold text-primary">
+<span id="budgetValue">25 000</span> FCFA
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Afficher les artisans dont le forfait de base ne dépasse pas ce montant.</p>
+<div class="py-2">
+<input class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" id="budgetSlider" max="50000" min="2000" oninput="document.getElementById('budgetValue').innerText = Number(this.value).toLocaleString('fr-FR')" step="1000" type="range" value="25000"/>
+<div class="flex justify-between font-label-sm text-label-sm text-outline mt-1.5">
+<span>2 000 FCFA</span>
+<span>25 000 FCFA</span>
+<span>50 000 FCFA</span>
+</div>
+</div>
+</div>
+<!-- 3. Pricing Model Type -->
+<fieldset class="space-y-space-xs">
+<legend class="font-title-md text-title-md font-semibold text-on-surface">Type de tarification</legend>
+<div class="space-y-2 pt-1">
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 text-primary accent-primary" name="pricingType" type="radio" value="fixed"/>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Tarif fixe garanti</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Prix sans surprise avant l'intervention</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">lock</span>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<input class="w-4 h-4 text-primary accent-primary" name="pricingType" type="radio" value="quote"/>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Sur devis gratuit</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Estimation sur photo ou déplacement</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">description</span>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<div class="flex items-center gap-2.5">
+<input class="w-4 h-4 text-primary accent-primary" name="pricingType" type="radio" value="depannage"/>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface block">Forfait dépannage express</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Déplacement + première heure incluse</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">bolt</span>
+</label>
+</div>
+</fieldset>
+<!-- 4. Mode d'intervention & Disponibilité -->
+<fieldset class="space-y-space-xs">
+<legend class="font-title-md text-title-md font-semibold text-on-surface">Intervention &amp; Disponibilité</legend>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<input checked="" class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">À domicile</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">En atelier</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<input checked="" class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Aujourd'hui</span>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low has-[:checked]:bg-secondary-container/40 cursor-pointer">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Urgences 24/7</span>
+</label>
+</div>
+</fieldset>
+</div>
+<!-- Modal Footer Actions -->
+<div class="p-gutter pt-space-sm bg-surface-container-lowest shadow-lg flex items-center gap-space-sm">
+<button class="h-12 px-space-md rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg hover:bg-surface-container-high transition-colors" onclick="toggleFiltersModal(false)" type="button">
+        Réinitialiser
+      </button>
+<button class="flex-1 h-12 px-space-md rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all" onclick="applyFilters()" type="button">
+<span>Afficher 24 résultats</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Devis Direct Mobile Sheet -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden transition-opacity" id="bookingSheetBackdrop" onclick="closeBookingSheet()"></div>
+<div class="fixed inset-x-0 bottom-0 z-50 max-h-[707px] bg-surface-container-lowest rounded-t-2xl shadow-2xl flex flex-col translate-y-full transition-transform duration-300 ease-out pb-safe" id="bookingSheet">
+<div class="p-gutter pb-2 flex items-center justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface" id="bookingArtisanName">Demander un devis</h3>
+<p class="font-body-sm text-body-sm text-secondary" id="bookingArtisanJob">Gratuit • Réponse rapide sous 30 min</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high" onclick="closeBookingSheet()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-gutter space-y-space-md overflow-y-auto" onsubmit="event.preventDefault(); submitBooking();">
+<div class="space-y-1">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Votre quartier à Douala</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-[20px] text-outline">location_on</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20" placeholder="Ex: Akwa, Rue Pau, derrière la pharmacie" required="" type="text"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Description rapide du besoin</label>
+<textarea class="w-full p-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20" placeholder="Ex: Disjoncteur principal qui saute dès que j'allume la clim..." required="" rows="3"></textarea>
+</div>
+<div class="space-y-1">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Numéro Téléphone / WhatsApp</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 font-label-md text-label-md text-outline font-semibold">+237</span>
+<input class="w-full h-11 pl-16 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20" placeholder="6XX XXX XXX" required="" type="tel"/>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full h-12 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+<span>Envoyer la demande</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+  function toggleFiltersModal(show) {
+    const backdrop = document.getElementById('filtersModalBackdrop');
+    const modal = document.getElementById('filtersModal');
+    if (!backdrop || !modal) return;
+
+    if (show) {
+      backdrop.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modal.classList.remove('translate-y-full');
+      });
+    } else {
+      modal.classList.add('translate-y-full');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  function applyFilters() {
+    toggleFiltersModal(false);
+  }
+
+  function toggleSortMenu() {
+    const menu = document.getElementById('sortMenu');
+    if (menu) {
+      menu.classList.toggle('hidden');
+    }
+  }
+
+  function setSort(label) {
+    const sortLabel = document.getElementById('sortLabel');
+    if (sortLabel) sortLabel.innerText = label;
+    toggleSortMenu();
+  }
+
+  function toggleHeart(btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    const isFilled = icon.style.fontVariationSettings && icon.style.fontVariationSettings.includes("'FILL' 1");
+    if (isFilled) {
+      icon.style.fontVariationSettings = "'FILL' 0";
+      btn.classList.remove('text-error');
+      btn.classList.add('text-outline');
+    } else {
+      icon.style.fontVariationSettings = "'FILL' 1";
+      btn.classList.remove('text-outline');
+      btn.classList.add('text-error');
+    }
+  }
+
+  function openBookingSheet(name, job) {
+    const nameEl = document.getElementById('bookingArtisanName');
+    const jobEl = document.getElementById('bookingArtisanJob');
+    const backdrop = document.getElementById('bookingSheetBackdrop');
+    const sheet = document.getElementById('bookingSheet');
+
+    if (nameEl) nameEl.innerText = 'Devis avec ' + name;
+    if (jobEl) jobEl.innerText = job + ' vérifié Douala • Réponse express';
+
+    if (backdrop && sheet) {
+      backdrop.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        sheet.classList.remove('translate-y-full');
+      });
+    }
+  }
+
+  function closeBookingSheet() {
+    const backdrop = document.getElementById('bookingSheetBackdrop');
+    const sheet = document.getElementById('bookingSheet');
+    if (backdrop && sheet) {
+      sheet.classList.add('translate-y-full');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  function submitBooking() {
+    closeBookingSheet();
+    alert('Votre demande de devis a été transmise avec succès à l\'artisan.');
+  }
+
+  // Close menus on outside click
+  document.addEventListener('click', function(e) {
+    const sortMenu = document.getElementById('sortMenu');
+    const sortButton = e.target.closest('[onclick="toggleSortMenu()"]');
+    if (sortMenu && !sortMenu.contains(e.target) && !sortButton && !sortMenu.classList.contains('hidden')) {
+      sortMenu.classList.add('hidden');
+    }
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary-container font-label-md"><div class="flex items-center justify-around h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="accueil" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Accueil</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors text-primary-container font-label-md" data-path="explorer" href="#"><span class="material-symbols-outlined text-[24px]">grid_view</span><span class="font-label-sm text-label-sm">Explorer</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors relative" data-path="devis" href="#"><span class="material-symbols-outlined text-[24px]">description</span><span class="font-label-sm text-label-sm">Devis</span><span class="absolute top-1 right-2 w-2 h-2 rounded-full bg-tertiary-fixed-dim ring-2 ring-surface"></span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors relative" data-path="demandes" href="#"><span class="material-symbols-outlined text-[24px]">assignment</span><span class="font-label-sm text-label-sm">Demandes</span><span class="absolute top-1 right-2 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compte" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Compte</span></a></div></nav></body></html>
