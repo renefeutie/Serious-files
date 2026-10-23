@@ -189,6 +189,17 @@ export const DemandesView: React.FC<DemandesViewProps> = ({
                   <span>Appeler</span>
                 </a>
 
+                {req.status === 'en_route' && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('carte')}
+                    className="col-span-2 sm:col-span-1 h-10 rounded-xl bg-[#bfecdc] text-[#006946] text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-[#a4d0c0] transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[17px]">near_me</span>
+                    <span>Suivi Google Maps</span>
+                  </button>
+                )}
+
                 {req.status === 'en_route' ? (
                   <button
                     type="button"

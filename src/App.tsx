@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ARTISANS, INITIAL_USER_REQUESTS, Artisan, UserRequest } from './data/mockData';
 import { Header } from './components/Header';
 import { Drawer } from './components/Drawer';
@@ -12,12 +12,22 @@ import { ArtisanDetailView } from './views/ArtisanDetailView';
 import { DevisWizardView } from './views/DevisWizardView';
 import { DemandesView } from './views/DemandesView';
 import { CompteView } from './views/CompteView';
+import { TechnicienMapView } from './views/TechnicienMapView';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<string>('accueil');
   const [selectedArtisanId, setSelectedArtisanId] = useState<string>('talla-eric');
   const [currentCity, setCurrentCity] = useState<string>('Douala');
   const [currentDistrict, setCurrentDistrict] = useState<string>('Akwa');
+
+  // Google Maps quota defense state
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
+
+  useEffect(() => {
+    const handleQuota = () => setQuotaExceeded(true);
+    window.addEventListener('gmp-quota-exceeded', handleQuota);
+    return () => window.removeEventListener('gmp-quota-exceeded', handleQuota);
+  }, []);
 
   // Favorites state (initialize with Talla Éric in favorites as shown in mockups)
   const [favorites, setFavorites] = useState<Set<string>>(new Set(['talla-eric']));
@@ -119,6 +129,28 @@ export default function App() {
         favoritesCount={favorites.size}
       />
 
+      {/* Google Maps Quota Warning Banner */}
+      {quotaExceeded && (
+        <div
+          role="alert"
+          className="fixed top-16 inset-x-0 z-50 bg-amber-50 border-b border-amber-300 text-amber-900 px-4 py-2.5 text-xs sm:text-sm font-medium flex items-center justify-between gap-3 shadow-md"
+        >
+          <div className="flex items-center gap-2 max-w-4xl mx-auto flex-1">
+            <span className="material-symbols-outlined text-amber-600 text-base shrink-0">warning</span>
+            <span>
+              Service Google Maps temporairement restreint. Affichage du mode hors-ligne et des positions GPS de secours.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setQuotaExceeded(false)}
+            className="text-amber-700 hover:text-amber-950 text-xs font-bold underline shrink-0 cursor-pointer"
+          >
+            Fermer
+          </button>
+        </div>
+      )}
+
       {/* Slide-in Drawer */}
       <Drawer
         isOpen={isDrawerOpen}
@@ -182,6 +214,15 @@ export default function App() {
             artisan={selectedArtisan}
             onBack={() => handleNavigate('explorer')}
             onStartQuote={handleStartQuote}
+            onShowToast={(msg) => showToast(msg)}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentTab === 'carte' && (
+          <TechnicienMapView
+            initialArtisanId={selectedArtisanId}
+            onNavigate={handleNavigate}
             onShowToast={(msg) => showToast(msg)}
           />
         )}

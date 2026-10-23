@@ -6,6 +6,7 @@ interface ArtisanDetailViewProps {
   onBack: () => void;
   onStartQuote: (artisan: Artisan, selectedServiceId?: string) => void;
   onShowToast: (msg: string) => void;
+  onNavigate?: (tab: string, artisanId?: string) => void;
 }
 
 export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
@@ -13,6 +14,7 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
   onBack,
   onStartQuote,
   onShowToast,
+  onNavigate,
 }) => {
   const [activeTab, setActiveTab] = useState<'presentation' | 'services' | 'realisations' | 'avis' | 'zone'>(
     'presentation'
@@ -509,6 +511,17 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
                   </span>
                 </div>
               </div>
+
+              {onNavigate && (
+                <button
+                  type="button"
+                  onClick={() => onNavigate('carte', artisan.id)}
+                  className="mt-2 w-full py-2.5 px-4 rounded-xl bg-[#006946] hover:bg-[#005236] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[18px]">near_me</span>
+                  <span>Voir la position en direct sur Google Maps</span>
+                </button>
+              )}
             </div>
           )}
         </div>

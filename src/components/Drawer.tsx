@@ -89,6 +89,18 @@ export const Drawer: React.FC<DrawerProps> = ({
             <button
               type="button"
               onClick={() => {
+                onNavigate('carte');
+                onClose();
+              }}
+              className="w-full flex items-center gap-3.5 h-11 px-3 rounded-xl text-[#151e18] hover:bg-[#ecf6ed] text-sm font-semibold transition-colors text-left"
+            >
+              <span className="material-symbols-outlined text-[#006946] text-[22px]">pin_drop</span>
+              <span>Suivi technicien (Google Maps)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
                 onNavigate('devis');
                 onClose();
               }}

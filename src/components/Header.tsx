@@ -74,6 +74,15 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             type="button"
+            onClick={() => onNavigate('carte')}
+            className={`hover:text-[#006946] transition-colors ${
+              currentTab === 'carte' ? 'text-[#006946] font-bold' : ''
+            }`}
+          >
+            Suivi GPS
+          </button>
+          <button
+            type="button"
             onClick={() => onNavigate('devis')}
             className={`hover:text-[#006946] transition-colors ${
               currentTab === 'devis' ? 'text-[#006946] font-bold' : ''

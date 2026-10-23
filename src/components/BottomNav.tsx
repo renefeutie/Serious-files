@@ -11,10 +11,18 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   onNavigate,
   demandesCount,
 }) => {
-  const tabs = [
+  interface NavTab {
+    id: string;
+    label: string;
+    icon: string;
+    badgeCount?: number;
+    hasPulse?: boolean;
+  }
+
+  const tabs: NavTab[] = [
     { id: 'accueil', label: 'Accueil', icon: 'home' },
     { id: 'explorer', label: 'Explorer', icon: 'grid_view' },
-    { id: 'devis', label: 'Devis', icon: 'description', hasPulse: true },
+    { id: 'carte', label: 'Carte GPS', icon: 'map', hasPulse: true },
     { id: 'demandes', label: 'Demandes', icon: 'assignment', badgeCount: demandesCount },
     { id: 'compte', label: 'Compte', icon: 'person' },
   ];
