@@ -22,7 +22,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const tabs: NavTab[] = [
     { id: 'accueil', label: 'Accueil', icon: 'home' },
     { id: 'explorer', label: 'Explorer', icon: 'grid_view' },
-    { id: 'carte', label: 'Carte GPS', icon: 'map', hasPulse: true },
+    { id: 'devis', label: 'Devis', icon: 'request_quote', hasPulse: true },
     { id: 'demandes', label: 'Demandes', icon: 'assignment', badgeCount: demandesCount },
     { id: 'compte', label: 'Compte', icon: 'person' },
   ];

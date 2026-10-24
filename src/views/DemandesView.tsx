@@ -172,7 +172,7 @@ export const DemandesView: React.FC<DemandesViewProps> = ({
               {/* Quick Actions */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 border-t border-[#f2fcf2]">
                 <a
-                  href={`https://wa.me/237699452180?text=Bonjour,%20concernant%20mon%20dossier%20${req.id}`}
+                  href={`https://wa.me/237686942622?text=Bonjour,%20concernant%20mon%20dossier%20${req.id}`}
                   target="_blank"
                   rel="noreferrer"
                   className="h-10 rounded-xl bg-[#ecf6ed] hover:bg-[#e1ebe1] text-[#151e18] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
@@ -188,17 +188,6 @@ export const DemandesView: React.FC<DemandesViewProps> = ({
                   <span className="material-symbols-outlined text-[17px] text-[#006946]">call</span>
                   <span>Appeler</span>
                 </a>
-
-                {req.status === 'en_route' && (
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('carte')}
-                    className="col-span-2 sm:col-span-1 h-10 rounded-xl bg-[#bfecdc] text-[#006946] text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-[#a4d0c0] transition-colors"
-                  >
-                    <span className="material-symbols-outlined text-[17px]">near_me</span>
-                    <span>Suivi Google Maps</span>
-                  </button>
-                )}
 
                 {req.status === 'en_route' ? (
                   <button
@@ -237,6 +226,37 @@ export const DemandesView: React.FC<DemandesViewProps> = ({
             </div>
           ))
         )}
+
+        {/* Assistance Block in Demandes */}
+        <div className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[20px]">support_agent</span>
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-[#151e18]">Besoin d'aide sur une mission ?</h4>
+              <p className="text-[11px] text-[#6e7a72]">Notre assistance est joignable 7j/7 pour vous accompagner.</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href="https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide%20sur%20mes%20demandes"
+              target="_blank"
+              rel="noreferrer"
+              className="px-3 py-1.5 rounded-xl bg-[#bfecdc] hover:bg-[#a4d0c0] text-[#006946] text-xs font-bold flex items-center gap-1 transition-colors"
+            >
+              <span className="material-symbols-outlined text-[15px]">chat</span>
+              <span>WhatsApp : 686 94 26 22</span>
+            </a>
+            <a
+              href="tel:+237654475764"
+              className="px-3 py-1.5 rounded-xl bg-[#006946] hover:bg-[#005236] text-white text-xs font-bold flex items-center gap-1 shadow-xs transition-colors"
+            >
+              <span className="material-symbols-outlined text-[15px]">call</span>
+              <span>654 47 57 64</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -151,6 +151,54 @@ export const CompteView: React.FC<CompteViewProps> = ({
         </button>
       </div>
 
+      {/* Assistance MboaFacile Dédiée */}
+      <div className="bg-white rounded-3xl p-5 shadow-xs border border-[#e1ebe1] flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#006946] text-[22px]">support_agent</span>
+            <h2 className="text-sm font-bold text-[#151e18]">Assistance &amp; Service Client</h2>
+          </div>
+          <span className="text-[10px] font-bold text-[#006946] bg-[#bfecdc] px-2 py-0.5 rounded-full">
+            7j/7 • 24h/24
+          </span>
+        </div>
+        <p className="text-xs text-[#6e7a72]">
+          Un doute sur une intervention, une question sur un devis ou un besoin de médiation ?
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <a
+            href="https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide%20concernant%20mon%20compte"
+            target="_blank"
+            rel="noreferrer"
+            className="p-3.5 rounded-2xl bg-[#bfecdc] hover:bg-[#a4d0c0] text-[#006946] flex items-center justify-between transition-colors shadow-xs"
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-[20px]">chat</span>
+              <div className="text-left">
+                <div className="font-extrabold text-xs">WhatsApp Assistance</div>
+                <div className="text-[11px] font-semibold text-[#006946]/80">686 94 26 22</div>
+              </div>
+            </div>
+            <span className="material-symbols-outlined text-[16px]">arrow_outward</span>
+          </a>
+
+          <a
+            href="tel:+237654475764"
+            className="p-3.5 rounded-2xl bg-[#006946] hover:bg-[#005236] text-white flex items-center justify-between transition-colors shadow-xs"
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-[20px]">call</span>
+              <div className="text-left">
+                <div className="font-extrabold text-xs">Appel Assistance</div>
+                <div className="text-[11px] text-[#bfecdc] font-semibold">654 47 57 64</div>
+              </div>
+            </div>
+            <span className="material-symbols-outlined text-[16px]">arrow_outward</span>
+          </a>
+        </div>
+      </div>
+
       {/* Numéros d'urgence locaux au Cameroun */}
       <div className="bg-white rounded-3xl p-5 shadow-xs border border-[#e1ebe1] flex flex-col gap-3">
         <div className="flex items-center gap-2">
@@ -182,11 +230,11 @@ export const CompteView: React.FC<CompteViewProps> = ({
             <span className="text-[11px] text-[#3e4942]">Police Secours</span>
           </a>
           <a
-            href="tel:+237699452180"
+            href="tel:+237654475764"
             className="p-3 rounded-2xl bg-[#f2fcf2] border border-[#e1ebe1] flex flex-col items-center text-center hover:bg-[#ecf6ed]"
           >
-            <span className="font-bold text-[#a06800] text-sm">Support 24/7</span>
-            <span className="text-[11px] text-[#3e4942]">MboaFacile</span>
+            <span className="font-bold text-[#a06800] text-sm">654 47 57 64</span>
+            <span className="text-[11px] text-[#3e4942]">Assistance Mboa</span>
           </a>
         </div>
       </div>

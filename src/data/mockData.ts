@@ -1,3 +1,13 @@
+export const ASSISTANCE_CONTACT = {
+  whatsapp: '237686942622',
+  whatsappDisplay: '686 94 26 22',
+  whatsappUrl: "https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide",
+  phone: '+237654475764',
+  phoneDisplay: '654 47 57 64',
+  phoneUrl: 'tel:+237654475764',
+  availability: '7j/7 • 24h/24',
+};
+
 export interface ServiceItem {
   id: string;
   title: string;

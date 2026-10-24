@@ -89,18 +89,6 @@ export const Drawer: React.FC<DrawerProps> = ({
             <button
               type="button"
               onClick={() => {
-                onNavigate('carte');
-                onClose();
-              }}
-              className="w-full flex items-center gap-3.5 h-11 px-3 rounded-xl text-[#151e18] hover:bg-[#ecf6ed] text-sm font-semibold transition-colors text-left"
-            >
-              <span className="material-symbols-outlined text-[#006946] text-[22px]">pin_drop</span>
-              <span>Suivi technicien (Google Maps)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
                 onNavigate('devis');
                 onClose();
               }}
@@ -155,23 +143,37 @@ export const Drawer: React.FC<DrawerProps> = ({
               <div className="h-px bg-[#e1ebe1] w-full" />
             </div>
 
-            <div className="p-3 bg-[#f2fcf2] rounded-xl border border-[#dbe5dc]">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#006946] mb-1">
-                <span className="material-symbols-outlined text-[16px]">support_agent</span>
-                Assistance MboaFacile
+            <div className="p-3.5 bg-[#f2fcf2] rounded-2xl border border-[#dbe5dc] flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#006946]">
+                  <span className="material-symbols-outlined text-[18px]">support_agent</span>
+                  <span>Assistance MboaFacile</span>
+                </div>
+                <span className="text-[10px] font-bold text-[#006946] bg-[#bfecdc] px-1.5 py-0.5 rounded-full">
+                  7j/7 • 24h/24
+                </span>
               </div>
-              <p className="text-xs text-[#6e7a72] mb-2">
-                Un problème avec une intervention ? Notre équipe à Akwa vous assiste 7j/7.
+              <p className="text-xs text-[#6e7a72] leading-tight">
+                Une question ou urgence ? Notre service client à Douala vous répond immédiatement :
               </p>
-              <a
-                href="https://wa.me/237699452180?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#006946] hover:underline"
-              >
-                <span>Contacter le support WhatsApp</span>
-                <span className="material-symbols-outlined text-[14px]">arrow_outward</span>
-              </a>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <a
+                  href="https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="h-9 px-2.5 rounded-xl bg-[#bfecdc] hover:bg-[#a4d0c0] text-[#006946] text-xs font-bold flex items-center justify-center gap-1 transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[16px]">chat</span>
+                  <span>686 94 26 22</span>
+                </a>
+                <a
+                  href="tel:+237654475764"
+                  className="h-9 px-2.5 rounded-xl bg-[#006946] hover:bg-[#005236] text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[16px]">call</span>
+                  <span>654 47 57 64</span>
+                </a>
+              </div>
             </div>
           </div>
 

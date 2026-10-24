@@ -641,6 +641,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
             Assistance 24/7
           </button>
         </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-[#006946] bg-[#ecf6ed] px-3.5 py-1.5 rounded-full border border-[#dbe5dc]">
+          <span className="material-symbols-outlined text-[15px]">support_agent</span>
+          <span>Assistance MboaFacile :</span>
+          <a
+            href="https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:underline"
+          >
+            WhatsApp 686 94 26 22
+          </a>
+          <span>•</span>
+          <a href="tel:+237654475764" className="hover:underline">
+            Appel 654 47 57 64
+          </a>
+        </div>
+
         <span className="text-[11px] text-[#6e7a72]">
           © 2025 MboaFacile. Tous droits réservés.
         </span>
