@@ -1,10 +1,13 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { LegalTab } from './LegalModal';
 
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onNavigate: (tab: string, artisanId?: string) => void;
   onOpenProModal: () => void;
+  onOpenLegalModal: (tab: LegalTab) => void;
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -12,7 +15,10 @@ export const Drawer: React.FC<DrawerProps> = ({
   onClose,
   onNavigate,
   onOpenProModal,
+  onOpenLegalModal,
 }) => {
+  const { user, userProfile, logout } = useAuth();
+
   return (
     <>
       {/* Backdrop */}
@@ -114,29 +120,178 @@ export const Drawer: React.FC<DrawerProps> = ({
               <div className="h-px bg-[#e1ebe1] w-full" />
             </div>
 
-            {/* Pro section */}
+            {/* Account & Pro section */}
+            {user ? (
+              <div className="space-y-1.5 p-2 bg-[#f2fcf2] rounded-2xl border border-[#dbe5dc]">
+                <div className="flex items-center gap-2.5 px-2 py-1">
+                  <div className="w-8 h-8 rounded-full bg-[#006946] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                    {userProfile?.displayName ? userProfile.displayName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <div className="truncate">
+                    <p className="text-xs font-bold text-[#151e18] truncate">
+                      {userProfile?.displayName || user.displayName}
+                    </p>
+                    <p className="text-[10px] text-[#6e7a72] truncate">{user.email}</p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('mon-profil');
+                    onClose();
+                  }}
+                  className="w-full flex items-center gap-2.5 h-9 px-2.5 rounded-xl text-[#151e18] hover:bg-[#e1ebe1] text-xs font-semibold text-left transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[#006946] text-[18px]">account_circle</span>
+                  <span>Mon profil &amp; favoris</span>
+                </button>
+
+                {userProfile?.role === 'merchant' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onNavigate('espace-commercant');
+                      onClose();
+                    }}
+                    className="w-full flex items-center gap-2.5 h-9 px-2.5 rounded-xl text-[#006946] bg-[#bfecdc]/50 hover:bg-[#bfecdc] text-xs font-bold text-left transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">storefront</span>
+                    <span>Mon Espace Commerçant</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('inscrire-mon-commerce');
+                    onClose();
+                  }}
+                  className="w-full flex items-center gap-2.5 h-9 px-2.5 rounded-xl text-[#3e4942] hover:bg-[#e1ebe1] text-xs font-semibold text-left transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[#a06800] text-[18px]">add_business</span>
+                  <span>Inscrire un commerce</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await logout();
+                    onClose();
+                  }}
+                  className="w-full flex items-center gap-2.5 h-9 px-2.5 rounded-xl text-rose-700 hover:bg-rose-50 text-xs font-semibold text-left transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">logout</span>
+                  <span>Se déconnecter</span>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-1.5 p-2 bg-[#f2fcf2] rounded-2xl border border-[#dbe5dc]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('connexion');
+                    onClose();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 h-10 px-3 rounded-xl bg-[#006946] text-white text-xs font-bold shadow-xs transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">login</span>
+                  <span>Se connecter</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('inscription');
+                    onClose();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 h-9 px-3 rounded-xl bg-white border border-[#dbe5dc] text-[#006946] text-xs font-bold hover:bg-[#e1ebe1] transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">person_add</span>
+                  <span>Créer un compte</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onNavigate('inscrire-mon-commerce');
+                    onClose();
+                  }}
+                  className="w-full flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl text-[#a06800] hover:bg-[#ffddb4]/40 text-xs font-bold transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">storefront</span>
+                  <span>Inscrire mon commerce</span>
+                </button>
+              </div>
+            )}
+
+            <div className="py-2">
+              <div className="h-px bg-[#e1ebe1] w-full" />
+            </div>
+
+            {/* Conformité & Droits */}
+            <div className="px-3 py-1 text-[11px] font-bold text-[#6e7a72] uppercase tracking-wider">
+              Conformité &amp; Sécurité
+            </div>
+
             <button
               type="button"
               onClick={() => {
-                onOpenProModal();
+                onOpenLegalModal('confidentialite');
                 onClose();
               }}
-              className="w-full flex items-center gap-3.5 h-11 px-3 rounded-xl bg-[#ffddb4]/40 text-[#7f5200] hover:bg-[#ffddb4]/70 text-sm font-bold transition-colors text-left"
+              className="w-full flex items-center gap-3.5 h-10 px-3 rounded-xl text-[#3e4942] hover:bg-[#ecf6ed] text-xs font-semibold transition-colors text-left"
             >
-              <span className="material-symbols-outlined text-[#a06800] text-[22px]">handyman</span>
-              <span>Devenir prestataire certifié</span>
+              <span className="material-symbols-outlined text-[#006946] text-[18px]">privacy_tip</span>
+              <span>Politique de Confidentialité</span>
             </button>
 
             <button
               type="button"
               onClick={() => {
-                onNavigate('compte');
+                onOpenLegalModal('mentions');
                 onClose();
               }}
-              className="w-full flex items-center gap-3.5 h-11 px-3 rounded-xl text-[#151e18] hover:bg-[#ecf6ed] text-sm font-semibold transition-colors text-left"
+              className="w-full flex items-center gap-3.5 h-10 px-3 rounded-xl text-[#3e4942] hover:bg-[#ecf6ed] text-xs font-semibold transition-colors text-left"
             >
-              <span className="material-symbols-outlined text-[#3d665a] text-[22px]">person</span>
-              <span>Mon espace client</span>
+              <span className="material-symbols-outlined text-[#006946] text-[18px]">info</span>
+              <span>Mentions Légales</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLegalModal('cgu');
+                onClose();
+              }}
+              className="w-full flex items-center gap-3.5 h-10 px-3 rounded-xl text-[#3e4942] hover:bg-[#ecf6ed] text-xs font-semibold transition-colors text-left"
+            >
+              <span className="material-symbols-outlined text-[#006946] text-[18px]">gavel</span>
+              <span>Conditions d'Utilisation (CGU)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLegalModal('litiges');
+                onClose();
+              }}
+              className="w-full flex items-center gap-3.5 h-10 px-3 rounded-xl text-[#3e4942] hover:bg-[#ecf6ed] text-xs font-semibold transition-colors text-left"
+            >
+              <span className="material-symbols-outlined text-[#006946] text-[18px]">payments</span>
+              <span>Paiements, Devis &amp; Litiges</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLegalModal('cookies');
+                onClose();
+              }}
+              className="w-full flex items-center gap-3.5 h-10 px-3 rounded-xl text-[#3e4942] hover:bg-[#ecf6ed] text-xs font-semibold transition-colors text-left"
+            >
+              <span className="material-symbols-outlined text-[#006946] text-[18px]">cookie</span>
+              <span>Préférences des cookies</span>
             </button>
 
             <div className="py-2">

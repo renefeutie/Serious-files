@@ -1,5 +1,6 @@
 import React from 'react';
 import { ARTISANS } from '../data/mockData';
+import { LegalTab } from '../components/LegalModal';
 
 interface CompteViewProps {
   favorites: Set<string>;
@@ -9,6 +10,7 @@ interface CompteViewProps {
   onOpenProModal: () => void;
   currentCity: string;
   currentDistrict: string;
+  onOpenLegalModal?: (tab: LegalTab) => void;
 }
 
 export const CompteView: React.FC<CompteViewProps> = ({
@@ -19,6 +21,7 @@ export const CompteView: React.FC<CompteViewProps> = ({
   onOpenProModal,
   currentCity,
   currentDistrict,
+  onOpenLegalModal,
 }) => {
   const favoriteArtisans = ARTISANS.filter((a) => favorites.has(a.id));
 
@@ -236,6 +239,67 @@ export const CompteView: React.FC<CompteViewProps> = ({
             <span className="font-bold text-[#a06800] text-sm">654 47 57 64</span>
             <span className="text-[11px] text-[#3e4942]">Assistance Mboa</span>
           </a>
+        </div>
+      </div>
+
+      {/* Données personnelles, Sécurité & Conformité */}
+      <div className="bg-white rounded-3xl p-5 shadow-xs border border-[#e1ebe1] flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-[#006946] text-[22px]">policy</span>
+          <h2 className="text-sm font-bold text-[#151e18]">Sécurité, Vie Privée &amp; Conformité</h2>
+        </div>
+        <p className="text-xs text-[#6e7a72] leading-relaxed">
+          Gérez vos préférences de confidentialité, vos droits RGPD / Loi camerounaise N°2010/012 et consultez les mentions légales.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('confidentialite')}
+            className="p-3 rounded-2xl bg-[#f2fcf2] hover:bg-[#ecf6ed] text-[#151e18] flex items-center justify-between border border-[#e1ebe1] transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px] text-[#006946]">privacy_tip</span>
+              <span>Politique de Confidentialité</span>
+            </span>
+            <span className="material-symbols-outlined text-[16px] text-[#6e7a72]">chevron_right</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('cookies')}
+            className="p-3 rounded-2xl bg-[#f2fcf2] hover:bg-[#ecf6ed] text-[#151e18] flex items-center justify-between border border-[#e1ebe1] transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px] text-[#006946]">cookie</span>
+              <span>Gérer les cookies &amp; traceurs</span>
+            </span>
+            <span className="material-symbols-outlined text-[16px] text-[#6e7a72]">chevron_right</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('mentions')}
+            className="p-3 rounded-2xl bg-[#f2fcf2] hover:bg-[#ecf6ed] text-[#151e18] flex items-center justify-between border border-[#e1ebe1] transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px] text-[#006946]">info</span>
+              <span>Mentions Légales</span>
+            </span>
+            <span className="material-symbols-outlined text-[16px] text-[#6e7a72]">chevron_right</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('cgu')}
+            className="p-3 rounded-2xl bg-[#f2fcf2] hover:bg-[#ecf6ed] text-[#151e18] flex items-center justify-between border border-[#e1ebe1] transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px] text-[#006946]">gavel</span>
+              <span>Conditions d'Utilisation (CGU)</span>
+            </span>
+            <span className="material-symbols-outlined text-[16px] text-[#6e7a72]">chevron_right</span>
+          </button>
         </div>
       </div>
     </div>

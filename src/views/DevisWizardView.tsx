@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CATEGORIES, DOUALA_DISTRICTS, Artisan, UserRequest } from '../data/mockData';
+import { sanitizeInput, validateCameroonPhone, validateEmail, checkRateLimit, recordActionTimestamp } from '../utils/security';
+import { DistrictCombobox } from '../components/DistrictCombobox';
 
 interface DevisWizardViewProps {
   initialArtisan?: Artisan;
@@ -8,6 +10,7 @@ interface DevisWizardViewProps {
   onNavigate: (tab: string) => void;
   onAddRequest: (newReq: UserRequest) => void;
   onShowToast: (msg: string) => void;
+  onOpenPrivacyPolicy?: () => void;
 }
 
 export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
@@ -17,6 +20,7 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   onNavigate,
   onAddRequest,
   onShowToast,
+  onOpenPrivacyPolicy,
 }) => {
   const [step, setStep] = useState<number>(2); // Start at Step 2 like in the user's mockup Image_8, with ability to go back to 1 or forward to 3 & 4!
 
@@ -26,6 +30,21 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   );
   const [targetArtisan, setTargetArtisan] = useState<Artisan | undefined>(initialArtisan);
   const [broadcastToMulti, setBroadcastToMulti] = useState(true);
+
+  // Sync props when user triggers quote for a specific artisan or category
+  useEffect(() => {
+    if (initialArtisan) {
+      setTargetArtisan(initialArtisan);
+      setSelectedCategoryId(initialArtisan.category);
+      setDistrict(initialArtisan.district);
+      setTitle(`Intervention avec ${initialArtisan.name}`);
+    } else if (initialCategory) {
+      setSelectedCategoryId(initialCategory);
+    }
+    if (initialUrgency) {
+      setUrgency(initialUrgency);
+    }
+  }, [initialArtisan, initialCategory, initialUrgency]);
 
   // Step 2 Details
   const [title, setTitle] = useState(
@@ -49,10 +68,12 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   const [exactAddress, setExactAddress] = useState('Rue Pau, face Hôtel Akwa Palace, Entrée 2');
   const [paymentPreference, setPaymentPreference] = useState('Orange Money / MTN MoMo');
 
-  // Step 4 Contact
+  // Step 4 Contact & Consent
   const [clientName, setClientName] = useState('Mme Kamga Sylvie');
   const [clientPhone, setClientPhone] = useState('699 45 21 80');
   const [clientEmail, setClientEmail] = useState('sylvie.kamga@gmail.com');
+  const [consentGiven, setConsentGiven] = useState(false);
+  const [errors, setErrors] = useState<{ phone?: string; email?: string; consent?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRequest, setSubmittedRequest] = useState<UserRequest | null>(null);
 
@@ -71,12 +92,50 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   };
 
   const handleCompleteSubmission = () => {
+    // 1. Validation anti-abus / rate-limit
+    const rateCheck = checkRateLimit('devis_submission', 2500, false);
+    if (!rateCheck.allowed) {
+      onShowToast(`Veuillez patienter ${rateCheck.waitSeconds}s avant de soumettre à nouveau.`);
+      return;
+    }
+
+    // 2. Validation téléphone Cameroun
+    const phoneVal = validateCameroonPhone(clientPhone);
+    const emailVal = validateEmail(clientEmail);
+    const newErrors: { phone?: string; email?: string; consent?: string } = {};
+
+    if (!phoneVal.isValid) {
+      newErrors.phone = phoneVal.error || 'Numéro invalide.';
+    }
+
+    if (!emailVal.isValid) {
+      newErrors.email = emailVal.error || 'Adresse email invalide.';
+    }
+
+    if (!consentGiven) {
+      newErrors.consent = 'Votre accord préalable est requis pour transmettre votre demande aux artisans.';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      onShowToast('Veuillez corriger les erreurs indiquées dans le formulaire.');
+      return;
+    }
+
+    recordActionTimestamp('devis_submission');
+    setErrors({});
     setIsSubmitting(true);
+
     setTimeout(() => {
       const generatedId = `MB-2025-${Math.floor(1000 + Math.random() * 9000)}`;
+      const cleanTitle = sanitizeInput(title, 120);
+      const cleanDesc = sanitizeInput(description, 500);
+      const cleanAddress = sanitizeInput(exactAddress, 250);
+      const cleanName = sanitizeInput(clientName, 80);
+
       const newReq: UserRequest = {
         id: generatedId,
-        title: title || 'Demande d’intervention',
+        title: cleanTitle || 'Demande d’intervention',
         serviceCategory: selectedCategory.name,
         artisanName: targetArtisan ? targetArtisan.name : '3 artisans certifiés consultés',
         artisanJob: targetArtisan ? targetArtisan.job : `${selectedCategory.name} Pro`,
@@ -99,8 +158,8 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
         statusColor: '#a06800',
         date: preferredDate,
         timeSlot,
-        phone: clientPhone,
-        description,
+        phone: phoneVal.normalized || clientPhone,
+        description: `${cleanDesc}${cleanAddress ? ` • Repère : ${cleanAddress}` : ''}`,
       };
 
       onAddRequest(newReq);
@@ -484,32 +543,16 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
               </div>
             </div>
 
-            {/* Quartier d'intervention (Douala) */}
-            <div>
-              <label className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
-                Quartier d'intervention (Douala) *
-              </label>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-3 text-[20px] text-[#006946]">
-                  location_on
-                </span>
-                <select
-                  required
-                  value={district}
-                  onChange={(e) => setDistrict(e.target.value)}
-                  className="w-full h-11 pl-10 pr-8 rounded-xl bg-white border border-[#dbe5dc] text-sm text-[#151e18] appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#006946]"
-                >
-                  {DOUALA_DISTRICTS.map((d) => (
-                    <option key={d} value={d}>
-                      {d} (Douala)
-                    </option>
-                  ))}
-                </select>
-                <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#6e7a72] pointer-events-none text-[20px]">
-                  expand_more
-                </span>
-              </div>
-            </div>
+            {/* Quartier d'intervention (Douala) avec système de recherche de quartier */}
+            <DistrictCombobox
+              id="devis-district-search"
+              label="Quartier d'intervention (Douala)"
+              required
+              value={district}
+              onChange={(newDistrict) => setDistrict(newDistrict)}
+              placeholder="Rechercher votre quartier (ex: Akwa, Maképè, Bonabéri)..."
+              helperText="Tapez le nom de votre quartier pour filtrer instantanément parmi plus de 140 zones couvertes."
+            />
 
             {/* Type de lieu d'intervention */}
             <div>
@@ -780,55 +823,137 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
               e.preventDefault();
               handleCompleteSubmission();
             }}
+            noValidate
             className="flex flex-col gap-4"
           >
             <div>
               <h2 className="text-lg font-bold text-[#151e18]">Coordonnées de contact</h2>
-              <p className="text-xs text-[#6e7a72]">Où l'artisan doit-il vous envoyer le devis chiffré ?</p>
+              <p className="text-xs text-[#6e7a72]">
+                Où l'artisan certifié doit-il vous transmettre le devis chiffré ?
+              </p>
             </div>
 
+            {/* Nom */}
             <div>
-              <label className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
-                Nom complet ou Entreprise *
+              <label htmlFor="devis-client-name" className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
+                Nom complet ou Entreprise <span className="text-[#ba1a1a]">*</span>
               </label>
               <input
+                id="devis-client-name"
                 type="text"
                 required
+                maxLength={80}
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
                 placeholder="Ex : Sylvie Kamga"
-                className="w-full h-11 px-3.5 rounded-xl bg-white border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                className="w-full h-11 px-3.5 rounded-xl bg-white border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
               />
             </div>
 
+            {/* Téléphone / WhatsApp */}
             <div>
-              <label className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
-                Numéro WhatsApp / Téléphone *
+              <label htmlFor="devis-client-phone" className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
+                Numéro WhatsApp / Téléphone <span className="text-[#ba1a1a]">*</span>
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-3 text-xs font-bold text-[#6e7a72]">+237</span>
+                <span className="absolute left-3 top-3 text-xs font-bold text-[#6e7a72]" aria-hidden="true">+237</span>
                 <input
+                  id="devis-client-phone"
                   type="tel"
                   required
+                  aria-required="true"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? 'devis-phone-error' : 'devis-phone-hint'}
                   value={clientPhone}
-                  onChange={(e) => setClientPhone(e.target.value)}
+                  onChange={(e) => {
+                    setClientPhone(e.target.value);
+                    if (errors.phone) setErrors((prev) => ({ ...prev, phone: undefined }));
+                  }}
                   placeholder="6XX XXX XXX"
-                  className="w-full h-11 pl-14 pr-3.5 rounded-xl bg-white border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                  className={`w-full h-11 pl-14 pr-3.5 rounded-xl bg-white border text-sm text-[#151e18] focus:outline-none focus:ring-2 focus-visible:ring-2 ${
+                    errors.phone
+                      ? 'border-[#ba1a1a] focus:ring-[#ba1a1a] focus-visible:ring-[#ba1a1a]'
+                      : 'border-[#dbe5dc] focus:ring-[#006946] focus-visible:ring-[#006946]'
+                  }`}
                 />
               </div>
+              {errors.phone ? (
+                <p id="devis-phone-error" role="alert" className="text-xs text-[#ba1a1a] font-medium mt-1">
+                  {errors.phone}
+                </p>
+              ) : (
+                <p id="devis-phone-hint" className="text-[11px] text-[#6e7a72] mt-1">
+                  Numéro direct à 9 chiffres débutant par 6 (Orange, MTN, Camtel).
+                </p>
+              )}
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
-                Email (Optionnel pour recevoir copie PDF)
+              <label htmlFor="devis-client-email" className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
+                Email <span className="text-[#6e7a72] font-normal">(Optionnel pour recevoir copie)</span>
               </label>
               <input
+                id="devis-client-email"
                 type="email"
+                maxLength={100}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'devis-email-error' : undefined}
                 value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
+                onChange={(e) => {
+                  setClientEmail(e.target.value);
+                  if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+                }}
                 placeholder="Ex : sylvie@exemple.cm"
-                className="w-full h-11 px-3.5 rounded-xl bg-white border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                className={`w-full h-11 px-3.5 rounded-xl bg-white border text-sm text-[#151e18] focus:outline-none focus:ring-2 focus-visible:ring-2 ${
+                  errors.email
+                    ? 'border-[#ba1a1a] focus:ring-[#ba1a1a] focus-visible:ring-[#ba1a1a]'
+                    : 'border-[#dbe5dc] focus:ring-[#006946] focus-visible:ring-[#006946]'
+                }`}
               />
+              {errors.email && (
+                <p id="devis-email-error" role="alert" className="text-xs text-[#ba1a1a] font-medium mt-1">
+                  {errors.email}
+                </p>
+              )}
+            </div>
+
+            {/* Explicit Privacy & Data Processing Consent (RGPD / Loi 2010/012) */}
+            <div className="p-3.5 rounded-2xl bg-[#ecf6ed] border border-[#dbe5dc]">
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  id="devis-consent-checkbox"
+                  type="checkbox"
+                  required
+                  aria-required="true"
+                  checked={consentGiven}
+                  onChange={(e) => {
+                    setConsentGiven(e.target.checked);
+                    if (errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
+                  }}
+                  className="w-4 h-4 rounded text-[#006946] accent-[#006946] shrink-0 mt-0.5 focus-visible:ring-2 focus-visible:ring-[#006946]"
+                />
+                <span className="text-xs text-[#3e4942] leading-relaxed">
+                  J'accepte que mes coordonnées (nom, quartier, numéro de contact) soient communiquées aux artisans
+                  sélectionnés exclusivement pour l'établissement du devis et l'organisation du chantier, conformément à la{' '}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onOpenPrivacyPolicy?.();
+                    }}
+                    className="text-[#006946] font-bold underline hover:text-[#005236] inline focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+                  >
+                    Politique de Confidentialité
+                  </button>
+                  . Pas de démarchage commercial.
+                </span>
+              </label>
+              {errors.consent && (
+                <p role="alert" className="text-xs text-[#ba1a1a] font-semibold mt-1.5 pl-6">
+                  {errors.consent}
+                </p>
+              )}
             </div>
 
             {/* Full Summary Box */}
@@ -849,7 +974,7 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6e7a72]">Paiement :</span>
+                  <span className="text-[#6e7a72]">Paiement prévu :</span>
                   <span className="font-bold text-[#006946]">{paymentPreference}</span>
                 </div>
               </div>
@@ -860,19 +985,19 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="h-12 px-5 rounded-xl bg-white border border-[#dbe5dc] text-[#151e18] font-bold text-xs hover:bg-[#ecf6ed]"
+                className="h-12 px-5 rounded-xl bg-white border border-[#dbe5dc] text-[#151e18] font-bold text-xs hover:bg-[#ecf6ed] transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
               >
                 Précédent
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 h-12 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-98 transition-all"
+                className="flex-1 h-12 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
               >
                 {isSubmitting ? (
                   <>
                     <span className="inline-block animate-spin material-symbols-outlined text-[18px]">progress_activity</span>
-                    <span>Validation du dossier...</span>
+                    <span>Transmission sécurisée...</span>
                   </>
                 ) : (
                   <>

@@ -25,9 +25,10 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
       </span>
       <span>{toast.text}</span>
       <button
+        type="button"
         onClick={onClose}
-        className="w-5 h-5 rounded-full flex items-center justify-center text-[#bdcac0] hover:text-white"
-        aria-label="Fermer"
+        className="w-5 h-5 rounded-full flex items-center justify-center text-[#bdcac0] hover:text-white focus-visible:ring-2 focus-visible:ring-white"
+        aria-label="Fermer la notification"
       >
         <span className="material-symbols-outlined text-[14px]">close</span>
       </button>

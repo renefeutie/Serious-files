@@ -1,0 +1,163 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // --- Entity Validation Helpers ---
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'role', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'role', 'phoneNumber', 'city', 'district', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid.size() <= 128 && data.uid == request.auth.uid
+        && data.email is string && data.email.size() <= 120
+        && data.displayName is string && data.displayName.size() <= 100
+        && (data.role == 'client' || data.role == 'merchant')
+        && (!('phoneNumber' in data) || (data.phoneNumber is string && data.phoneNumber.size() <= 30))
+        && (!('city' in data) || (data.city is string && data.city.size() <= 60))
+        && (!('district' in data) || (data.district is string && data.district.size() <= 80));
+    }
+
+    function isValidBusiness(data) {
+      return data.keys().hasAll(['id', 'ownerId', 'name', 'job', 'category', 'city', 'district', 'phone', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'ownerId', 'name', 'job', 'category', 'city', 'district', 'address', 'lat', 'lng', 'phone', 'whatsapp', 'bio', 'startingPrice', 'status', 'cniVerified', 'createdAt', 'updatedAt'])
+        && data.id is string && data.id.size() <= 128
+        && data.ownerId is string && data.ownerId.size() <= 128 && data.ownerId == request.auth.uid
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 120
+        && data.job is string && data.job.size() <= 120
+        && data.category is string && data.category.size() <= 60
+        && data.city is string && data.city.size() <= 60
+        && data.district is string && data.district.size() <= 80
+        && data.phone is string && data.phone.size() <= 30
+        && (!('whatsapp' in data) || (data.whatsapp is string && data.whatsapp.size() <= 30))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 1000))
+        && (!('startingPrice' in data) || (data.startingPrice is number && data.startingPrice >= 0))
+        && (data.status == 'pending' || data.status == 'approved' || data.status == 'rejected')
+        && (!('cniVerified' in data) || data.cniVerified is bool);
+    }
+
+    function isValidFavorite(data) {
+      return data.keys().hasAll(['id', 'userId', 'artisanId', 'createdAt'])
+        && data.keys().hasOnly(['id', 'userId', 'artisanId', 'createdAt'])
+        && data.id is string && data.id.size() <= 128
+        && data.userId is string && data.userId == request.auth.uid
+        && data.artisanId is string && data.artisanId.size() <= 128;
+    }
+
+    function isValidBusinessApplication(data) {
+      return data.keys().hasAll(['id', 'ownerId', 'businessName', 'ownerName', 'phone', 'job', 'category', 'city', 'district', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'ownerId', 'businessName', 'ownerName', 'phone', 'whatsapp', 'job', 'category', 'city', 'district', 'experienceYears', 'cniNumber', 'status', 'notes', 'createdAt', 'updatedAt'])
+        && data.id is string && data.id.size() <= 128
+        && data.ownerId is string && data.ownerId == request.auth.uid
+        && data.businessName is string && data.businessName.size() <= 120
+        && data.ownerName is string && data.ownerName.size() <= 100
+        && data.phone is string && data.phone.size() <= 30
+        && (data.status == 'pending' || data.status == 'approved' || data.status == 'rejected');
+    }
+
+    // --- Collections ---
+
+    // 1. Users Collection
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUser(incoming());
+      allow update: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUser(incoming())
+        && incoming().uid == existing().uid
+        && incoming().role == existing().role
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    // 2. Businesses Collection (Public exploration for approved; private for owners/admin)
+    match /businesses/{businessId} {
+      allow get: if isValidId(businessId) && (
+        resource.data.status == 'approved' ||
+        (isSignedIn() && resource.data.ownerId == request.auth.uid) ||
+        isAdmin()
+      );
+      allow list: if (
+        resource.data.status == 'approved' ||
+        (isSignedIn() && resource.data.ownerId == request.auth.uid) ||
+        isAdmin()
+      );
+      allow create: if isValidId(businessId)
+        && isSignedIn()
+        && isValidBusiness(incoming())
+        && incoming().status == 'pending'
+        && (!('cniVerified' in incoming()) || incoming().cniVerified == false);
+      allow update: if isValidId(businessId)
+        && isSignedIn()
+        && (
+          (existing().ownerId == request.auth.uid
+            && isValidBusiness(incoming())
+            && incoming().ownerId == existing().ownerId
+            && incoming().createdAt == existing().createdAt
+            && (!('cniVerified' in incoming()) || incoming().cniVerified == existing().cniVerified)
+            && (incoming().status == 'pending' || incoming().status == existing().status)
+          ) || isAdmin()
+        );
+      allow delete: if isValidId(businessId) && isSignedIn() && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+
+    // 3. Favorites Collection (Private per user)
+    match /favorites/{favoriteId} {
+      allow get: if isValidId(favoriteId) && isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isValidId(favoriteId)
+        && isSignedIn()
+        && isValidFavorite(incoming());
+      allow delete: if isValidId(favoriteId) && isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // 4. Business Applications
+    match /businessApplications/{applicationId} {
+      allow get: if isValidId(applicationId) && isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow create: if isValidId(applicationId)
+        && isSignedIn()
+        && isValidBusinessApplication(incoming())
+        && incoming().status == 'pending';
+      allow update: if isValidId(applicationId) && (
+        (isSignedIn() && existing().ownerId == request.auth.uid && existing().status == 'pending' && isValidBusinessApplication(incoming()) && incoming().status == 'pending')
+        || isAdmin()
+      );
+      allow delete: if isValidId(applicationId) && (
+        (isSignedIn() && existing().ownerId == request.auth.uid && existing().status == 'pending')
+        || isAdmin()
+      );
+    }
+  }
+}

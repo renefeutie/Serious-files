@@ -61,7 +61,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 
                 {/* Badge count on Demandes */}
                 {tab.badgeCount !== undefined && tab.badgeCount > 0 && (
-                  <span className="absolute -top-1 -right-2 px-1.5 py-0.2 rounded-full bg-[#006946] text-white text-[10px] font-bold ring-2 ring-[#f2fcf2]">
+                  <span className="absolute -top-1 -right-2 px-1.5 py-0.5 rounded-full bg-[#006946] text-white text-[10px] font-bold ring-2 ring-[#f2fcf2]">
                     {tab.badgeCount}
                   </span>
                 )}

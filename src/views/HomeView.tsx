@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ARTISANS, CATEGORIES, DOUALA_DISTRICTS, Artisan } from '../data/mockData';
+import { LegalTab } from '../components/LegalModal';
 
 interface HomeViewProps {
   onNavigate: (tab: string, artisanId?: string) => void;
@@ -11,6 +12,7 @@ interface HomeViewProps {
   favorites: Set<string>;
   onStartQuote: (artisan?: Artisan, categoryId?: string, urgency?: string) => void;
   onSearch: (query: string, district?: string) => void;
+  onOpenLegalModal?: (tab: LegalTab) => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -23,6 +25,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   favorites,
   onStartQuote,
   onSearch,
+  onOpenLegalModal,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState(currentDistrict);
@@ -114,22 +117,23 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <span className="material-symbols-outlined text-[16px] text-[#6e7a72]">swap_horiz</span>
               </button>
 
-              <div className="relative">
-                <select
-                  value={selectedDistrict}
-                  onChange={(e) => setSelectedDistrict(e.target.value)}
-                  className="w-full h-full px-3.5 py-2.5 rounded-xl bg-[#ecf6ed] text-xs font-semibold text-[#151e18] outline-none appearance-none cursor-pointer pr-8 hover:bg-[#e1ebe1]"
-                >
-                  {DOUALA_DISTRICTS.map((d) => (
-                    <option key={d} value={d}>
-                      Quartier : {d}
-                    </option>
-                  ))}
-                </select>
-                <span className="material-symbols-outlined text-[18px] text-[#3e4942] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
-                  expand_more
+              {/* District search trigger button */}
+              <button
+                type="button"
+                onClick={onOpenCitySelector}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#ecf6ed] text-[#151e18] text-xs font-semibold hover:bg-[#e1ebe1] text-left transition-colors group"
+                title="Cliquer pour rechercher un quartier à Douala"
+              >
+                <div className="flex items-center gap-1.5 truncate">
+                  <span className="material-symbols-outlined text-[18px] text-[#006946] group-hover:scale-110 transition-transform">
+                    location_on
+                  </span>
+                  <span className="truncate">Quartier : {selectedDistrict}</span>
+                </div>
+                <span className="material-symbols-outlined text-[16px] text-[#006946] bg-white rounded-md p-0.5 shadow-2xs">
+                  search
                 </span>
-              </div>
+              </button>
             </div>
 
             {/* CTA Button */}
@@ -142,19 +146,40 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </button>
           </form>
 
-          {/* Instant Suggestions Badges */}
-          <div className="pt-1 flex flex-col gap-1.5">
-            <span className="text-xs text-[#6e7a72] font-medium">Recherches fréquentes à Douala :</span>
+          {/* Quick Districts Bar */}
+          <div className="pt-0.5 flex flex-col gap-1.5 border-t border-[#e1ebe1]/60 mt-1">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-[#6e7a72] font-semibold flex items-center gap-1">
+                <span className="material-symbols-outlined text-[14px] text-[#006946]">near_me</span>
+                Quartiers populaires à Douala :
+              </span>
+              <button
+                type="button"
+                onClick={onOpenCitySelector}
+                className="text-[11px] font-bold text-[#006946] hover:underline flex items-center gap-0.5"
+              >
+                <span>Rechercher parmi 140+ quartiers</span>
+                <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
+              </button>
+            </div>
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-              {['Plombier', 'Électricien', 'Clim & Froid', 'Réparateur smartphone', 'Menuisier', 'Nettoyage'].map(
-                (term) => (
+              {['Akwa', 'Bonapriso', 'Bonanjo', 'Deïdo', 'Bonamoussadi', 'Maképè', 'Kotto', 'Logpom', 'Bonabéri', 'Bépanda', 'Yassa'].map(
+                (q) => (
                   <button
-                    key={term}
+                    key={q}
                     type="button"
-                    onClick={() => handleQuickTagClick(term)}
-                    className="px-3 py-1 rounded-full bg-[#ecf6ed] text-[#3e4942] text-xs font-semibold whitespace-nowrap hover:bg-[#bfecdc] hover:text-[#006946] transition-colors"
+                    onClick={() => {
+                      setSelectedDistrict(q);
+                      onSearch('', q);
+                      onNavigate('explorer');
+                    }}
+                    className={`px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                      selectedDistrict.toLowerCase() === q.toLowerCase()
+                        ? 'bg-[#006946] text-white font-bold'
+                        : 'bg-[#ecf6ed] text-[#006946] hover:bg-[#bfecdc]'
+                    }`}
                   >
-                    {term}
+                    {q}
                   </button>
                 )
               )}
@@ -514,8 +539,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
               <span className="material-symbols-outlined text-[20px]">rate_review</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">Avis 100% Réels</span>
-            <span className="text-[11px] text-[#6e7a72]">Seuls les clients ayant fait appel au pro notent.</span>
+            <span className="text-xs font-bold text-[#151e18]">Avis Vérifiés Post-Chantier</span>
+            <span className="text-[11px] text-[#6e7a72]">Collectés uniquement après intervention réelle confirmée.</span>
           </div>
 
           <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1">
@@ -530,8 +555,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
               <span className="material-symbols-outlined text-[20px]">handshake</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">Paiement Garanti</span>
-            <span className="text-[11px] text-[#6e7a72]">Zéro avance suspecte demandée sans contrat.</span>
+            <span className="text-xs font-bold text-[#151e18]">Paiement à Satisfaction</span>
+            <span className="text-[11px] text-[#6e7a72]">Règlement direct à l'artisan après vérification des travaux.</span>
           </div>
         </div>
       </section>
@@ -557,7 +582,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <button
             type="button"
             onClick={onOpenProModal}
-            className="w-full sm:w-auto px-6 h-11 rounded-xl bg-white text-[#7f5200] font-bold text-xs flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-98 transition-transform"
+            className="w-full sm:w-auto px-6 h-11 rounded-xl bg-white text-[#7f5200] font-bold text-xs flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-98 transition-transform focus-visible:ring-2 focus-visible:ring-white"
           >
             <span className="material-symbols-outlined text-[18px]">engineering</span>
             <span>Créer mon profil Pro</span>
@@ -576,11 +601,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {[
             {
               q: 'La demande de devis est-elle vraiment gratuite ?',
-              a: 'Oui, à 100%. Vous pouvez contacter jusqu’à 3 artisans pour un même projet, comparer leurs propositions et vous décider sans aucun engagement financier.',
+              a: 'Oui, à 100%. Vous pouvez contacter des artisans qualifiés pour un même projet, comparer leurs propositions et vous décider sans aucun engagement financier.',
             },
             {
               q: 'Comment vérifiez-vous les artisans sur le terrain ?',
-              a: 'Chaque professionnel doit fournir sa Carte Nationale d’Identité (CNI), un justificatif de domicile ou localisation de son atelier à Douala ou Yaoundé, ainsi que les contacts de clients précédents pour attester de son sérieux.',
+              a: 'Chaque professionnel doit fournir sa Carte Nationale d’Identité (CNI) ou récépissé officiel, la localisation de son atelier à Douala ou Yaoundé, ainsi que des références pour attester de son savoir-faire.',
             },
             {
               q: 'Comment se déroule le paiement de la prestation ?',
@@ -588,7 +613,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             },
             {
               q: 'Que se passe-t-il en cas de problème ou malfaçon ?',
-              a: 'Toutes les interventions réalisées via un profil certifié bénéficient de la garantie MboaFacile (30 à 60 jours selon le métier). En cas de litige, notre service client basé à Akwa intervient pour faire corriger le travail sans frais additionnels.',
+              a: 'Toutes les interventions réalisées via un profil certifié bénéficient de la garantie MboaFacile (30 à 60 jours selon le métier). En cas de litige, notre service client basé à Akwa intervient pour organiser une médiation et faire corriger le travail sans frais additionnels.',
             },
           ].map((faq, idx) => {
             const isOpen = openFaq === idx;
@@ -597,7 +622,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <button
                   type="button"
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-4 flex items-center justify-between text-left text-sm font-bold text-[#151e18]"
+                  className="w-full p-4 flex items-center justify-between text-left text-sm font-bold text-[#151e18] focus-visible:ring-2 focus-visible:ring-[#006946]"
                 >
                   <span className="pr-2">{faq.q}</span>
                   <span
@@ -619,26 +644,71 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* 9. Footer Compact */}
+      {/* 9. Footer Transparent & Conforme */}
       <footer className="px-4 pt-6 max-w-4xl mx-auto w-full flex flex-col gap-3 text-center items-center border-t border-[#e1ebe1]/60 mt-4">
         <div className="flex items-center gap-1.5 text-[#006946]">
           <span className="material-symbols-outlined text-[20px]">shield</span>
           <span className="font-extrabold text-sm">MboaFacile Cameroun</span>
         </div>
         <p className="text-xs text-[#6e7a72] max-w-xs leading-relaxed">
-          Plateforme dédiée aux artisans de confiance à Douala (Akwa, Bonapriso, Bonamoussadi, Makepe...) et Yaoundé.
+          Plateforme d'intermédiation locale dédiée aux artisans certifiés à Douala et Yaoundé.
         </p>
-        <div className="flex items-center gap-4 text-[#6e7a72] text-xs font-medium">
-          <button type="button" onClick={() => onNavigate('explorer')} className="hover:text-[#006946]">
+        
+        {/* Navigation principale */}
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[#6e7a72] text-xs font-medium">
+          <button type="button" onClick={() => onNavigate('explorer')} className="hover:text-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs">
             Trouver un pro
           </button>
           <span>•</span>
-          <button type="button" onClick={onOpenProModal} className="hover:text-[#006946]">
+          <button type="button" onClick={onOpenProModal} className="hover:text-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs">
             Devenir Pro
           </button>
           <span>•</span>
-          <button type="button" onClick={() => onNavigate('compte')} className="hover:text-[#006946]">
+          <button type="button" onClick={() => onNavigate('compte')} className="hover:text-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs">
             Assistance 24/7
+          </button>
+        </div>
+
+        {/* Liens de conformité légale et RGPD */}
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[#3e4942] font-semibold pt-1">
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('confidentialite')}
+            className="hover:text-[#006946] underline decoration-[#006946]/40 focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+          >
+            Politique de Confidentialité &amp; RGPD
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('mentions')}
+            className="hover:text-[#006946] underline decoration-[#006946]/40 focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+          >
+            Mentions Légales
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('cgu')}
+            className="hover:text-[#006946] underline decoration-[#006946]/40 focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+          >
+            CGU
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('litiges')}
+            className="hover:text-[#006946] underline decoration-[#006946]/40 focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+          >
+            Paiements &amp; Litiges
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => onOpenLegalModal?.('cookies')}
+            className="hover:text-[#006946] underline decoration-[#006946]/40 focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+          >
+            Gestion des cookies
           </button>
         </div>
 
@@ -649,12 +719,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
             href="https://wa.me/237686942622?text=Bonjour%20MboaFacile,%20j'ai%20besoin%20d'aide"
             target="_blank"
             rel="noreferrer"
-            className="hover:underline"
+            className="hover:underline focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
           >
             WhatsApp 686 94 26 22
           </a>
           <span>•</span>
-          <a href="tel:+237654475764" className="hover:underline">
+          <a href="tel:+237654475764" className="hover:underline focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs">
             Appel 654 47 57 64
           </a>
         </div>

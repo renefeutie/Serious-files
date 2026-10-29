@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Artisan, ServiceItem } from '../data/mockData';
+import { sanitizeInput, validateCameroonPhone, checkRateLimit, recordActionTimestamp } from '../utils/security';
 
 interface ArtisanDetailViewProps {
   artisan: Artisan;
@@ -7,6 +8,7 @@ interface ArtisanDetailViewProps {
   onStartQuote: (artisan: Artisan, selectedServiceId?: string) => void;
   onShowToast: (msg: string) => void;
   onNavigate?: (tab: string, artisanId?: string) => void;
+  onOpenPrivacyPolicy?: () => void;
 }
 
 export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
@@ -15,6 +17,7 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
   onStartQuote,
   onShowToast,
   onNavigate,
+  onOpenPrivacyPolicy,
 }) => {
   const [activeTab, setActiveTab] = useState<'presentation' | 'services' | 'realisations' | 'avis' | 'zone'>(
     'presentation'
@@ -26,7 +29,17 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
   const [quoteDistrict, setQuoteDistrict] = useState(artisan.district + ', Douala');
   const [quotePhone, setQuotePhone] = useState('699452180');
   const [quoteDetails, setQuoteDetails] = useState('');
+  const [quoteConsent, setQuoteConsent] = useState(false);
+  const [quoteError, setQuoteError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Sync state when artisan prop changes
+  useEffect(() => {
+    if (artisan) {
+      setSelectedService(artisan.services[0]?.title || 'Diagnostic / Panne de courant');
+      setQuoteDistrict(`${artisan.district}, Douala`);
+    }
+  }, [artisan]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -45,11 +58,31 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
 
   const handleModalQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const rateCheck = checkRateLimit('artisan_direct_quote', 2500, false);
+    if (!rateCheck.allowed) {
+      setQuoteError(`Veuillez patienter ${rateCheck.waitSeconds}s avant de soumettre.`);
+      return;
+    }
+
+    const phoneVal = validateCameroonPhone(quotePhone);
+    if (!phoneVal.isValid) {
+      setQuoteError(phoneVal.error || 'Numéro invalide.');
+      return;
+    }
+
+    if (!quoteConsent) {
+      setQuoteError('Veuillez accepter la transmission de votre demande selon la politique de confidentialité.');
+      return;
+    }
+
+    recordActionTimestamp('artisan_direct_quote');
+    setQuoteError(null);
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
       setIsQuoteModalOpen(false);
-      onShowToast(`Votre devis express a été transmis à ${artisan.name} ! Il vous répondra d’ici 15 min.`);
+      setQuoteConsent(false);
+      onShowToast(`Votre devis express a été transmis à ${artisan.name} !`);
     }, 700);
   };
 
@@ -563,15 +596,22 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
               </button>
             </div>
 
-            <form onSubmit={handleModalQuoteSubmit} className="flex flex-col gap-3.5">
+            <form onSubmit={handleModalQuoteSubmit} noValidate className="flex flex-col gap-3.5">
+              {quoteError && (
+                <div role="alert" className="p-3 rounded-xl bg-[#ffdad6] text-[#ba1a1a] text-xs font-semibold">
+                  {quoteError}
+                </div>
+              )}
+
               <div>
-                <label className="block text-xs font-bold text-[#151e18] mb-1">
-                  Quel est votre besoin ?
+                <label htmlFor="artisan-modal-service" className="block text-xs font-bold text-[#151e18] mb-1">
+                  Quel est votre besoin ? <span className="text-[#ba1a1a]">*</span>
                 </label>
                 <select
+                  id="artisan-modal-service"
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
                 >
                   {artisan.services.map((svc) => (
                     <option key={svc.id} value={svc.title}>
@@ -583,54 +623,86 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#151e18] mb-1">
-                  Votre quartier à Douala
+                <label htmlFor="artisan-modal-district" className="block text-xs font-bold text-[#151e18] mb-1">
+                  Votre quartier à Douala <span className="text-[#ba1a1a]">*</span>
                 </label>
                 <input
+                  id="artisan-modal-district"
                   type="text"
                   required
+                  maxLength={100}
                   value={quoteDistrict}
                   onChange={(e) => setQuoteDistrict(e.target.value)}
                   placeholder="Ex : Akwa, Rue Pau, face hôtel..."
-                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#151e18] mb-1">
-                  Numéro de téléphone WhatsApp
+                <label htmlFor="artisan-modal-phone" className="block text-xs font-bold text-[#151e18] mb-1">
+                  Numéro de téléphone WhatsApp <span className="text-[#ba1a1a]">*</span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-3 text-xs font-bold text-[#6e7a72]">+237</span>
+                  <span className="absolute left-3 top-3 text-xs font-bold text-[#6e7a72]" aria-hidden="true">+237</span>
                   <input
+                    id="artisan-modal-phone"
                     type="tel"
                     required
                     value={quotePhone}
                     onChange={(e) => setQuotePhone(e.target.value)}
                     placeholder="6XX XXX XXX"
-                    className="w-full h-11 pl-14 pr-3 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                    className="w-full h-11 pl-14 pr-3 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#151e18] mb-1">
-                  Détails du problème (optionnel)
+                <label htmlFor="artisan-modal-details" className="block text-xs font-bold text-[#151e18] mb-1">
+                  Détails du problème <span className="text-[#6e7a72] font-normal">(optionnel)</span>
                 </label>
                 <textarea
+                  id="artisan-modal-details"
                   rows={2}
+                  maxLength={300}
                   value={quoteDetails}
                   onChange={(e) => setQuoteDetails(e.target.value)}
                   placeholder="Décrivez les symptômes de la panne..."
-                  className="w-full p-3 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] resize-none"
+                  className="w-full p-3 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946] resize-none"
                 />
+              </div>
+
+              {/* Privacy Consent Checkbox */}
+              <div className="p-3 bg-[#ecf6ed] rounded-xl border border-[#dbe5dc]">
+                <label className="flex items-start gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    required
+                    checked={quoteConsent}
+                    onChange={(e) => setQuoteConsent(e.target.checked)}
+                    className="w-4 h-4 rounded text-[#006946] accent-[#006946] shrink-0 mt-0.5 focus-visible:ring-2 focus-visible:ring-[#006946]"
+                  />
+                  <span className="text-xs text-[#3e4942] leading-relaxed">
+                    J'accepte la transmission de mes coordonnées à cet artisan certifié selon la{' '}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onOpenPrivacyPolicy?.();
+                      }}
+                      className="text-[#006946] font-bold underline hover:text-[#005236] inline focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
+                    >
+                      Politique de Confidentialité
+                    </button>
+                    .
+                  </span>
+                </label>
               </div>
 
               <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all"
+                  className="w-full h-12 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <>
@@ -645,7 +717,7 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
                   )}
                 </button>
                 <p className="text-center text-[11px] text-[#6e7a72] mt-2">
-                  Réponse garantie sous 15 minutes sur WhatsApp.
+                  Zéro frais de dossier • Délai de réponse moyen constaté : 15 à 30 min.
                 </p>
               </div>
             </form>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface HeaderProps {
   currentTab: string;
@@ -19,6 +20,8 @@ export const Header: React.FC<HeaderProps> = ({
   currentCity,
   favoritesCount,
 }) => {
+  const { user, userProfile } = useAuth();
+
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-[#f2fcf2]/95 backdrop-blur-xl pt-safe border-b border-[#e1ebe1]/60 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
       <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between gap-3">
@@ -144,19 +147,52 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Profile Avatar */}
-          <button
-            type="button"
-            onClick={() => onNavigate('compte')}
-            aria-label="Mon compte"
-            className="w-10 h-10 flex items-center justify-center rounded-full ring-2 ring-[#006946]/20 overflow-hidden hover:ring-[#006946] transition-all"
-          >
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzVJXNLiHJHSRN1qlVaXDaZ0erVYr-ayB2S7bcBMwABnZcwZ9xdFi8-S7iNMB349iTHenx0LtSD9zZDWHKGcEYBBjuDHVAyQgQhfzVacSbi2ryaWqOV8fvYav9tT5NgWvE8WE1u9_7fFnjSQxhiCaKntMYjEm-8Ry4mrUpbj9HmhxypcBYR2GrSEXh6xzVm5TfuVLGIJ-D29sKLCb9i6kWLNZmF1QXj0yGGsUG9Jivp06mR5T1WBgdqA"
-              alt="Profil utilisateur"
-              className="w-full h-full object-cover"
-            />
-          </button>
+          {/* Auth State Button: Login or Profile */}
+          {user ? (
+            <div className="flex items-center gap-1.5">
+              {userProfile?.role === 'merchant' && (
+                <button
+                  type="button"
+                  onClick={() => onNavigate('espace-commercant')}
+                  className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#bfecdc] text-[#006946] text-xs font-bold hover:bg-[#a3e2cd] transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[15px]">storefront</span>
+                  <span>Espace Pro</span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => onNavigate('mon-profil')}
+                aria-label="Mon profil"
+                className="w-9 h-9 rounded-full bg-[#006946] text-white flex items-center justify-center font-bold text-xs ring-2 ring-[#006946]/30 hover:ring-[#006946] transition-all overflow-hidden"
+              >
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover" />
+                ) : (
+                  <span>{userProfile?.displayName ? userProfile.displayName.charAt(0).toUpperCase() : 'U'}</span>
+                )}
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => onNavigate('inscrire-mon-commerce')}
+                className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#006946] hover:bg-[#ecf6ed] transition-colors"
+              >
+                <span className="material-symbols-outlined text-[16px]">add_business</span>
+                <span>Espace Pro</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('connexion')}
+                className="h-9 px-3 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-transform active:scale-95"
+              >
+                <span className="material-symbols-outlined text-[16px]">login</span>
+                <span>Connexion</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>
