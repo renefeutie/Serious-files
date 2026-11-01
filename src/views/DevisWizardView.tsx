@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CATEGORIES, DOUALA_DISTRICTS, Artisan, UserRequest } from '../data/mockData';
 import { sanitizeInput, validateCameroonPhone, validateEmail, checkRateLimit, recordActionTimestamp } from '../utils/security';
 import { DistrictCombobox } from '../components/DistrictCombobox';
+import { useAuth } from '../contexts/AuthContext';
 
 interface DevisWizardViewProps {
   initialArtisan?: Artisan;
@@ -22,6 +23,7 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   onShowToast,
   onOpenPrivacyPolicy,
 }) => {
+  const { user, userProfile } = useAuth();
   const [step, setStep] = useState<number>(2); // Start at Step 2 like in the user's mockup Image_8, with ability to go back to 1 or forward to 3 & 4!
 
   // Form State
@@ -69,9 +71,30 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   const [paymentPreference, setPaymentPreference] = useState('Orange Money / MTN MoMo');
 
   // Step 4 Contact & Consent
-  const [clientName, setClientName] = useState('Mme Kamga Sylvie');
-  const [clientPhone, setClientPhone] = useState('699 45 21 80');
-  const [clientEmail, setClientEmail] = useState('sylvie.kamga@gmail.com');
+  const [clientName, setClientName] = useState(
+    userProfile?.displayName || user?.displayName || 'Mme Kamga Sylvie'
+  );
+  const [clientPhone, setClientPhone] = useState(
+    userProfile?.phoneNumber || '699 45 21 80'
+  );
+  const [clientEmail, setClientEmail] = useState(
+    user?.email || 'sylvie.kamga@gmail.com'
+  );
+
+  useEffect(() => {
+    if (userProfile?.displayName) {
+      setClientName(userProfile.displayName);
+    } else if (user?.displayName) {
+      setClientName(user.displayName);
+    }
+    if (userProfile?.phoneNumber) {
+      setClientPhone(userProfile.phoneNumber);
+    }
+    if (user?.email) {
+      setClientEmail(user.email);
+    }
+  }, [user, userProfile]);
+
   const [consentGiven, setConsentGiven] = useState(false);
   const [errors, setErrors] = useState<{ phone?: string; email?: string; consent?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);

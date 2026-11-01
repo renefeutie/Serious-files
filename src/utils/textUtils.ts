@@ -47,3 +47,16 @@ export const POPULAR_DOUALA_DISTRICTS = [
   'Yassa',
   'Japoma',
 ];
+
+export const POPULAR_YAOUNDE_DISTRICTS = [
+  'Bastos',
+  'Omnisports',
+  'Essos',
+  'Mvan',
+  'Mendong',
+  'Biyem-Assi',
+  'Etoudi',
+  'Ngoa-Ekélé',
+  'Odza',
+];
+

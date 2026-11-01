@@ -8,6 +8,7 @@ import { DistrictFaq } from '../components/DistrictFaq';
 interface ExplorerViewProps {
   initialQuery?: string;
   initialDistrict?: string;
+  initialViewMode?: 'liste' | 'carte' | 'mixte';
   currentCity?: string;
   currentDistrict?: string;
   onOpenCitySelector?: () => void;
@@ -15,13 +16,14 @@ interface ExplorerViewProps {
   onToggleFavorite: (artisanId: string) => void;
   favorites: Set<string>;
   onStartQuote: (artisan?: Artisan) => void;
-  onShowToast: (msg: string) => void;
+  onShowToast: (msg: string, type?: 'success' | 'info' | 'warning') => void;
   onOpenPrivacyPolicy?: () => void;
 }
 
 export const ExplorerView: React.FC<ExplorerViewProps> = ({
   initialQuery = '',
   initialDistrict = '',
+  initialViewMode = 'liste',
   currentCity = 'Douala',
   currentDistrict = 'Akwa',
   onOpenCitySelector,
@@ -32,7 +34,7 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
   onShowToast,
   onOpenPrivacyPolicy,
 }) => {
-  const [viewMode, setViewMode] = useState<'liste' | 'carte' | 'mixte'>('liste');
+  const [viewMode, setViewMode] = useState<'liste' | 'carte' | 'mixte'>(initialViewMode);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>(
     initialDistrict ? [initialDistrict] : ['Akwa', 'Bonapriso']
@@ -45,6 +47,13 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [districtFilterSearch, setDistrictFilterSearch] = useState('');
+
+  // Sync viewMode if initialViewMode prop changes
+  useEffect(() => {
+    if (initialViewMode) {
+      setViewMode(initialViewMode);
+    }
+  }, [initialViewMode]);
 
   // Sync state if props change from external navigation
   useEffect(() => {
@@ -445,12 +454,12 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
           <div className="bg-gradient-to-r from-[#006946] to-[#16845b] text-white p-3.5 rounded-2xl shadow-xs flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[20px]">explore</span>
+                <span className="material-symbols-outlined text-[20px]">near_me</span>
               </div>
               <div>
-                <p className="text-xs font-bold leading-tight">Explorer autour de moi avec Google Maps</p>
+                <p className="text-xs font-bold leading-tight">Prestataires près de moi (Google Maps)</p>
                 <p className="text-[11px] text-[#bfecdc] leading-tight mt-0.5">
-                  Visualisez les artisans vérifiés et commerces de proximité sur la carte interactive.
+                  Localisez par GPS et par distance à vol d'oiseau les artisans vérifiés et commerces de votre zone.
                 </p>
               </div>
             </div>
@@ -459,7 +468,7 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
               onClick={() => setViewMode('carte')}
               className="px-3 py-1.5 rounded-xl bg-white text-[#006946] text-xs font-extrabold hover:bg-[#ecf6ed] transition-colors shrink-0 shadow-xs"
             >
-              Voir la carte
+              Autour de moi
             </button>
           </div>
         )}

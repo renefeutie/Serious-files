@@ -1,15 +1,60 @@
-export type UserRole = 'client' | 'merchant' | 'admin';
+export type UserRole = 'client' | 'merchant' | 'technicien' | 'admin';
 
 export interface UserProfile {
-  uid: string;
+  uid: string; // id auth.users
   email: string;
   displayName: string;
   role: UserRole;
   phoneNumber?: string;
   city?: string;
   district?: string;
+  job?: string;
+  status?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+/**
+ * Schéma Supabase table public.clients
+ */
+export interface SupabaseClientRecord {
+  id: string; // FK -> auth.users.id
+  email: string;
+  nom?: string;
+  display_name?: string;
+  full_name?: string;
+  telephone?: string;
+  phone?: string;
+  ville?: string;
+  city?: string;
+  quartier?: string;
+  district?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+/**
+ * Schéma Supabase table public.techniciens
+ */
+export interface SupabaseTechnicienRecord {
+  id: string; // FK -> auth.users.id
+  email: string;
+  nom?: string;
+  display_name?: string;
+  full_name?: string;
+  telephone?: string;
+  phone?: string;
+  ville?: string;
+  city?: string;
+  quartier?: string;
+  district?: string;
+  metier?: string;
+  job?: string;
+  categorie?: string;
+  statut?: string;
+  status?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type BusinessStatus = 'pending' | 'approved' | 'rejected';

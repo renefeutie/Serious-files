@@ -54,7 +54,7 @@ export const MerchantDashboardView: React.FC<MerchantDashboardViewProps> = ({
             Tableau de Bord Professionnel
           </span>
           <h1 className="text-xl sm:text-2xl font-extrabold">
-            Bienvenue, {userProfile?.displayName || user.displayName} !
+            Bienvenue, {userProfile?.displayName || user.displayName || 'Commerçant'} !
           </h1>
           <p className="text-xs text-[#bfecdc]">
             Gérez la visibilité de vos commerces, services et vos interventions à Douala et Yaoundé.

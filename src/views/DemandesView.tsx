@@ -182,7 +182,7 @@ export const DemandesView: React.FC<DemandesViewProps> = ({
                 </a>
 
                 <a
-                  href={`tel:${req.phone}`}
+                  href={`tel:${req.phone.replace(/\s+/g, '')}`}
                   className="h-10 rounded-xl bg-[#ecf6ed] hover:bg-[#e1ebe1] text-[#151e18] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <span className="material-symbols-outlined text-[17px] text-[#006946]">call</span>

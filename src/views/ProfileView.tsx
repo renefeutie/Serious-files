@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { ARTISANS, DOUALA_DISTRICTS, YAOUNDE_DISTRICTS, Artisan } from '../data/mockData';
 import { sanitizeInput, validateCameroonPhone } from '../utils/security';
@@ -28,6 +28,18 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onNavigate, onShowToas
   const [isSaving, setIsSaving] = useState(false);
   const [isResending, setIsResending] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+
+  // Synchronize form states when userProfile loads asynchronously from Firestore
+  useEffect(() => {
+    if (!isEditing && userProfile) {
+      if (userProfile.displayName) setDisplayName(userProfile.displayName);
+      if (userProfile.phoneNumber !== undefined) setPhone(userProfile.phoneNumber || '');
+      if (userProfile.city && (userProfile.city === 'Douala' || userProfile.city === 'Yaoundé')) {
+        setCity(userProfile.city);
+      }
+      if (userProfile.district) setDistrict(userProfile.district);
+    }
+  }, [userProfile, isEditing]);
 
   if (!user) {
     return (
@@ -280,7 +292,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onNavigate, onShowToas
                   onChange={(e) => setDistrict(e.target.value)}
                   className="w-full h-10 px-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs font-semibold text-[#151e18]"
                 >
-                  {districtsList.slice(0, 50).map((d: string) => (
+                  {district && !districtsList.includes(district) && (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  )}
+                  {districtsList.map((d: string) => (
                     <option key={d} value={d}>
                       {d}
                     </option>

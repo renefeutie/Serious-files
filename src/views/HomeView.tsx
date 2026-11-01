@@ -3,7 +3,7 @@ import { ARTISANS, CATEGORIES, DOUALA_DISTRICTS, Artisan } from '../data/mockDat
 import { LegalTab } from '../components/LegalModal';
 
 interface HomeViewProps {
-  onNavigate: (tab: string, artisanId?: string) => void;
+  onNavigate: (tab: string, artisanId?: string, viewMode?: 'liste' | 'carte' | 'mixte') => void;
   onOpenCitySelector: () => void;
   currentDistrict: string;
   currentCity: string;
@@ -137,13 +137,23 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
 
             {/* CTA Button */}
-            <button
-              type="submit"
-              className="w-full h-12 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm active:scale-98 transition-all"
-            >
-              <span className="material-symbols-outlined text-[20px]">manage_search</span>
-              <span>Trouver un professionnel</span>
-            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button
+                type="submit"
+                className="w-full h-12 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm active:scale-98 transition-all"
+              >
+                <span className="material-symbols-outlined text-[20px]">manage_search</span>
+                <span>Trouver un professionnel</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('explorer', undefined, 'carte')}
+                className="w-full h-12 rounded-xl bg-[#ecf6ed] hover:bg-[#bfecdc] text-[#006946] font-bold text-sm flex items-center justify-center gap-2 border border-[#bfecdc] active:scale-98 transition-all"
+              >
+                <span className="material-symbols-outlined text-[20px]">near_me</span>
+                <span>Prestataires près de moi</span>
+              </button>
+            </div>
           </form>
 
           {/* Quick Districts Bar */}

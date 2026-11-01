@@ -129,9 +129,15 @@ function AppContent() {
     }
   };
 
-  const handleNavigate = (tab: string, artisanId?: string) => {
+  // Explorer view mode state (liste / carte / mixte)
+  const [explorerViewMode, setExplorerViewMode] = useState<'liste' | 'carte' | 'mixte'>('liste');
+
+  const handleNavigate = (tab: string, artisanId?: string, viewMode?: 'liste' | 'carte' | 'mixte') => {
     if (artisanId) {
       setSelectedArtisanId(artisanId);
+    }
+    if (viewMode) {
+      setExplorerViewMode(viewMode);
     }
     const targetTab = tab === 'compte' ? 'mon-profil' : tab;
     setCurrentTab(targetTab);
@@ -287,6 +293,7 @@ function AppContent() {
             <ExplorerView
               initialQuery={searchQuery}
               initialDistrict={searchDistrict}
+              initialViewMode={explorerViewMode}
               currentCity={currentCity}
               currentDistrict={currentDistrict}
               onOpenCitySelector={() => setIsCityModalOpen(true)}
@@ -294,7 +301,7 @@ function AppContent() {
               onToggleFavorite={handleToggleFavorite}
               favorites={activeFavorites}
               onStartQuote={handleStartQuote}
-              onShowToast={(msg) => showToast(msg)}
+              onShowToast={(msg, type) => showToast(msg, type)}
               onOpenPrivacyPolicy={() => handleOpenLegalModal('confidentialite')}
             />
           )}

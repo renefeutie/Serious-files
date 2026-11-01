@@ -63,10 +63,10 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
 
     setIsLoading(true);
     try {
-      await registerWithEmail(cleanEmail, password, cleanName, role, city, district);
+      await registerWithEmail(cleanEmail, password, cleanName, role, city, district, phone.trim());
       onShowToast(
         role === 'merchant'
-          ? 'Compte commerçant créé avec succès ! Un e-mail de confirmation vous a été envoyé.'
+          ? 'Compte commerçant / technicien créé avec succès !'
           : 'Compte client créé avec succès ! Bienvenue sur MboaFacile.',
         'success'
       );

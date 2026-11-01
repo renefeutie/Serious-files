@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { DOUALA_DISTRICTS } from '../data/mockData';
-import { filterDistricts, POPULAR_DOUALA_DISTRICTS } from '../utils/textUtils';
+import { DOUALA_DISTRICTS, YAOUNDE_DISTRICTS } from '../data/mockData';
+import { filterDistricts, POPULAR_DOUALA_DISTRICTS, POPULAR_YAOUNDE_DISTRICTS } from '../utils/textUtils';
 
 interface CitySelectorModalProps {
   isOpen: boolean;
@@ -8,8 +8,6 @@ interface CitySelectorModalProps {
   currentDistrict: string;
   onSelectDistrict: (district: string, city: string) => void;
 }
-
-const YAOUNDE_DISTRICTS = ['Bastos', 'Omnisports', 'Essos', 'Mvan', 'Mendong', 'Biyem-Assi', 'Etoudi', 'Nlongkak'];
 
 export const CitySelectorModal: React.FC<CitySelectorModalProps> = ({
   isOpen,
@@ -122,31 +120,34 @@ export const CitySelectorModal: React.FC<CitySelectorModalProps> = ({
           </div>
 
           {/* Quartiers populaires pour accès immédiat en 1 clic */}
-          {selectedCity === 'Douala' && (
-            <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-              <span className="text-[11px] font-bold text-[#6e7a72] flex items-center gap-1">
-                <span className="material-symbols-outlined text-[13px] text-[#006946]">trending_up</span>
-                Populaires :
-              </span>
-              {POPULAR_DOUALA_DISTRICTS.slice(0, 7).map((pop) => (
-                <button
-                  key={pop}
-                  type="button"
-                  onClick={() => {
-                    onSelectDistrict(pop, selectedCity);
-                    onClose();
-                  }}
-                  className={`text-[11px] px-2 py-0.5 rounded-full transition-all ${
-                    currentDistrict.toLowerCase().includes(pop.toLowerCase())
-                      ? 'bg-[#006946] text-white font-bold'
-                      : 'bg-[#ecf6ed] text-[#006946] hover:bg-[#bfecdc] font-medium'
-                  }`}
-                >
-                  {pop}
-                </button>
-              ))}
-            </div>
-          )}
+          {(() => {
+            const popularList = selectedCity === 'Douala' ? POPULAR_DOUALA_DISTRICTS : POPULAR_YAOUNDE_DISTRICTS;
+            return (
+              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span className="text-[11px] font-bold text-[#6e7a72] flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[13px] text-[#006946]">trending_up</span>
+                  Populaires :
+                </span>
+                {popularList.slice(0, 7).map((pop) => (
+                  <button
+                    key={pop}
+                    type="button"
+                    onClick={() => {
+                      onSelectDistrict(pop, selectedCity);
+                      onClose();
+                    }}
+                    className={`text-[11px] px-2 py-0.5 rounded-full transition-all ${
+                      currentDistrict.toLowerCase().includes(pop.toLowerCase())
+                        ? 'bg-[#006946] text-white font-bold'
+                        : 'bg-[#ecf6ed] text-[#006946] hover:bg-[#bfecdc] font-medium'
+                    }`}
+                  >
+                    {pop}
+                  </button>
+                ))}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Counter header */}

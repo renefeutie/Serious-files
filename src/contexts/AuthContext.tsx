@@ -1,32 +1,30 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import {
-  User,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  sendPasswordResetEmail,
-  sendEmailVerification,
-  updateProfile,
-} from 'firebase/auth';
+  supabase,
+  fetchUserProfileFromSupabase,
+  createClientProfileInSupabase,
+  createTechnicienProfileInSupabase,
+  updateProfileInSupabase,
+  translateSupabaseAuthError,
+} from '../supabase';
 import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  onSnapshot,
-} from 'firebase/firestore';
-import { auth, db, googleProvider, handleFirestoreError, OperationType, testFirestoreConnection } from '../firebase';
-import { UserProfile, UserRole, BusinessDocument, BusinessApplicationDocument } from '../types/auth';
+  UserProfile,
+  UserRole,
+  BusinessDocument,
+  BusinessApplicationDocument,
+} from '../types/auth';
+
+export interface AuthUser {
+  id: string;
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string | null;
+  emailVerified: boolean;
+}
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   userProfile: UserProfile | null;
   loading: boolean;
   needsRoleSelection: boolean;
@@ -39,7 +37,8 @@ interface AuthContextType {
     displayName: string,
     role: UserRole,
     city?: string,
-    district?: string
+    district?: string,
+    phone?: string
   ) => Promise<void>;
   loginWithGoogle: (defaultRole?: UserRole) => Promise<void>;
   completeGoogleRoleSelection: (role: UserRole, city?: string, district?: string) => Promise<void>;
@@ -48,270 +47,385 @@ interface AuthContextType {
   logout: () => Promise<void>;
   updateProfileData: (data: Partial<UserProfile>) => Promise<void>;
   toggleFavoriteInDb: (artisanId: string) => Promise<boolean>;
-  registerNewBusiness: (businessData: Omit<BusinessDocument, 'id' | 'ownerId' | 'status' | 'cniVerified' | 'createdAt' | 'updatedAt'>) => Promise<string>;
-  submitMerchantApplication: (appData: Omit<BusinessApplicationDocument, 'id' | 'ownerId' | 'status' | 'createdAt' | 'updatedAt'>) => Promise<string>;
+  registerNewBusiness: (
+    businessData: Omit<BusinessDocument, 'id' | 'ownerId' | 'status' | 'cniVerified' | 'createdAt' | 'updatedAt'>
+  ) => Promise<string>;
+  submitMerchantApplication: (
+    appData: Omit<BusinessApplicationDocument, 'id' | 'ownerId' | 'status' | 'createdAt' | 'updatedAt'>
+  ) => Promise<string>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [needsRoleSelection, setNeedsRoleSelection] = useState(false);
   const [userFavorites, setUserFavorites] = useState<Set<string>>(new Set());
   const [merchantBusinesses, setMerchantBusinesses] = useState<BusinessDocument[]>([]);
 
-  // Test Firestore connectivity on boot
-  useEffect(() => {
-    testFirestoreConnection();
-  }, []);
+  // Convertit un utilisateur Supabase en AuthUser normalisé compatible avec le frontend
+  const buildAuthUser = (sbUser: any): AuthUser => {
+    const meta = sbUser.user_metadata || {};
+    return {
+      id: sbUser.id,
+      uid: sbUser.id,
+      email: sbUser.email || '',
+      displayName:
+        meta.displayName ||
+        meta.display_name ||
+        meta.full_name ||
+        meta.name ||
+        (sbUser.email ? sbUser.email.split('@')[0] : 'Utilisateur'),
+      photoURL: meta.avatar_url || meta.picture || meta.photoURL || null,
+      emailVerified: !!(sbUser.email_confirmed_at || sbUser.confirmed_at),
+    };
+  };
 
-  // Listen to Auth State
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser);
-      if (firebaseUser) {
-        try {
-          const userDocRef = doc(db, 'users', firebaseUser.uid);
-          const userSnap = await getDoc(userDocRef);
+  // Traite la session Supabase active (boot ou changement d'état)
+  const processSessionUser = async (sbUser: any) => {
+    const authUser = buildAuthUser(sbUser);
+    setUser(authUser);
 
-          if (userSnap.exists()) {
-            setUserProfile(userSnap.data() as UserProfile);
-            setNeedsRoleSelection(false);
-          } else {
-            // New Google user who hasn't selected their role yet
-            setNeedsRoleSelection(true);
-          }
-        } catch (err) {
-          console.error('Erreur de chargement du profil utilisateur:', err);
-        }
+    // Charger les favoris sauvegardés localement pour cet utilisateur
+    try {
+      const storedFavs = localStorage.getItem(`mboafacile_favs_${authUser.id}`);
+      if (storedFavs) {
+        setUserFavorites(new Set(JSON.parse(storedFavs)));
+      }
+    } catch {
+      // Ignorer les erreurs localStorage
+    }
+
+    // Charger les commerces enregistrés localement
+    try {
+      const storedBiz = localStorage.getItem(`mboafacile_biz_${authUser.id}`);
+      if (storedBiz) {
+        setMerchantBusinesses(JSON.parse(storedBiz));
+      }
+    } catch {
+      // Ignorer les erreurs localStorage
+    }
+
+    try {
+      // Vérification dans public.clients ou public.techniciens
+      const profile = await fetchUserProfileFromSupabase(sbUser.id);
+      if (profile) {
+        setUserProfile(profile);
+        setNeedsRoleSelection(false);
       } else {
+        // Premier accès OAuth Google : demander le type de profil si non défini
+        const metaRole = sbUser.user_metadata?.role as UserRole | undefined;
+        if (metaRole) {
+          await completeGoogleRoleSelection(
+            metaRole,
+            sbUser.user_metadata?.city || 'Douala',
+            sbUser.user_metadata?.district || 'Akwa'
+          );
+        } else {
+          setNeedsRoleSelection(true);
+        }
+      }
+    } catch (err) {
+      console.warn('Erreur vérification profil Supabase:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 1. Initialisation et écoute de session Supabase (Persistance automatique)
+  useEffect(() => {
+    let isMounted = true;
+
+    // Vérifier la session existante au chargement
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (!isMounted) return;
+      if (error) {
+        console.warn('Erreur récupération session Supabase:', error);
+      }
+      if (session?.user) {
+        processSessionUser(session.user);
+      } else {
+        setUser(null);
+        setUserProfile(null);
+        setLoading(false);
+      }
+    });
+
+    // Écouter les changements d'état d'authentification (login, logout, token refresh)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!isMounted) return;
+      if (session?.user) {
+        await processSessionUser(session.user);
+      } else {
+        setUser(null);
         setUserProfile(null);
         setNeedsRoleSelection(false);
         setUserFavorites(new Set());
         setMerchantBusinesses([]);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  // Listen to Favorites when user is signed in
-  useEffect(() => {
-    if (!user) {
-      setUserFavorites(new Set());
-      return;
-    }
-
-    const favQuery = query(collection(db, 'favorites'), where('userId', '==', user.uid));
-    const unsubscribe = onSnapshot(
-      favQuery,
-      (snapshot) => {
-        const ids = new Set<string>();
-        snapshot.forEach((docSnap) => {
-          const data = docSnap.data();
-          if (data.artisanId) ids.add(data.artisanId);
-        });
-        setUserFavorites(ids);
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.GET, 'favorites');
-      }
-    );
-
-    return () => unsubscribe();
-  }, [user]);
-
-  // Listen to Merchant businesses
-  useEffect(() => {
-    if (!user || userProfile?.role !== 'merchant') {
-      setMerchantBusinesses([]);
-      return;
-    }
-
-    const bizQuery = query(collection(db, 'businesses'), where('ownerId', '==', user.uid));
-    const unsubscribe = onSnapshot(
-      bizQuery,
-      (snapshot) => {
-        const list: BusinessDocument[] = [];
-        snapshot.forEach((docSnap) => {
-          list.push(docSnap.data() as BusinessDocument);
-        });
-        setMerchantBusinesses(list);
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.GET, 'businesses');
-      }
-    );
-
-    return () => unsubscribe();
-  }, [user, userProfile?.role]);
-
-  // Login with Email & Password
-  const loginWithEmail = async (email: string, pass: string) => {
-    await signInWithEmailAndPassword(auth, email.trim(), pass);
-  };
-
-  // Register with Email & Password
+  // 2. Inscription par e-mail et mot de passe avec dispatch dans clients ou techniciens
   const registerWithEmail = async (
     email: string,
     pass: string,
     displayName: string,
     role: UserRole,
     city: string = 'Douala',
-    district: string = 'Akwa'
+    district: string = 'Akwa',
+    phone: string = ''
   ) => {
-    const cred = await createUserWithEmailAndPassword(auth, email.trim(), pass);
-    await updateProfile(cred.user, { displayName: displayName.trim() });
+    const cleanEmail = email.trim();
+    const cleanName = displayName.trim();
+    const cleanPhone = phone.trim();
+    const targetRole: UserRole = role === 'merchant' ? 'technicien' : role;
 
-    try {
-      await sendEmailVerification(cred.user);
-    } catch (e) {
-      console.warn("Impossible d'envoyer l'e-mail de vérification immédiatement:", e);
+    // Inscription Supabase Auth
+    const { data, error } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password: pass,
+      options: {
+        data: {
+          display_name: cleanName,
+          full_name: cleanName,
+          role: targetRole,
+          city,
+          district,
+          phone: cleanPhone,
+        },
+      },
+    });
+
+    if (error) {
+      throw new Error(translateSupabaseAuthError(error));
+    }
+
+    if (!data.user) {
+      throw new Error('Échec de la création du compte. Veuillez réessayer.');
+    }
+
+    const userId = data.user.id;
+
+    // Enregistrement du profil dans public.clients ou public.techniciens
+    if (targetRole === 'client') {
+      await createClientProfileInSupabase({
+        id: userId,
+        email: cleanEmail,
+        nom: cleanName,
+        telephone: cleanPhone,
+        ville: city,
+        quartier: district,
+      });
+    } else {
+      await createTechnicienProfileInSupabase({
+        id: userId,
+        email: cleanEmail,
+        nom: cleanName,
+        telephone: cleanPhone,
+        ville: city,
+        quartier: district,
+        metier: 'Artisan',
+        statut: 'en_attente',
+      });
     }
 
     const now = new Date().toISOString();
     const newProfile: UserProfile = {
-      uid: cred.user.uid,
-      email: cred.user.email || email.trim(),
-      displayName: displayName.trim(),
-      role,
+      uid: userId,
+      email: cleanEmail,
+      displayName: cleanName,
+      role: targetRole,
+      phoneNumber: cleanPhone,
       city,
       district,
       createdAt: now,
       updatedAt: now,
     };
 
-    try {
-      await setDoc(doc(db, 'users', cred.user.uid), newProfile);
-      setUserProfile(newProfile);
-    } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, `users/${cred.user.uid}`);
+    setUser(buildAuthUser(data.user));
+    setUserProfile(newProfile);
+    setNeedsRoleSelection(false);
+  };
+
+  // 3. Connexion par e-mail et mot de passe
+  const loginWithEmail = async (email: string, pass: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password: pass,
+    });
+
+    if (error) {
+      throw new Error(translateSupabaseAuthError(error));
+    }
+
+    if (data.user) {
+      await processSessionUser(data.user);
     }
   };
 
-  // Login with Google Popup
+  // 4. Connexion avec Google via Supabase Auth
   const loginWithGoogle = async (defaultRole?: UserRole) => {
-    const res = await signInWithPopup(auth, googleProvider);
-    const userDocRef = doc(db, 'users', res.user.uid);
-    const userSnap = await getDoc(userDocRef);
+    const redirectUrl = window.location.origin;
+    const targetRole = defaultRole === 'merchant' ? 'technicien' : defaultRole;
 
-    if (userSnap.exists()) {
-      setUserProfile(userSnap.data() as UserProfile);
-      setNeedsRoleSelection(false);
-    } else if (defaultRole) {
-      const now = new Date().toISOString();
-      const newProfile: UserProfile = {
-        uid: res.user.uid,
-        email: res.user.email || '',
-        displayName: res.user.displayName || 'Utilisateur',
-        role: defaultRole,
-        city: 'Douala',
-        district: 'Akwa',
-        createdAt: now,
-        updatedAt: now,
-      };
-      await setDoc(userDocRef, newProfile);
-      setUserProfile(newProfile);
-      setNeedsRoleSelection(false);
-    } else {
-      setNeedsRoleSelection(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectUrl,
+        queryParams: {
+          prompt: 'select_account',
+          ...(targetRole ? { role: targetRole } : {}),
+        },
+      },
+    });
+
+    if (error) {
+      throw new Error(translateSupabaseAuthError(error));
     }
   };
 
-  // Complete Google Role Selection on first login
+  // 5. Finalisation du profil Google (création dans clients ou techniciens)
   const completeGoogleRoleSelection = async (
     role: UserRole,
     city: string = 'Douala',
     district: string = 'Akwa'
   ) => {
     if (!user) throw new Error('Aucun utilisateur connecté.');
+
+    const targetRole: UserRole = role === 'merchant' ? 'technicien' : role;
+    const displayName = user.displayName || 'Utilisateur';
+
+    if (targetRole === 'client') {
+      await createClientProfileInSupabase({
+        id: user.id,
+        email: user.email || '',
+        nom: displayName,
+        ville: city,
+        quartier: district,
+      });
+    } else {
+      await createTechnicienProfileInSupabase({
+        id: user.id,
+        email: user.email || '',
+        nom: displayName,
+        ville: city,
+        quartier: district,
+        metier: 'Artisan',
+        statut: 'en_attente',
+      });
+    }
+
     const now = new Date().toISOString();
     const newProfile: UserProfile = {
-      uid: user.uid,
+      uid: user.id,
       email: user.email || '',
-      displayName: user.displayName || 'Utilisateur',
-      role,
+      displayName,
+      role: targetRole,
       city,
       district,
       createdAt: now,
       updatedAt: now,
     };
 
-    try {
-      await setDoc(doc(db, 'users', user.uid), newProfile);
-      setUserProfile(newProfile);
-      setNeedsRoleSelection(false);
-    } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, `users/${user.uid}`);
-    }
-  };
-
-  // Reset password via email
-  const resetPassword = async (email: string) => {
-    await sendPasswordResetEmail(auth, email.trim());
-  };
-
-  // Resend verification email
-  const resendVerificationEmail = async () => {
-    if (user && !user.emailVerified) {
-      await sendEmailVerification(user);
-    }
-  };
-
-  // Logout
-  const logout = async () => {
-    await signOut(auth);
-    setUser(null);
-    setUserProfile(null);
+    setUserProfile(newProfile);
     setNeedsRoleSelection(false);
   };
 
-  // Update profile
-  const updateProfileData = async (data: Partial<UserProfile>) => {
-    if (!user || !userProfile) return;
-    const now = new Date().toISOString();
-    const updated = {
-      ...data,
-      updatedAt: now,
-    };
+  // 6. Récupération de mot de passe via Supabase Auth
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}#mot-de-passe-oublie`,
+    });
 
-    try {
-      await updateDoc(doc(db, 'users', user.uid), updated);
-      setUserProfile((prev) => (prev ? { ...prev, ...updated } : null));
-    } catch (err) {
-      handleFirestoreError(err, OperationType.UPDATE, `users/${user.uid}`);
+    if (error) {
+      throw new Error(translateSupabaseAuthError(error));
     }
   };
 
-  // Toggle favorite in Firestore
+  // 7. Renvoi de l'e-mail de vérification
+  const resendVerificationEmail = async () => {
+    if (!user?.email) return;
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: user.email,
+    });
+    if (error) {
+      throw new Error(translateSupabaseAuthError(error));
+    }
+  };
+
+  // 8. Déconnexion
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setUserProfile(null);
+    setNeedsRoleSelection(false);
+    setUserFavorites(new Set());
+    setMerchantBusinesses([]);
+  };
+
+  // 9. Mise à jour des informations de profil
+  const updateProfileData = async (data: Partial<UserProfile>) => {
+    if (!user || !userProfile) throw new Error('Aucun utilisateur connecté.');
+
+    await updateProfileInSupabase(user.id, userProfile.role, data);
+    setUserProfile((prev) =>
+      prev ? { ...prev, ...data, updatedAt: new Date().toISOString() } : null
+    );
+  };
+
+  // 10. Gestion des favoris avec persistance
   const toggleFavoriteInDb = async (artisanId: string): Promise<boolean> => {
     if (!user) return false;
-    const favId = `${user.uid}_${artisanId}`;
-    const favDocRef = doc(db, 'favorites', favId);
+    const next = new Set(userFavorites);
+    let isAdded = false;
+
+    if (next.has(artisanId)) {
+      next.delete(artisanId);
+      isAdded = false;
+    } else {
+      next.add(artisanId);
+      isAdded = true;
+    }
+
+    setUserFavorites(next);
 
     try {
-      if (userFavorites.has(artisanId)) {
-        await deleteDoc(favDocRef);
-        return false;
-      } else {
-        await setDoc(favDocRef, {
-          id: favId,
-          userId: user.uid,
-          artisanId,
-          createdAt: new Date().toISOString(),
-        });
-        return true;
-      }
-    } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, `favorites/${favId}`);
-      return false;
+      localStorage.setItem(`mboafacile_favs_${user.id}`, JSON.stringify(Array.from(next)));
+    } catch {
+      // Ignorer
     }
+
+    // Tenter la synchronisation Supabase si la table favorites existe
+    try {
+      if (isAdded) {
+        await supabase.from('favorites').upsert({
+          id: `${user.id}_${artisanId}`,
+          user_id: user.id,
+          artisan_id: artisanId,
+        });
+      } else {
+        await supabase.from('favorites').delete().eq('id', `${user.id}_${artisanId}`);
+      }
+    } catch {
+      // Fallback silencieux si la table n'a pas été créée
+    }
+
+    return isAdded;
   };
 
-  // Register a new business for merchant
+  // 11. Inscription d'un commerce pour commerçant / technicien
   const registerNewBusiness = async (
     bizData: Omit<BusinessDocument, 'id' | 'ownerId' | 'status' | 'cniVerified' | 'createdAt' | 'updatedAt'>
   ): Promise<string> => {
@@ -322,22 +436,45 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const fullDoc: BusinessDocument = {
       ...bizData,
       id: businessId,
-      ownerId: user.uid,
+      ownerId: user.id,
       status: 'pending',
       cniVerified: false,
       createdAt: now,
       updatedAt: now,
     };
 
+    const nextList = [fullDoc, ...merchantBusinesses];
+    setMerchantBusinesses(nextList);
+
     try {
-      await setDoc(doc(db, 'businesses', businessId), fullDoc);
-      return businessId;
-    } catch (err) {
-      handleFirestoreError(err, OperationType.CREATE, `businesses/${businessId}`);
+      localStorage.setItem(`mboafacile_biz_${user.id}`, JSON.stringify(nextList));
+    } catch {
+      // Ignorer
     }
+
+    try {
+      await supabase.from('businesses').insert({
+        id: businessId,
+        owner_id: user.id,
+        name: fullDoc.name,
+        job: fullDoc.job,
+        category: fullDoc.category,
+        city: fullDoc.city,
+        district: fullDoc.district,
+        phone: fullDoc.phone,
+        starting_price: fullDoc.startingPrice,
+        status: 'pending',
+        created_at: now,
+        updated_at: now,
+      });
+    } catch {
+      // Fallback
+    }
+
+    return businessId;
   };
 
-  // Submit formal merchant application dossier
+  // 12. Soumission d'un dossier pro complet
   const submitMerchantApplication = async (
     appData: Omit<BusinessApplicationDocument, 'id' | 'ownerId' | 'status' | 'createdAt' | 'updatedAt'>
   ): Promise<string> => {
@@ -348,18 +485,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const fullApp: BusinessApplicationDocument = {
       ...appData,
       id: appId,
-      ownerId: user.uid,
+      ownerId: user.id,
       status: 'pending',
       createdAt: now,
       updatedAt: now,
     };
 
     try {
-      await setDoc(doc(db, 'businessApplications', appId), fullApp);
-      return appId;
-    } catch (err) {
-      handleFirestoreError(err, OperationType.CREATE, `businessApplications/${appId}`);
+      await supabase.from('business_applications').insert({
+        id: appId,
+        owner_id: user.id,
+        business_name: fullApp.businessName,
+        owner_name: fullApp.ownerName,
+        phone: fullApp.phone,
+        job: fullApp.job,
+        category: fullApp.category,
+        city: fullApp.city,
+        district: fullApp.district,
+        status: 'pending',
+        created_at: now,
+        updated_at: now,
+      });
+    } catch {
+      // Fallback
     }
+
+    return appId;
   };
 
   return (

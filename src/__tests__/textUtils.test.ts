@@ -5,6 +5,7 @@ import {
   matchesDistrict,
   filterDistricts,
   POPULAR_DOUALA_DISTRICTS,
+  POPULAR_YAOUNDE_DISTRICTS,
 } from '../utils/textUtils';
 import { DOUALA_DISTRICTS } from '../data/mockData';
 
@@ -69,4 +70,13 @@ describe('Text and Search Utilities', () => {
       }
     });
   });
+
+  describe('POPULAR_YAOUNDE_DISTRICTS', () => {
+    it('contains key Yaounde districts', () => {
+      expect(POPULAR_YAOUNDE_DISTRICTS.length).toBeGreaterThan(0);
+      expect(POPULAR_YAOUNDE_DISTRICTS).toContain('Bastos');
+      expect(POPULAR_YAOUNDE_DISTRICTS).toContain('Omnisports');
+    });
+  });
 });
+
