@@ -4,6 +4,7 @@ import { sanitizeInput, validateCameroonPhone, checkRateLimit, recordActionTimes
 import { filterDistricts, POPULAR_DOUALA_DISTRICTS, removeAccents } from '../utils/textUtils';
 import { NeighborhoodMapExplorer } from '../components/NeighborhoodMapExplorer';
 import { DistrictFaq } from '../components/DistrictFaq';
+import { ScrollReveal } from '../components/ScrollReveal';
 
 interface ExplorerViewProps {
   initialQuery?: string;
@@ -451,26 +452,28 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
       <section className="px-4 pt-3 max-w-4xl mx-auto w-full space-y-4">
         {/* Banner to open Map when in List mode */}
         {viewMode === 'liste' && (
-          <div className="bg-gradient-to-r from-[#006946] to-[#16845b] text-white p-3.5 rounded-2xl shadow-xs flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[20px]">near_me</span>
+          <ScrollReveal variant="fade-up" duration={450}>
+            <div className="bg-gradient-to-r from-[#006946] to-[#16845b] text-white p-3.5 rounded-2xl shadow-xs flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-[20px]">near_me</span>
+                </div>
+                <div>
+                  <p className="text-xs font-bold leading-tight">Prestataires près de moi (Google Maps)</p>
+                  <p className="text-[11px] text-[#bfecdc] leading-tight mt-0.5">
+                    Localisez par GPS et par distance à vol d'oiseau les artisans vérifiés et commerces de votre zone.
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-bold leading-tight">Prestataires près de moi (Google Maps)</p>
-                <p className="text-[11px] text-[#bfecdc] leading-tight mt-0.5">
-                  Localisez par GPS et par distance à vol d'oiseau les artisans vérifiés et commerces de votre zone.
-                </p>
-              </div>
+              <button
+                type="button"
+                onClick={() => setViewMode('carte')}
+                className="px-3 py-1.5 rounded-xl bg-white text-[#006946] text-xs font-extrabold hover:bg-[#ecf6ed] transition-colors shrink-0 shadow-xs"
+              >
+                Autour de moi
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={() => setViewMode('carte')}
-              className="px-3 py-1.5 rounded-xl bg-white text-[#006946] text-xs font-extrabold hover:bg-[#ecf6ed] transition-colors shrink-0 shadow-xs"
-            >
-              Autour de moi
-            </button>
-          </div>
+          </ScrollReveal>
         )}
 
         {/* Interactive Map Component (active in 'carte' or 'mixte' mode) */}
@@ -506,13 +509,19 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
             </button>
           </div>
         ) : (
-          filteredArtisans.map((artisan) => {
+          filteredArtisans.map((artisan, idx) => {
             const isFav = favorites.has(artisan.id);
             return (
-              <article
+              <ScrollReveal
                 key={artisan.id}
-                className="bg-white rounded-2xl p-4 sm:p-5 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-md transition-all relative overflow-hidden"
+                variant="fade-up"
+                staggerIndex={idx % 6}
+                staggerInterval={50}
+                duration={450}
               >
+                <article
+                  className="bg-white rounded-2xl p-4 sm:p-5 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-md transition-all relative overflow-hidden"
+                >
                 {/* Top Row: Photo + Identity + Favorite */}
                 <div className="flex items-start justify-between gap-3 mb-2.5">
                   <div
@@ -644,9 +653,10 @@ export const ExplorerView: React.FC<ExplorerViewProps> = ({
                   </button>
                 </div>
               </article>
-            );
-          })
-        )}
+            </ScrollReveal>
+          );
+        })
+      )}
           </div>
         )}
 

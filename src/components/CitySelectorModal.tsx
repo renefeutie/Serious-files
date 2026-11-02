@@ -28,7 +28,7 @@ export const CitySelectorModal: React.FC<CitySelectorModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="city-selector-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4"
     >
       {/* Backdrop */}
       <div
@@ -37,7 +37,7 @@ export const CitySelectorModal: React.FC<CitySelectorModalProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-5 z-10 max-h-[88vh] flex flex-col border border-[#dbe5dc]">
+      <div className="relative w-full max-w-lg bg-white rounded-3xl landscape:rounded-2xl shadow-2xl p-4 sm:p-5 landscape:p-3.5 z-10 max-h-[90vh] landscape:max-h-[94dvh] flex flex-col border border-[#dbe5dc]">
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-[#e1ebe1]">
           <div className="flex items-center gap-2.5">
@@ -163,7 +163,7 @@ export const CitySelectorModal: React.FC<CitySelectorModalProps> = ({
         </div>
 
         {/* District list */}
-        <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 pt-2 no-scrollbar max-h-[44vh]">
+        <div className="flex-1 min-h-0 overflow-y-auto space-y-1.5 pr-1 pt-2 no-scrollbar">
           {districts.length === 0 ? (
             <div className="py-6 text-center space-y-2">
               <span className="material-symbols-outlined text-[32px] text-[#6e7a72]">location_off</span>

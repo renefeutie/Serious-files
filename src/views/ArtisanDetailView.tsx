@@ -89,7 +89,7 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
   return (
     <div className="flex flex-col w-full pb-28">
       {/* Sub-header / Top Navigation Bar */}
-      <div className="sticky top-16 z-30 bg-[#f2fcf2]/95 backdrop-blur-md px-4 py-2 border-b border-[#e1ebe1] flex items-center justify-between">
+      <div className="sticky top-16 landscape:top-12 md:landscape:top-16 z-30 bg-[#f2fcf2]/95 backdrop-blur-md px-4 py-2 landscape:py-1 border-b border-[#e1ebe1] flex items-center justify-between pl-safe pr-safe">
         <button
           type="button"
           onClick={onBack}
@@ -115,7 +115,7 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
         {/* Cover Picture & Avatar */}
         <div className="relative w-full">
           <div
-            className="w-full h-44 sm:h-56 bg-cover bg-center"
+            className="w-full h-44 sm:h-56 landscape:h-32 sm:landscape:h-44 md:landscape:h-56 bg-cover bg-center"
             style={{ backgroundImage: `url('${artisan.coverImage}')` }}
           >
             <div className="w-full h-full bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -565,9 +565,9 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
           <button
             type="button"
             onClick={() => setIsQuoteModalOpen(true)}
-            className="flex-1 h-12 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-sm px-4 flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all"
+            className="flex-1 h-11 sm:h-12 landscape:h-9.5 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-xs sm:text-sm px-4 flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all"
           >
-            <span className="material-symbols-outlined text-[20px]">request_quote</span>
+            <span className="material-symbols-outlined text-[18px] sm:text-[20px]">request_quote</span>
             <span>Demander un devis</span>
           </button>
         </div>
@@ -575,13 +575,13 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
 
       {/* Interactive Quote Request Modal */}
       {isQuoteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center landscape:items-center justify-center p-0 sm:p-4 landscape:p-3 pl-safe pr-safe">
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
             onClick={() => setIsQuoteModalOpen(false)}
           />
 
-          <div className="relative w-full max-w-lg bg-white rounded-t-3xl shadow-2xl z-10 max-h-[88vh] overflow-y-auto no-scrollbar p-5 flex flex-col gap-4 pb-safe">
+          <div className="relative w-full max-w-lg landscape:max-w-2xl bg-white rounded-t-3xl sm:rounded-3xl landscape:rounded-2xl shadow-2xl z-10 max-h-[88vh] landscape:max-h-[94dvh] overflow-y-auto no-scrollbar p-5 landscape:p-3.5 flex flex-col gap-3.5 landscape:gap-2.5 pb-safe">
             <div className="flex items-center justify-between pb-2 border-b border-[#e1ebe1]">
               <div>
                 <h3 className="text-base font-bold text-[#151e18]">Demande de devis express</h3>
@@ -590,52 +590,54 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
               <button
                 type="button"
                 onClick={() => setIsQuoteModalOpen(false)}
-                className="w-9 h-9 rounded-full bg-[#f2fcf2] flex items-center justify-center text-[#3e4942]"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#f2fcf2] flex items-center justify-center text-[#3e4942]"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <span className="material-symbols-outlined text-[18px] sm:text-[20px]">close</span>
               </button>
             </div>
 
-            <form onSubmit={handleModalQuoteSubmit} noValidate className="flex flex-col gap-3.5">
+            <form onSubmit={handleModalQuoteSubmit} noValidate className="flex flex-col gap-3 landscape:gap-2">
               {quoteError && (
-                <div role="alert" className="p-3 rounded-xl bg-[#ffdad6] text-[#ba1a1a] text-xs font-semibold">
+                <div role="alert" className="p-2.5 rounded-xl bg-[#ffdad6] text-[#ba1a1a] text-xs font-semibold">
                   {quoteError}
                 </div>
               )}
 
-              <div>
-                <label htmlFor="artisan-modal-service" className="block text-xs font-bold text-[#151e18] mb-1">
-                  Quel est votre besoin ? <span className="text-[#ba1a1a]">*</span>
-                </label>
-                <select
-                  id="artisan-modal-service"
-                  value={selectedService}
-                  onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
-                >
-                  {artisan.services.map((svc) => (
-                    <option key={svc.id} value={svc.title}>
-                      {svc.title} ({svc.price.toLocaleString('fr-FR')} FCFA)
-                    </option>
-                  ))}
-                  <option value="Autre prestation sur mesure">Autre prestation sur mesure</option>
-                </select>
-              </div>
+              <div className="grid grid-cols-1 landscape:grid-cols-2 gap-2.5">
+                <div>
+                  <label htmlFor="artisan-modal-service" className="block text-xs font-bold text-[#151e18] mb-1">
+                    Quel est votre besoin ? <span className="text-[#ba1a1a]">*</span>
+                  </label>
+                  <select
+                    id="artisan-modal-service"
+                    value={selectedService}
+                    onChange={(e) => setSelectedService(e.target.value)}
+                    className="w-full h-10 sm:h-11 landscape:h-9.5 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
+                  >
+                    {artisan.services.map((svc) => (
+                      <option key={svc.id} value={svc.title}>
+                        {svc.title} ({svc.price.toLocaleString('fr-FR')} FCFA)
+                      </option>
+                    ))}
+                    <option value="Autre prestation sur mesure">Autre prestation sur mesure</option>
+                  </select>
+                </div>
 
-              <div>
-                <label htmlFor="artisan-modal-district" className="block text-xs font-bold text-[#151e18] mb-1">
-                  Votre quartier à Douala <span className="text-[#ba1a1a]">*</span>
-                </label>
-                <input
-                  id="artisan-modal-district"
-                  type="text"
-                  required
-                  maxLength={100}
-                  value={quoteDistrict}
-                  onChange={(e) => setQuoteDistrict(e.target.value)}
-                  placeholder="Ex : Akwa, Rue Pau, face hôtel..."
-                  className="w-full h-11 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
-                />
+                <div>
+                  <label htmlFor="artisan-modal-district" className="block text-xs font-bold text-[#151e18] mb-1">
+                    Votre quartier à Douala <span className="text-[#ba1a1a]">*</span>
+                  </label>
+                  <input
+                    id="artisan-modal-district"
+                    type="text"
+                    required
+                    maxLength={100}
+                    value={quoteDistrict}
+                    onChange={(e) => setQuoteDistrict(e.target.value)}
+                    placeholder="Ex : Akwa, Rue Pau, face hôtel..."
+                    className="w-full h-10 sm:h-11 landscape:h-9.5 bg-[#f2fcf2] border border-[#dbe5dc] rounded-xl px-3 text-xs sm:text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
+                  />
+                </div>
               </div>
 
               <div>
@@ -698,11 +700,11 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
                 </label>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
+                  className="w-full h-10 sm:h-12 landscape:h-9.5 bg-[#006946] hover:bg-[#16845b] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <>
@@ -711,13 +713,13 @@ export const ArtisanDetailView: React.FC<ArtisanDetailViewProps> = ({
                     </>
                   ) : (
                     <>
-                      <span className="material-symbols-outlined text-[20px]">send</span>
+                      <span className="material-symbols-outlined text-[18px] sm:text-[20px]">send</span>
                       <span>Envoyer la demande gratuitement</span>
                     </>
                   )}
                 </button>
-                <p className="text-center text-[11px] text-[#6e7a72] mt-2">
-                  Zéro frais de dossier • Délai de réponse moyen constaté : 15 à 30 min.
+                <p className="text-center text-[10px] sm:text-[11px] text-[#6e7a72] mt-1.5">
+                  Zéro frais de dossier • Délai moyen : 15 à 30 min.
                 </p>
               </div>
             </form>

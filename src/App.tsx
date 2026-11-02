@@ -273,7 +273,7 @@ function AppContent() {
         />
 
         {/* Main Content Area */}
-        <main className="flex-1 w-full pt-16">
+        <main className="flex-1 w-full pt-16 landscape:pt-12 md:landscape:pt-16 pb-20 landscape:pb-14 lg:pb-8">
           {currentTab === 'accueil' && (
             <HomeView
               onNavigate={handleNavigate}

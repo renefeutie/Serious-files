@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ARTISANS, CATEGORIES, DOUALA_DISTRICTS, Artisan } from '../data/mockData';
 import { LegalTab } from '../components/LegalModal';
+import { ScrollReveal } from '../components/ScrollReveal';
 
 interface HomeViewProps {
   onNavigate: (tab: string, artisanId?: string, viewMode?: 'liste' | 'carte' | 'mixte') => void;
@@ -54,33 +55,38 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="flex flex-col w-full pb-16">
       {/* 1. Hero Section */}
-      <section className="px-4 pt-4 pb-6 max-w-4xl mx-auto w-full flex flex-col gap-4">
+      <section className="px-4 pt-4 pb-6 landscape:pt-2.5 landscape:pb-4 max-w-4xl mx-auto w-full flex flex-col gap-4 landscape:gap-2.5 pl-safe pr-safe">
         {/* Reassurance pill */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#bfecdc] text-[#006946] w-fit shadow-xs">
-          <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-            workspace_premium
-          </span>
-          <span className="text-xs font-bold tracking-wide">
-            N°1 des services de proximité au Cameroun
-          </span>
-        </div>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#bfecdc] text-[#006946] w-fit shadow-xs">
+            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+              workspace_premium
+            </span>
+            <span className="text-xs font-bold tracking-wide">
+              N°1 des services de proximité au Cameroun
+            </span>
+          </div>
+        </ScrollReveal>
 
         {/* Hero Title & Value Proposition */}
-        <div className="flex flex-col gap-1.5">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#151e18] tracking-tight leading-tight">
-            Le bon professionnel,{' '}
-            <span className="text-[#006946] underline decoration-[#ffb955] decoration-wavy decoration-2">
-              sans perdre
-            </span>{' '}
-            votre temps.
-          </h1>
-          <p className="text-sm sm:text-base text-[#3e4942] leading-relaxed max-w-2xl">
-            Trouvez des artisans et prestataires vérifiés à Douala et Yaoundé, comparez les tarifs en FCFA et recevez votre devis sans frais.
-          </p>
-        </div>
+        <ScrollReveal variant="fade-up" delay={60} duration={450}>
+          <div className="flex flex-col gap-1.5">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#151e18] tracking-tight leading-tight">
+              Le bon professionnel,{' '}
+              <span className="text-[#006946] underline decoration-[#ffb955] decoration-wavy decoration-2">
+                sans perdre
+              </span>{' '}
+              votre temps.
+            </h1>
+            <p className="text-sm sm:text-base text-[#3e4942] leading-relaxed max-w-2xl">
+              Trouvez des artisans et prestataires vérifiés à Douala et Yaoundé, comparez les tarifs en FCFA et recevez votre devis sans frais.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Quick Search Widget Card */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-md border border-[#e1ebe1] flex flex-col gap-3">
+        <ScrollReveal variant="fade-up" delay={120} duration={500}>
+        <div className="bg-white rounded-2xl p-4 sm:p-5 landscape:p-3.5 shadow-md border border-[#e1ebe1] flex flex-col gap-3">
           <form onSubmit={handleHeroSubmit} className="flex flex-col gap-3">
             {/* Search Input */}
             <div className="flex items-center gap-2 px-3.5 py-3 rounded-xl bg-[#ecf6ed] text-[#151e18] focus-within:ring-2 focus-within:ring-[#006946] transition-all">
@@ -196,42 +202,52 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
         </div>
-      </section>
+      </ScrollReveal>
+    </section>
 
       {/* 2. Catégories Populaires */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-[#151e18]">Catégories Populaires</h2>
-            <p className="text-xs text-[#6e7a72]">Des spécialistes vérifiés dans vos quartiers</p>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-[#151e18]">Catégories Populaires</h2>
+              <p className="text-xs text-[#6e7a72]">Des spécialistes vérifiés dans vos quartiers</p>
+            </div>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#bfecdc] text-[#006946] text-xs font-bold">
+              {CATEGORIES.length} Métiers
+            </span>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-[#bfecdc] text-[#006946] text-xs font-bold">
-            {CATEGORIES.length} Métiers
-          </span>
-        </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-          {displayedCategories.map((cat) => (
-            <button
+        <div className="grid grid-cols-2 sm:grid-cols-3 landscape:grid-cols-3 md:landscape:grid-cols-4 gap-2.5">
+          {displayedCategories.map((cat, idx) => (
+            <ScrollReveal
               key={cat.id}
-              type="button"
-              onClick={() => {
-                onSearch('', currentDistrict);
-                onNavigate('explorer');
-              }}
-              className="bg-white p-3 rounded-2xl flex items-center gap-3 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-sm text-left transition-all active:scale-98"
+              variant="fade-up"
+              staggerIndex={idx}
+              staggerInterval={40}
+              duration={400}
             >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: cat.bgLight, color: cat.accentColor }}
+              <button
+                type="button"
+                onClick={() => {
+                  onSearch('', currentDistrict);
+                  onNavigate('explorer');
+                }}
+                className="w-full bg-white p-3 rounded-2xl flex items-center gap-3 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-sm text-left transition-all active:scale-98"
               >
-                <span className="material-symbols-outlined text-[24px]">{cat.icon}</span>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-xs sm:text-sm font-bold text-[#151e18] truncate">{cat.name}</span>
-                <span className="text-[11px] text-[#6e7a72]">{cat.prosCount} pros certifiés</span>
-              </div>
-            </button>
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: cat.bgLight, color: cat.accentColor }}
+                >
+                  <span className="material-symbols-outlined text-[24px]">{cat.icon}</span>
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs sm:text-sm font-bold text-[#151e18] truncate">{cat.name}</span>
+                  <span className="text-[11px] text-[#6e7a72]">{cat.prosCount} pros certifiés</span>
+                </div>
+              </button>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -249,235 +265,252 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 3. Trouver par besoin immédiat */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full flex flex-col gap-3">
-        <div className="flex flex-col">
-          <h2 className="text-lg font-bold text-[#151e18]">Votre besoin du moment</h2>
-          <p className="text-xs text-[#6e7a72]">Accédez à une solution adaptée à votre situation</p>
-        </div>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex flex-col">
+            <h2 className="text-lg font-bold text-[#151e18]">Votre besoin du moment</h2>
+            <p className="text-xs text-[#6e7a72]">Accédez à une solution adaptée à votre situation</p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Urgence */}
-          <div
-            onClick={() => onStartQuote(undefined, 'plomberie', 'urgent')}
-            className="p-4 rounded-2xl bg-white border border-[#ffdad6] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group"
-          >
-            <div className="w-11 h-11 rounded-xl bg-[#ffdad6] text-[#ba1a1a] flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[24px]">emergency</span>
-            </div>
-            <div className="flex flex-col gap-0.5 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#151e18]">Panne urgente</span>
-                <span className="px-2 py-0.5 rounded-full bg-[#ffdad6] text-[#ba1a1a] text-[10px] font-bold">
-                  &lt; 2h à Douala
-                </span>
+          <ScrollReveal variant="fade-up" staggerIndex={0} staggerInterval={60} duration={450}>
+            <div
+              onClick={() => onStartQuote(undefined, 'plomberie', 'urgent')}
+              className="p-4 rounded-2xl bg-white border border-[#ffdad6] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group h-full"
+            >
+              <div className="w-11 h-11 rounded-xl bg-[#ffdad6] text-[#ba1a1a] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[24px]">emergency</span>
               </div>
-              <p className="text-xs text-[#6e7a72]">
-                Fuite d'eau, court-circuit, serrure coincée : intervention immédiate prioritaire.
-              </p>
-              <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
-                <span>Dépannage express</span>
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              <div className="flex flex-col gap-0.5 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm text-[#151e18]">Panne urgente</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#ffdad6] text-[#ba1a1a] text-[10px] font-bold">
+                    &lt; 2h à Douala
+                  </span>
+                </div>
+                <p className="text-xs text-[#6e7a72]">
+                  Fuite d'eau, court-circuit, serrure coincée : intervention immédiate prioritaire.
+                </p>
+                <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
+                  <span>Dépannage express</span>
+                  <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Réparation Domicile */}
-          <div
-            onClick={() => onStartQuote(undefined, 'electricite', '48h')}
-            className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group"
-          >
-            <div className="w-11 h-11 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[24px]">home_repair_service</span>
-            </div>
-            <div className="flex flex-col gap-0.5 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#151e18]">Réparation à domicile</span>
-                <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
-                  Devis sans frais
-                </span>
+          <ScrollReveal variant="fade-up" staggerIndex={1} staggerInterval={60} duration={450}>
+            <div
+              onClick={() => onStartQuote(undefined, 'electricite', '48h')}
+              className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group h-full"
+            >
+              <div className="w-11 h-11 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[24px]">home_repair_service</span>
               </div>
-              <p className="text-xs text-[#6e7a72]">
-                Climatiseur, frigo, robinetterie avec diagnostic clair et prix fixé à l'avance.
-              </p>
-              <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
-                <span>Demander une intervention</span>
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              <div className="flex flex-col gap-0.5 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm text-[#151e18]">Réparation à domicile</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
+                    Devis sans frais
+                  </span>
+                </div>
+                <p className="text-xs text-[#6e7a72]">
+                  Climatiseur, frigo, robinetterie avec diagnostic clair et prix fixé à l'avance.
+                </p>
+                <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
+                  <span>Demander une intervention</span>
+                  <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Entreprise & Commerce */}
-          <div
-            onClick={() => onStartQuote(undefined, 'froid', 'semaine')}
-            className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group"
-          >
-            <div className="w-11 h-11 rounded-xl bg-[#ffddb4] text-[#7f5200] flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[24px]">storefront</span>
-            </div>
-            <div className="flex flex-col gap-0.5 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#151e18]">Pour mon commerce</span>
-                <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
-                  Facture Pro
-                </span>
+          <ScrollReveal variant="fade-up" staggerIndex={2} staggerInterval={60} duration={450}>
+            <div
+              onClick={() => onStartQuote(undefined, 'froid', 'semaine')}
+              className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group h-full"
+            >
+              <div className="w-11 h-11 rounded-xl bg-[#ffddb4] text-[#7f5200] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[24px]">storefront</span>
               </div>
-              <p className="text-xs text-[#6e7a72]">
-                Boutiques, restaurants, bureaux : contrats d'entretien et maintenances sur mesure.
-              </p>
-              <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
-                <span>Solutions Entreprises</span>
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              <div className="flex flex-col gap-0.5 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm text-[#151e18]">Pour mon commerce</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
+                    Facture Pro
+                  </span>
+                </div>
+                <p className="text-xs text-[#6e7a72]">
+                  Boutiques, restaurants, bureaux : contrats d'entretien et maintenances sur mesure.
+                </p>
+                <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
+                  <span>Solutions Entreprises</span>
+                  <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Grands travaux */}
-          <div
-            onClick={() => onStartQuote(undefined, 'menuiserie', 'flexible')}
-            className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group"
-          >
-            <div className="w-11 h-11 rounded-xl bg-[#ecf6ed] text-[#3e4942] flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[24px]">architecture</span>
-            </div>
-            <div className="flex flex-col gap-0.5 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#151e18]">Chantiers &amp; Travaux</span>
-                <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
-                  Planification
-                </span>
+          <ScrollReveal variant="fade-up" staggerIndex={3} staggerInterval={60} duration={450}>
+            <div
+              onClick={() => onStartQuote(undefined, 'menuiserie', 'flexible')}
+              className="p-4 rounded-2xl bg-white border border-[#e1ebe1] shadow-xs flex items-start gap-3.5 cursor-pointer hover:shadow-md transition-all group h-full"
+            >
+              <div className="w-11 h-11 rounded-xl bg-[#ecf6ed] text-[#3e4942] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[24px]">architecture</span>
               </div>
-              <p className="text-xs text-[#6e7a72]">
-                Rénovation complète, pose aluminium, carrelage et peinture intérieure.
-              </p>
-              <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
-                <span>Planifier mon devis</span>
-                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              <div className="flex flex-col gap-0.5 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm text-[#151e18]">Chantiers &amp; Travaux</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[10px] font-bold">
+                    Planification
+                  </span>
+                </div>
+                <p className="text-xs text-[#6e7a72]">
+                  Rénovation complète, pose aluminium, carrelage et peinture intérieure.
+                </p>
+                <div className="mt-1 text-xs font-bold text-[#006946] flex items-center gap-1 group-hover:underline">
+                  <span>Planifier mon devis</span>
+                  <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* 4. Artisans certifiés à la une */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-[#151e18]">Artisans certifiés à la une</h2>
-            <p className="text-xs text-[#6e7a72]">Contrôlés à Douala : CNI &amp; compétences</p>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-[#151e18]">Artisans certifiés à la une</h2>
+              <p className="text-xs text-[#6e7a72]">Contrôlés à Douala : CNI &amp; compétences</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigate('explorer')}
+              className="text-xs font-bold text-[#006946] flex items-center gap-0.5 hover:underline"
+            >
+              <span>Voir tous</span>
+              <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => onNavigate('explorer')}
-            className="text-xs font-bold text-[#006946] flex items-center gap-0.5 hover:underline"
-          >
-            <span>Voir tous</span>
-            <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-          </button>
-        </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-          {featuredArtisans.map((artisan) => {
+          {featuredArtisans.map((artisan, idx) => {
             const isFav = favorites.has(artisan.id);
             return (
-              <div
+              <ScrollReveal
                 key={artisan.id}
-                className="bg-white rounded-2xl p-4 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-md transition-all flex flex-col justify-between"
+                variant="fade-up"
+                staggerIndex={idx}
+                staggerInterval={70}
+                duration={480}
               >
-                <div>
-                  {/* Top: Avatar + Identity + Fav */}
-                  <div className="flex items-start justify-between gap-2.5">
-                    <div
-                      className="flex items-center gap-3 cursor-pointer"
-                      onClick={() => onNavigate('artisan', artisan.id)}
-                    >
-                      <div className="relative w-13 h-13 rounded-2xl overflow-hidden bg-[#ecf6ed] shrink-0">
-                        <img
-                          src={artisan.avatar}
-                          alt={artisan.name}
-                          className="w-full h-full object-cover"
-                        />
-                        <span className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-[#006946] text-white flex items-center justify-center text-[10px]">
-                          <span className="material-symbols-outlined text-[11px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                            check
+                <div className="bg-white rounded-2xl p-4 shadow-xs border border-[#e1ebe1] hover:border-[#006946]/40 hover:shadow-md transition-all flex flex-col justify-between h-full">
+                  <div>
+                    {/* Top: Avatar + Identity + Fav */}
+                    <div className="flex items-start justify-between gap-2.5">
+                      <div
+                        className="flex items-center gap-3 cursor-pointer"
+                        onClick={() => onNavigate('artisan', artisan.id)}
+                      >
+                        <div className="relative w-13 h-13 rounded-2xl overflow-hidden bg-[#ecf6ed] shrink-0">
+                          <img
+                            src={artisan.avatar}
+                            alt={artisan.name}
+                            className="w-full h-full object-cover"
+                          />
+                          <span className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-[#006946] text-white flex items-center justify-center text-[10px]">
+                            <span className="material-symbols-outlined text-[11px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                              check
+                            </span>
                           </span>
-                        </span>
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <h3 className="font-bold text-sm text-[#151e18] truncate hover:text-[#006946]">
+                            {artisan.name}
+                          </h3>
+                          <p className="text-xs text-[#3d665a] font-medium truncate">{artisan.job}</p>
+                          <span className="text-[11px] text-[#6e7a72] flex items-center gap-0.5 mt-0.5">
+                            <span className="material-symbols-outlined text-[13px] text-[#a06800]">location_on</span>
+                            {artisan.district}, Douala
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col min-w-0">
-                        <h3 className="font-bold text-sm text-[#151e18] truncate hover:text-[#006946]">
-                          {artisan.name}
-                        </h3>
-                        <p className="text-xs text-[#3d665a] font-medium truncate">{artisan.job}</p>
-                        <span className="text-[11px] text-[#6e7a72] flex items-center gap-0.5 mt-0.5">
-                          <span className="material-symbols-outlined text-[13px] text-[#a06800]">location_on</span>
-                          {artisan.district}, Douala
+
+                      <button
+                        type="button"
+                        onClick={() => onToggleFavorite(artisan.id)}
+                        aria-label="Favori"
+                        className="w-9 h-9 rounded-full flex items-center justify-center text-[#6e7a72] hover:text-[#ba1a1a] active:scale-90 transition-transform"
+                      >
+                        <span
+                          className={`material-symbols-outlined text-[20px] ${
+                            isFav ? 'text-[#ba1a1a]' : 'text-[#6e7a72]'
+                          }`}
+                          style={{ fontVariationSettings: isFav ? "'FILL' 1" : "'FILL' 0" }}
+                        >
+                          favorite
                         </span>
-                      </div>
+                      </button>
                     </div>
 
+                    {/* Badges */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-2">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#bfecdc] text-[#006946] text-[11px] font-bold">
+                        <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                          verified
+                        </span>
+                        Profil Vérifié CNI
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[11px]">
+                        Réponse {artisan.responseTime}
+                      </span>
+                    </div>
+
+                    {/* Rating & Starting Price */}
+                    <div className="flex items-center justify-between pt-3 mt-1 border-t border-[#e1ebe1]/60">
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[16px] text-[#ffb955]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                          star
+                        </span>
+                        <span className="text-xs font-bold text-[#151e18]">{artisan.rating}</span>
+                        <span className="text-[11px] text-[#6e7a72]">({artisan.reviewsCount} avis)</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[11px] text-[#6e7a72]">Tarif : </span>
+                        <span className="text-xs font-bold text-[#006946]">{artisan.startingPriceLabel}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="grid grid-cols-2 gap-2 pt-3 mt-2">
                     <button
                       type="button"
-                      onClick={() => onToggleFavorite(artisan.id)}
-                      aria-label="Favori"
-                      className="w-9 h-9 rounded-full flex items-center justify-center text-[#6e7a72] hover:text-[#ba1a1a] active:scale-90 transition-transform"
+                      onClick={() => onNavigate('artisan', artisan.id)}
+                      className="h-10 px-2 rounded-xl bg-[#ecf6ed] text-[#151e18] font-bold text-xs hover:bg-[#e1ebe1] transition-colors"
                     >
-                      <span
-                        className={`material-symbols-outlined text-[20px] ${
-                          isFav ? 'text-[#ba1a1a]' : 'text-[#6e7a72]'
-                        }`}
-                        style={{ fontVariationSettings: isFav ? "'FILL' 1" : "'FILL' 0" }}
-                      >
-                        favorite
-                      </span>
+                      Voir profil
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onStartQuote(artisan)}
+                      className="h-10 px-2 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">send</span>
+                      <span>Devis direct</span>
                     </button>
                   </div>
-
-                  {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-2">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#bfecdc] text-[#006946] text-[11px] font-bold">
-                      <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        verified
-                      </span>
-                      Profil Vérifié CNI
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#ecf6ed] text-[#3e4942] text-[11px]">
-                      Réponse {artisan.responseTime}
-                    </span>
-                  </div>
-
-                  {/* Rating & Starting Price */}
-                  <div className="flex items-center justify-between pt-3 mt-1 border-t border-[#e1ebe1]/60">
-                    <div className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[16px] text-[#ffb955]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        star
-                      </span>
-                      <span className="text-xs font-bold text-[#151e18]">{artisan.rating}</span>
-                      <span className="text-[11px] text-[#6e7a72]">({artisan.reviewsCount} avis)</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[11px] text-[#6e7a72]">Tarif : </span>
-                      <span className="text-xs font-bold text-[#006946]">{artisan.startingPriceLabel}</span>
-                    </div>
-                  </div>
                 </div>
-
-                {/* Actions */}
-                <div className="grid grid-cols-2 gap-2 pt-3 mt-2">
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('artisan', artisan.id)}
-                    className="h-10 px-2 rounded-xl bg-[#ecf6ed] text-[#151e18] font-bold text-xs hover:bg-[#e1ebe1] transition-colors"
-                  >
-                    Voir profil
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onStartQuote(artisan)}
-                    className="h-10 px-2 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-1.5 transition-colors"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">send</span>
-                    <span>Devis direct</span>
-                  </button>
-                </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>
@@ -485,15 +518,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 5. Comment ça marche */}
       <section className="px-4 py-8 max-w-4xl mx-auto w-full my-2 bg-[#ecf6ed] rounded-3xl flex flex-col gap-4">
-        <div className="flex flex-col text-center items-center">
-          <span className="px-3 py-1 rounded-full bg-white text-[#006946] text-xs font-bold shadow-xs">
-            Simple &amp; Garanti
-          </span>
-          <h2 className="text-xl font-extrabold text-[#151e18] mt-1.5">Comment ça marche ?</h2>
-          <p className="text-xs text-[#3e4942] max-w-xs">
-            Votre solution en 4 étapes fluides, sans tracasseries ni frais cachés.
-          </p>
-        </div>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex flex-col text-center items-center">
+            <span className="px-3 py-1 rounded-full bg-white text-[#006946] text-xs font-bold shadow-xs">
+              Simple &amp; Garanti
+            </span>
+            <h2 className="text-xl font-extrabold text-[#151e18] mt-1.5">Comment ça marche ?</h2>
+            <p className="text-xs text-[#3e4942] max-w-xs">
+              Votre solution en 4 étapes fluides, sans tracasseries ni frais cachés.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
           {[
@@ -517,95 +552,117 @@ export const HomeView: React.FC<HomeViewProps> = ({
               title: 'Réglez après satisfaction',
               desc: 'L’artisan intervient chez vous. Vous payez (Cash ou Mobile Money) une fois validé.',
             },
-          ].map((item) => (
-            <div key={item.step} className="p-4 rounded-2xl bg-white shadow-xs flex flex-col gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#006946] text-white font-bold text-sm flex items-center justify-center">
-                {item.step}
+          ].map((item, idx) => (
+            <ScrollReveal
+              key={item.step}
+              variant="fade-up"
+              staggerIndex={idx}
+              staggerInterval={60}
+              duration={450}
+            >
+              <div className="p-4 rounded-2xl bg-white shadow-xs flex flex-col gap-2 h-full">
+                <div className="w-8 h-8 rounded-full bg-[#006946] text-white font-bold text-sm flex items-center justify-center">
+                  {item.step}
+                </div>
+                <h3 className="text-sm font-bold text-[#151e18]">{item.title}</h3>
+                <p className="text-xs text-[#6e7a72] leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="text-sm font-bold text-[#151e18]">{item.title}</h3>
-              <p className="text-xs text-[#6e7a72] leading-relaxed">{item.desc}</p>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
 
       {/* 6. Sécurité & Transparence */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full flex flex-col gap-3">
-        <div className="flex flex-col">
-          <h2 className="text-lg font-bold text-[#151e18]">Sécurité &amp; Transparence locale</h2>
-          <p className="text-xs text-[#6e7a72]">Finies les mauvaises surprises et les chantiers inachevés</p>
-        </div>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex flex-col">
+            <h2 className="text-lg font-bold text-[#151e18]">Sécurité &amp; Transparence locale</h2>
+            <p className="text-xs text-[#6e7a72]">Finies les mauvaises surprises et les chantiers inachevés</p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1">
-            <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
-              <span className="material-symbols-outlined text-[20px]">badge</span>
+          <ScrollReveal variant="fade-up" staggerIndex={0} staggerInterval={50} duration={400}>
+            <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1 h-full">
+              <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
+                <span className="material-symbols-outlined text-[20px]">badge</span>
+              </div>
+              <span className="text-xs font-bold text-[#151e18]">CNI &amp; Références</span>
+              <span className="text-[11px] text-[#6e7a72]">Identité et atelier vérifiés physiquement.</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">CNI &amp; Références</span>
-            <span className="text-[11px] text-[#6e7a72]">Identité et atelier vérifiés physiquement.</span>
-          </div>
+          </ScrollReveal>
 
-          <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1">
-            <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
-              <span className="material-symbols-outlined text-[20px]">rate_review</span>
+          <ScrollReveal variant="fade-up" staggerIndex={1} staggerInterval={50} duration={400}>
+            <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1 h-full">
+              <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
+                <span className="material-symbols-outlined text-[20px]">rate_review</span>
+              </div>
+              <span className="text-xs font-bold text-[#151e18]">Avis Vérifiés Post-Chantier</span>
+              <span className="text-[11px] text-[#6e7a72]">Collectés uniquement après intervention réelle confirmée.</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">Avis Vérifiés Post-Chantier</span>
-            <span className="text-[11px] text-[#6e7a72]">Collectés uniquement après intervention réelle confirmée.</span>
-          </div>
+          </ScrollReveal>
 
-          <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1">
-            <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
-              <span className="material-symbols-outlined text-[20px]">payments</span>
+          <ScrollReveal variant="fade-up" staggerIndex={2} staggerInterval={50} duration={400}>
+            <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1 h-full">
+              <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
+                <span className="material-symbols-outlined text-[20px]">payments</span>
+              </div>
+              <span className="text-xs font-bold text-[#151e18]">Tarifs Clairs en FCFA</span>
+              <span className="text-[11px] text-[#6e7a72]">Fourchettes annoncées avant le moindre travail.</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">Tarifs Clairs en FCFA</span>
-            <span className="text-[11px] text-[#6e7a72]">Fourchettes annoncées avant le moindre travail.</span>
-          </div>
+          </ScrollReveal>
 
-          <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1">
-            <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
-              <span className="material-symbols-outlined text-[20px]">handshake</span>
+          <ScrollReveal variant="fade-up" staggerIndex={3} staggerInterval={50} duration={400}>
+            <div className="p-3.5 rounded-2xl bg-white shadow-xs border border-[#e1ebe1] flex flex-col gap-1 h-full">
+              <div className="w-9 h-9 rounded-xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mb-1">
+                <span className="material-symbols-outlined text-[20px]">handshake</span>
+              </div>
+              <span className="text-xs font-bold text-[#151e18]">Paiement à Satisfaction</span>
+              <span className="text-[11px] text-[#6e7a72]">Règlement direct à l'artisan après vérification des travaux.</span>
             </div>
-            <span className="text-xs font-bold text-[#151e18]">Paiement à Satisfaction</span>
-            <span className="text-[11px] text-[#6e7a72]">Règlement direct à l'artisan après vérification des travaux.</span>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* 7. Bannière Devenir Prestataire */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full">
-        <div className="rounded-3xl bg-gradient-to-br from-[#7f5200] to-[#a06800] text-white p-5 sm:p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-col gap-1 text-center sm:text-left">
-            <div className="flex items-center gap-2 justify-center sm:justify-start">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#ffddb4] text-[#7f5200] text-[10px] font-bold">
-                Espace Artisans
-              </span>
-              <span className="text-xs text-white/90">Douala &amp; Yaoundé</span>
+        <ScrollReveal variant="fade-up" duration={480}>
+          <div className="rounded-3xl bg-gradient-to-br from-[#7f5200] to-[#a06800] text-white p-5 sm:p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-col gap-1 text-center sm:text-left">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#ffddb4] text-[#7f5200] text-[10px] font-bold">
+                  Espace Artisans
+                </span>
+                <span className="text-xs text-white/90">Douala &amp; Yaoundé</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-white leading-snug">
+                Vous êtes artisan qualifié ? Développez votre clientèle.
+              </h3>
+              <p className="text-xs text-white/90 max-w-md">
+                Rejoignez MboaFacile et recevez des demandes de devis qualifiées chaque jour dans votre quartier.
+              </p>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white leading-snug">
-              Vous êtes artisan qualifié ? Développez votre clientèle.
-            </h3>
-            <p className="text-xs text-white/90 max-w-md">
-              Rejoignez MboaFacile et recevez des demandes de devis qualifiées chaque jour dans votre quartier.
-            </p>
-          </div>
 
-          <button
-            type="button"
-            onClick={onOpenProModal}
-            className="w-full sm:w-auto px-6 h-11 rounded-xl bg-white text-[#7f5200] font-bold text-xs flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-98 transition-transform focus-visible:ring-2 focus-visible:ring-white"
-          >
-            <span className="material-symbols-outlined text-[18px]">engineering</span>
-            <span>Créer mon profil Pro</span>
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={onOpenProModal}
+              className="w-full sm:w-auto px-6 h-11 rounded-xl bg-white text-[#7f5200] font-bold text-xs flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-98 transition-transform focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <span className="material-symbols-outlined text-[18px]">engineering</span>
+              <span>Créer mon profil Pro</span>
+            </button>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* 8. FAQ Interactive (Accordions) */}
       <section className="px-4 py-4 max-w-4xl mx-auto w-full flex flex-col gap-3">
-        <div className="flex flex-col">
-          <h2 className="text-lg font-bold text-[#151e18]">Questions Fréquentes</h2>
-          <p className="text-xs text-[#6e7a72]">Tout comprendre sur le fonctionnement de MboaFacile</p>
-        </div>
+        <ScrollReveal variant="fade-in" duration={400}>
+          <div className="flex flex-col">
+            <h2 className="text-lg font-bold text-[#151e18]">Questions Fréquentes</h2>
+            <p className="text-xs text-[#6e7a72]">Tout comprendre sur le fonctionnement de MboaFacile</p>
+          </div>
+        </ScrollReveal>
 
         <div className="flex flex-col gap-2">
           {[

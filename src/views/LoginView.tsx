@@ -63,14 +63,14 @@ export const LoginView: React.FC<LoginViewProps> = ({ onNavigate, onShowToast })
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-[#dbe5dc] shadow-sm space-y-6">
+    <div className="min-h-[75vh] flex items-center justify-center px-4 py-6 landscape:py-2 pl-safe pr-safe">
+      <div className="w-full max-w-md landscape:max-w-xl bg-white rounded-3xl p-6 sm:p-8 landscape:p-4 border border-[#dbe5dc] shadow-sm space-y-5 landscape:space-y-3">
         {/* Brand Icon & Heading */}
-        <div className="text-center space-y-1.5">
-          <div className="w-12 h-12 rounded-2xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center mx-auto mb-2">
-            <span className="material-symbols-outlined text-[28px]">lock_open</span>
+        <div className="text-center space-y-1">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 landscape:w-8 landscape:h-8 rounded-2xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center mx-auto mb-1">
+            <span className="material-symbols-outlined text-[24px] sm:text-[28px] landscape:text-[20px]">lock_open</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#151e18]">Connexion à MboaFacile</h1>
+          <h1 className="text-lg sm:text-2xl font-extrabold text-[#151e18]">Connexion à MboaFacile</h1>
           <p className="text-xs sm:text-sm text-[#6e7a72]">
             Accédez à vos demandes, favoris et espace professionnel.
           </p>
@@ -78,7 +78,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onNavigate, onShowToast })
 
         {/* Error Banner */}
         {error && (
-          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
+          <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
             <span className="material-symbols-outlined text-[18px] text-rose-600 shrink-0">error</span>
             <span>{error}</span>
           </div>
@@ -90,9 +90,9 @@ export const LoginView: React.FC<LoginViewProps> = ({ onNavigate, onShowToast })
             type="button"
             onClick={handleGoogleLogin}
             disabled={isGoogleLoading || isLoading}
-            className="w-full h-12 rounded-2xl border border-[#dbe5dc] bg-white hover:bg-[#f2fcf2] text-[#151e18] text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all shadow-xs active:scale-98 disabled:opacity-50"
+            className="w-full h-10 sm:h-12 landscape:h-9.5 rounded-2xl border border-[#dbe5dc] bg-white hover:bg-[#f2fcf2] text-[#151e18] text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all shadow-xs active:scale-98 disabled:opacity-50"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -117,12 +117,12 @@ export const LoginView: React.FC<LoginViewProps> = ({ onNavigate, onShowToast })
         {/* Divider */}
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-[#e1ebe1]" />
-          <span className="text-[11px] uppercase font-bold text-[#6e7a72]">ou avec votre e-mail</span>
+          <span className="text-[10px] sm:text-[11px] uppercase font-bold text-[#6e7a72]">ou avec votre e-mail</span>
           <div className="flex-1 h-px bg-[#e1ebe1]" />
         </div>
 
         {/* Email & Password Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3.5 landscape:space-y-2.5">
           <div>
             <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="login-email">
               Adresse e-mail

@@ -103,52 +103,51 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({
         <aside
           role="region"
           aria-label="Gestion des cookies et données personnelles"
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-white/95 backdrop-blur-md border-t border-[#dbe5dc] shadow-2xl transition-all animate-in slide-in-from-bottom-4"
+          className="fixed bottom-0 inset-x-0 z-50 p-4 landscape:p-2.5 landscape:py-2 pl-safe pr-safe pb-safe bg-white/95 backdrop-blur-md border-t border-[#dbe5dc] shadow-2xl transition-all animate-in slide-in-from-bottom-4"
         >
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="flex items-start gap-3 flex-1">
-              <div className="w-10 h-10 rounded-xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center shrink-0 mt-0.5">
-                <span className="material-symbols-outlined text-[22px]">cookie</span>
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3 landscape:gap-2">
+            <div className="flex items-start gap-2.5 sm:gap-3 flex-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#ecf6ed] text-[#006946] hidden sm:flex landscape:hidden md:landscape:flex items-center justify-center shrink-0 mt-0.5">
+                <span className="material-symbols-outlined text-[18px] sm:text-[22px]">cookie</span>
               </div>
-              <div className="text-xs text-[#3e4942] leading-relaxed">
-                <p className="font-bold text-sm text-[#151e18] mb-0.5">
+              <div className="text-xs landscape:text-[11px] text-[#3e4942] leading-relaxed">
+                <p className="font-bold text-xs sm:text-sm text-[#151e18] mb-0.5">
                   Respect de votre vie privée &amp; gestion des cookies
                 </p>
                 <p>
-                  MboaFacile utilise des technologies locales strictement nécessaires au bon fonctionnement de la plateforme
-                  (mise en relation avec les artisans, mémorisation de vos devis). Nous vous laissons le plein contrôle sur les
-                  préférences de localisation et la mesure d'audience anonymisée.{' '}
+                  MboaFacile utilise des technologies locales nécessaires au fonctionnement de la plateforme
+                  (mise en relation avec les artisans, mémorisation des devis). Nous vous laissons le contrôle sur vos préférences.{' '}
                   <button
                     type="button"
                     onClick={onOpenPrivacyPolicy}
                     className="text-[#006946] font-semibold underline hover:text-[#005236] focus-visible:ring-2 focus-visible:ring-[#006946] rounded-xs"
                   >
-                    Consulter notre politique de confidentialité
+                    Politique de confidentialité
                   </button>
                   .
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto shrink-0">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full md:w-auto shrink-0">
               <button
                 type="button"
                 onClick={() => setShowCustomizeModal(true)}
-                className="h-10 px-3.5 rounded-xl border border-[#dbe5dc] bg-white text-xs font-bold text-[#151e18] hover:bg-[#ecf6ed] transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
+                className="h-8 sm:h-10 px-3 sm:px-3.5 rounded-xl border border-[#dbe5dc] bg-white text-[11px] sm:text-xs font-bold text-[#151e18] hover:bg-[#ecf6ed] transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
               >
                 Personnaliser
               </button>
               <button
                 type="button"
                 onClick={handleRefuseAll}
-                className="h-10 px-3.5 rounded-xl border border-[#dbe5dc] bg-white text-xs font-bold text-[#ba1a1a] hover:bg-[#ffdad6]/40 transition-colors focus-visible:ring-2 focus-visible:ring-[#ba1a1a]"
+                className="h-8 sm:h-10 px-3 sm:px-3.5 rounded-xl border border-[#dbe5dc] bg-white text-[11px] sm:text-xs font-bold text-[#ba1a1a] hover:bg-[#ffdad6]/40 transition-colors focus-visible:ring-2 focus-visible:ring-[#ba1a1a]"
               >
                 Tout refuser
               </button>
               <button
                 type="button"
                 onClick={handleAcceptAll}
-                className="h-10 px-4 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white text-xs font-bold shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
+                className="h-8 sm:h-10 px-3.5 sm:px-4 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white text-[11px] sm:text-xs font-bold shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
               >
                 Tout accepter
               </button>
@@ -163,9 +162,9 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="cookie-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs pl-safe pr-safe"
         >
-          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 border border-[#e1ebe1] max-h-[90vh] overflow-y-auto no-scrollbar">
+          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-4 sm:p-6 landscape:p-4 border border-[#e1ebe1] max-h-[90vh] landscape:max-h-[94dvh] overflow-y-auto no-scrollbar">
             <div className="flex items-center justify-between pb-3 border-b border-[#e1ebe1]">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center">

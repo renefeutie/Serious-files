@@ -24,16 +24,16 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-[#f2fcf2]/95 backdrop-blur-xl pt-safe border-b border-[#e1ebe1]/60 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-      <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between gap-3">
+      <div className="max-w-6xl mx-auto h-16 landscape:h-12 md:landscape:h-16 px-4 pl-safe pr-safe flex items-center justify-between gap-2 sm:gap-3">
         {/* Left: Drawer toggle + Brand */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={onOpenDrawer}
             aria-label="Menu principal"
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-[#151e18] hover:bg-[#e6f1e7] active:bg-[#dbe5dc] transition-colors"
+            className="w-10 h-10 landscape:w-8 landscape:h-8 md:landscape:w-10 md:landscape:h-10 flex items-center justify-center rounded-xl text-[#151e18] hover:bg-[#e6f1e7] active:bg-[#dbe5dc] transition-colors"
           >
-            <span className="material-symbols-outlined text-[24px]">menu</span>
+            <span className="material-symbols-outlined text-[24px] landscape:text-[20px] md:landscape:text-[24px]">menu</span>
           </button>
 
           <button
@@ -41,14 +41,14 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('accueil')}
             className="flex items-center gap-2 group text-left"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#006946] to-[#16845b] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-              <span className="material-symbols-outlined text-[22px]">handyman</span>
+            <div className="w-9 h-9 landscape:w-7 landscape:h-7 md:landscape:w-9 md:landscape:h-9 rounded-xl bg-gradient-to-br from-[#006946] to-[#16845b] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+              <span className="material-symbols-outlined text-[22px] landscape:text-[18px] md:landscape:text-[22px]">handyman</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-lg text-[#006946] tracking-tight leading-tight">
+              <span className="font-extrabold text-lg landscape:text-base md:landscape:text-lg text-[#006946] tracking-tight leading-tight">
                 Mboa<span className="text-[#a06800]">Facile</span>
               </span>
-              <span className="text-[10px] text-[#3d665a] font-medium leading-none hidden sm:block">
+              <span className="text-[10px] text-[#3d665a] font-medium leading-none hidden sm:block landscape:hidden md:landscape:block">
                 Services &amp; Artisans Certifiés
               </span>
             </div>
@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onOpenCitySelector}
-            className="flex items-center gap-1 px-3 h-9 rounded-full bg-[#ecf6ed] text-[#3e4942] text-xs font-semibold hover:bg-[#e1ebe1] border border-[#dbe5dc]/80 transition-colors"
+            className="flex items-center gap-1 px-3 landscape:px-2 md:landscape:px-3 h-9 landscape:h-8 md:landscape:h-9 rounded-full bg-[#ecf6ed] text-[#3e4942] text-xs font-semibold hover:bg-[#e1ebe1] border border-[#dbe5dc]/80 transition-colors"
             title="Changer de quartier ou ville"
           >
             <span className="material-symbols-outlined text-[16px] text-[#a06800]">
@@ -120,9 +120,9 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={() => onNavigate('explorer')}
             aria-label="Recherche rapide"
-            className="w-10 h-10 flex items-center justify-center rounded-full text-[#151e18] hover:bg-[#e6f1e7] transition-colors"
+            className="w-10 h-10 landscape:w-8 landscape:h-8 md:landscape:w-10 md:landscape:h-10 flex items-center justify-center rounded-full text-[#151e18] hover:bg-[#e6f1e7] transition-colors"
           >
-            <span className="material-symbols-outlined text-[22px]">search</span>
+            <span className="material-symbols-outlined text-[22px] landscape:text-[18px] md:landscape:text-[22px]">search</span>
           </button>
 
           {/* Favorites Heart with counter */}
@@ -130,10 +130,10 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={() => onNavigate('compte')}
             aria-label="Mes favoris"
-            className="relative w-10 h-10 flex items-center justify-center rounded-full text-[#151e18] hover:bg-[#e6f1e7] transition-colors"
+            className="relative w-10 h-10 landscape:w-8 landscape:h-8 md:landscape:w-10 md:landscape:h-10 flex items-center justify-center rounded-full text-[#151e18] hover:bg-[#e6f1e7] transition-colors"
           >
             <span
-              className={`material-symbols-outlined text-[22px] ${
+              className={`material-symbols-outlined text-[22px] landscape:text-[18px] md:landscape:text-[22px] ${
                 favoritesCount > 0 ? 'text-[#ba1a1a]' : 'text-[#6e7a72]'
               }`}
               style={{ fontVariationSettings: favoritesCount > 0 ? "'FILL' 1" : "'FILL' 0" }}
@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 onClick={() => onNavigate('mon-profil')}
                 aria-label="Mon profil"
-                className="w-9 h-9 rounded-full bg-[#006946] text-white flex items-center justify-center font-bold text-xs ring-2 ring-[#006946]/30 hover:ring-[#006946] transition-all overflow-hidden"
+                className="w-9 h-9 landscape:w-8 landscape:h-8 md:landscape:w-9 md:landscape:h-9 rounded-full bg-[#006946] text-white flex items-center justify-center font-bold text-xs ring-2 ring-[#006946]/30 hover:ring-[#006946] transition-all overflow-hidden"
               >
                 {user.photoURL ? (
                   <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover" />
@@ -178,7 +178,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigate('inscrire-mon-commerce')}
-                className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#006946] hover:bg-[#ecf6ed] transition-colors"
+                className="hidden sm:inline-flex landscape:hidden md:landscape:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#006946] hover:bg-[#ecf6ed] transition-colors"
               >
                 <span className="material-symbols-outlined text-[16px]">add_business</span>
                 <span>Espace Pro</span>
@@ -186,7 +186,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigate('connexion')}
-                className="h-9 px-3 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-transform active:scale-95"
+                className="h-9 landscape:h-8 md:landscape:h-9 px-3 landscape:px-2.5 md:landscape:px-3 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-transform active:scale-95"
               >
                 <span className="material-symbols-outlined text-[16px]">login</span>
                 <span>Connexion</span>

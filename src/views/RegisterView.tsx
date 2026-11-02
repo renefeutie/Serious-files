@@ -111,14 +111,14 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 border border-[#dbe5dc] shadow-sm space-y-6">
+    <div className="min-h-[75vh] flex items-center justify-center px-4 py-6 landscape:py-2 pl-safe pr-safe">
+      <div className="w-full max-w-lg landscape:max-w-3xl bg-white rounded-3xl p-6 sm:p-8 landscape:p-4 border border-[#dbe5dc] shadow-sm space-y-5 landscape:space-y-3">
         {/* Heading */}
-        <div className="text-center space-y-1.5">
-          <div className="w-12 h-12 rounded-2xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center mx-auto mb-2">
-            <span className="material-symbols-outlined text-[28px]">person_add</span>
+        <div className="text-center space-y-1">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 landscape:w-8 landscape:h-8 rounded-2xl bg-[#ecf6ed] text-[#006946] flex items-center justify-center mx-auto mb-1">
+            <span className="material-symbols-outlined text-[24px] sm:text-[28px] landscape:text-[20px]">person_add</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#151e18]">Rejoindre MboaFacile</h1>
+          <h1 className="text-lg sm:text-2xl font-extrabold text-[#151e18]">Rejoindre MboaFacile</h1>
           <p className="text-xs sm:text-sm text-[#6e7a72]">
             Créez votre compte en quelques instants pour profiter de tous les services.
           </p>
@@ -129,32 +129,32 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
           <button
             type="button"
             onClick={() => setRole('client')}
-            className={`py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-2 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
               role === 'client'
                 ? 'bg-[#006946] text-white shadow-xs'
                 : 'text-[#3e4942] hover:text-[#151e18]'
             }`}
           >
-            <span className="material-symbols-outlined text-[18px]">person</span>
+            <span className="material-symbols-outlined text-[16px] sm:text-[18px]">person</span>
             <span>Client Particulier</span>
           </button>
           <button
             type="button"
             onClick={() => setRole('merchant')}
-            className={`py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
+            className={`py-2 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all ${
               role === 'merchant'
                 ? 'bg-[#006946] text-white shadow-xs'
                 : 'text-[#3e4942] hover:text-[#151e18]'
             }`}
           >
-            <span className="material-symbols-outlined text-[18px]">storefront</span>
+            <span className="material-symbols-outlined text-[16px] sm:text-[18px]">storefront</span>
             <span>Commerçant / Artisan</span>
           </button>
         </div>
 
         {/* Error Banner */}
         {error && (
-          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
+          <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
             <span className="material-symbols-outlined text-[18px] text-rose-600 shrink-0">error</span>
             <span>{error}</span>
           </div>
@@ -166,9 +166,9 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
             type="button"
             onClick={handleGoogleRegister}
             disabled={isGoogleLoading || isLoading}
-            className="w-full h-12 rounded-2xl border border-[#dbe5dc] bg-white hover:bg-[#f2fcf2] text-[#151e18] text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all shadow-xs active:scale-98 disabled:opacity-50"
+            className="w-full h-10 sm:h-12 landscape:h-9.5 rounded-2xl border border-[#dbe5dc] bg-white hover:bg-[#f2fcf2] text-[#151e18] text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 transition-all shadow-xs active:scale-98 disabled:opacity-50"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -197,60 +197,62 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
         {/* Divider */}
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-[#e1ebe1]" />
-          <span className="text-[11px] uppercase font-bold text-[#6e7a72]">ou avec e-mail</span>
+          <span className="text-[10px] sm:text-[11px] uppercase font-bold text-[#6e7a72]">ou avec e-mail</span>
           <div className="flex-1 h-px bg-[#e1ebe1]" />
         </div>
 
         {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-name">
-              {role === 'merchant' ? "Nom du gérant / de l'établissement *" : 'Nom et Prénom *'}
-            </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3.5 top-3 text-[18px] text-[#6e7a72]">
-                badge
-              </span>
-              <input
-                id="reg-name"
-                type="text"
-                required
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder={role === 'merchant' ? 'Ex: Talla Éric (Atelier Électricité)' : 'Ex: Patrick Kamga'}
-                className="w-full h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
-              />
+        <form onSubmit={handleSubmit} className="space-y-3.5 landscape:space-y-2.5">
+          <div className="grid grid-cols-1 landscape:grid-cols-2 gap-3 landscape:gap-2.5">
+            <div>
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-name">
+                {role === 'merchant' ? "Nom du gérant / atelier *" : 'Nom et Prénom *'}
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3.5 top-2.5 sm:top-3 text-[18px] text-[#6e7a72]">
+                  badge
+                </span>
+                <input
+                  id="reg-name"
+                  type="text"
+                  required
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  placeholder={role === 'merchant' ? 'Ex: Talla Éric (Élec-Pro)' : 'Ex: Patrick Kamga'}
+                  className="w-full h-10 sm:h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-email">
-              Adresse e-mail *
-            </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3.5 top-3 text-[18px] text-[#6e7a72]">
-                mail
-              </span>
-              <input
-                id="reg-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre.email@exemple.com"
-                className="w-full h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
-              />
+            <div>
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-email">
+                Adresse e-mail *
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3.5 top-2.5 sm:top-3 text-[18px] text-[#6e7a72]">
+                  mail
+                </span>
+                <input
+                  id="reg-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="votre.email@exemple.com"
+                  className="w-full h-10 sm:h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                />
+              </div>
             </div>
           </div>
 
           {/* Password & Confirm */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 landscape:gap-2.5">
             <div>
-              <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-password">
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-password">
                 Mot de passe *
               </label>
               <div className="relative">
-                <span className="material-symbols-outlined absolute left-3.5 top-3 text-[18px] text-[#6e7a72]">
+                <span className="material-symbols-outlined absolute left-3.5 top-2.5 sm:top-3 text-[18px] text-[#6e7a72]">
                   lock
                 </span>
                 <input
@@ -260,17 +262,17 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min 6 caractères"
-                  className="w-full h-11 pl-10 pr-9 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                  className="w-full h-10 sm:h-11 pl-10 pr-9 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-confirm">
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-confirm">
                 Confirmation *
               </label>
               <div className="relative">
-                <span className="material-symbols-outlined absolute left-3.5 top-3 text-[18px] text-[#6e7a72]">
+                <span className="material-symbols-outlined absolute left-3.5 top-2.5 sm:top-3 text-[18px] text-[#6e7a72]">
                   lock_reset
                 </span>
                 <input
@@ -280,16 +282,16 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirmer"
-                  className="w-full h-11 pl-10 pr-9 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                  className="w-full h-10 sm:h-11 pl-10 pr-9 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
                 />
               </div>
             </div>
           </div>
 
-          {/* City & District */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* City & District & Phone in landscape 3-cols or 2-cols */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 landscape:gap-2.5">
             <div>
-              <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-city">
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-city">
                 Ville
               </label>
               <select
@@ -300,7 +302,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                   setCity(newCity);
                   setDistrict(newCity === 'Douala' ? 'Akwa' : 'Bastos');
                 }}
-                className="w-full h-11 px-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-semibold text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                className="w-full h-10 sm:h-11 px-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-semibold text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
               >
                 <option value="Douala">Douala</option>
                 <option value="Yaoundé">Yaoundé</option>
@@ -308,48 +310,47 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-district">
-                Quartier principal
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-district">
+                Quartier
               </label>
               <select
                 id="reg-district"
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="w-full h-11 px-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-semibold text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                className="w-full h-10 sm:h-11 px-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-semibold text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
               >
-                {districtsList.slice(0, 50).map((d: string) => (
+                {districtsList.map((d: string) => (
                   <option key={d} value={d}>
                     {d}
                   </option>
                 ))}
               </select>
             </div>
-          </div>
 
-          {/* Phone */}
-          <div>
-            <label className="block text-xs font-bold text-[#151e18] mb-1.5" htmlFor="reg-phone">
-              Numéro de téléphone (facultatif mais recommandé pour devis)
-            </label>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-3.5 top-3 text-[18px] text-[#6e7a72]">
-                phone_iphone
-              </span>
-              <input
-                id="reg-phone"
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="6XX XX XX XX (Orange / MTN)"
-                className="w-full h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
-              />
+            <div>
+              <label className="block text-xs font-bold text-[#151e18] mb-1" htmlFor="reg-phone">
+                Téléphone
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3.5 top-2.5 sm:top-3 text-[18px] text-[#6e7a72]">
+                  phone_iphone
+                </span>
+                <input
+                  id="reg-phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="6XX XX XX XX"
+                  className="w-full h-10 sm:h-11 pl-10 pr-3 rounded-xl border border-[#dbe5dc] bg-[#f2fcf2] text-xs sm:text-sm font-medium text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946]"
+                />
+              </div>
             </div>
           </div>
 
           <button
             type="submit"
             disabled={isLoading || isGoogleLoading}
-            className="w-full h-12 rounded-2xl bg-[#006946] hover:bg-[#16845b] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all active:scale-98 disabled:opacity-50"
+            className="w-full h-10 sm:h-12 landscape:h-9.5 rounded-2xl bg-[#006946] hover:bg-[#16845b] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all active:scale-98 disabled:opacity-50"
           >
             {isLoading ? (
               <>

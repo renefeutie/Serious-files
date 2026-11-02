@@ -281,10 +281,10 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
   return (
     <div className="flex flex-col w-full pb-20">
       {/* Stepper de progression (4 étapes) */}
-      <div className="px-4 pt-3 pb-3 bg-[#ecf6ed] border-b border-[#e1ebe1]">
+      <div className="px-4 pt-3 pb-3 landscape:pt-1.5 landscape:pb-1.5 bg-[#ecf6ed] border-b border-[#e1ebe1] pl-safe pr-safe">
         <div className="max-w-2xl mx-auto w-full">
           {/* Breadcrumb contextuel */}
-          <div className="flex items-center gap-1.5 text-[#3e4942] text-xs font-semibold mb-3">
+          <div className="flex items-center gap-1.5 text-[#3e4942] text-xs font-semibold mb-2.5 landscape:mb-1">
             <button type="button" onClick={() => onNavigate('accueil')} className="hover:underline">
               Accueil
             </button>
@@ -312,22 +312,22 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
                   className="flex flex-col items-center text-center group"
                 >
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 text-xs font-bold transition-all ${
+                    className={`w-7 h-7 sm:w-8 sm:h-8 landscape:w-6 landscape:h-6 rounded-full flex items-center justify-center mb-0.5 sm:mb-1 text-xs font-bold transition-all ${
                       isPast
                         ? 'bg-[#006946] text-white shadow-xs'
                         : isCurrent
-                        ? 'bg-[#16845b] text-white ring-4 ring-[#bfecdc] shadow-md scale-105'
+                        ? 'bg-[#16845b] text-white ring-2 sm:ring-4 ring-[#bfecdc] shadow-md scale-105'
                         : 'bg-[#dbe5dc] text-[#6e7a72]'
                     }`}
                   >
                     {isPast ? (
-                      <span className="material-symbols-outlined text-[16px]">check</span>
+                      <span className="material-symbols-outlined text-[14px] sm:text-[16px]">check</span>
                     ) : (
                       s.num
                     )}
                   </div>
                   <span
-                    className={`text-[11px] truncate w-full ${
+                    className={`text-[10px] sm:text-[11px] truncate w-full ${
                       isCurrent ? 'font-bold text-[#151e18]' : 'text-[#6e7a72]'
                     }`}
                   >
@@ -339,7 +339,7 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
           </div>
 
           {/* Progress bar continuous */}
-          <div className="w-full bg-[#dbe5dc] h-1.5 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-[#dbe5dc] h-1.5 rounded-full mt-2 landscape:mt-1 overflow-hidden">
             <div
               className="bg-[#006946] h-full rounded-full transition-all duration-300"
               style={{ width: `${step * 25}%` }}
@@ -348,16 +348,16 @@ export const DevisWizardView: React.FC<DevisWizardViewProps> = ({
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto w-full px-4 pt-4">
+      <div className="max-w-2xl mx-auto w-full px-4 pt-3.5 landscape:pt-2 pl-safe pr-safe">
         {/* ================= STEP 1: SERVICE CATEGORY ================= */}
         {step === 1 && (
-          <div className="space-y-4">
+          <div className="space-y-4 landscape:space-y-2.5">
             <div>
-              <h2 className="text-lg font-bold text-[#151e18]">Sélectionnez la catégorie du besoin</h2>
+              <h2 className="text-base sm:text-lg font-bold text-[#151e18]">Sélectionnez la catégorie du besoin</h2>
               <p className="text-xs text-[#6e7a72]">Quel type d'artisan doit intervenir à votre domicile ?</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 landscape:grid-cols-3 gap-2.5">
               {CATEGORIES.map((cat) => {
                 const isSelected = selectedCategoryId === cat.id;
                 return (

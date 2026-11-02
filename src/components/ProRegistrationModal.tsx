@@ -76,14 +76,14 @@ export const ProRegistrationModal: React.FC<ProRegistrationModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="pro-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs pl-safe pr-safe"
     >
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 z-10 max-h-[90vh] overflow-y-auto no-scrollbar border border-[#dbe5dc]">
+      <div className="relative w-full max-w-lg landscape:max-w-xl bg-white rounded-3xl shadow-2xl p-5 sm:p-6 landscape:p-4 z-10 max-h-[90vh] landscape:max-h-[94dvh] overflow-y-auto no-scrollbar border border-[#dbe5dc]">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#e1ebe1]">
+        <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#e1ebe1]">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#ffddb4] text-[#7f5200] flex items-center justify-center shadow-xs">
-              <span className="material-symbols-outlined text-[24px]">handyman</span>
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffddb4] text-[#7f5200] flex items-center justify-center shadow-xs">
+              <span className="material-symbols-outlined text-[20px] sm:text-[24px]">handyman</span>
             </div>
             <div>
               <h3 id="pro-modal-title" className="text-base sm:text-lg font-bold text-[#151e18]">
@@ -95,7 +95,7 @@ export const ProRegistrationModal: React.FC<ProRegistrationModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-[#f2fcf2] text-[#3e4942] hover:bg-[#e6f1e7] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#006946]"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#f2fcf2] text-[#3e4942] hover:bg-[#e6f1e7] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#006946]"
             aria-label="Fermer la boîte de candidature"
           >
             <span className="material-symbols-outlined text-[20px]">close</span>
@@ -103,12 +103,12 @@ export const ProRegistrationModal: React.FC<ProRegistrationModalProps> = ({
         </div>
 
         {errors.general && (
-          <div role="alert" className="mt-3 p-3 rounded-xl bg-[#ffdad6] text-[#ba1a1a] text-xs font-semibold">
+          <div role="alert" className="mt-2.5 p-2.5 rounded-xl bg-[#ffdad6] text-[#ba1a1a] text-xs font-semibold">
             {errors.general}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="mt-4 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="mt-3.5 landscape:mt-2.5 space-y-3.5 landscape:space-y-2.5">
           {/* Nom complet */}
           <div>
             <label htmlFor="pro-full-name" className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
@@ -122,11 +122,11 @@ export const ProRegistrationModal: React.FC<ProRegistrationModalProps> = ({
               placeholder="Ex : Atangana Joseph (Élec-Pro Akwa)"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full h-11 px-3.5 rounded-xl bg-[#f2fcf2] border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
+              className="w-full h-10 sm:h-11 px-3.5 rounded-xl bg-[#f2fcf2] border border-[#dbe5dc] text-sm text-[#151e18] focus:outline-none focus:ring-2 focus:ring-[#006946] focus-visible:ring-2 focus-visible:ring-[#006946]"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 landscape:gap-2">
             {/* Téléphone WhatsApp */}
             <div>
               <label htmlFor="pro-phone" className="block text-xs font-bold text-[#151e18] uppercase tracking-wider mb-1">
@@ -288,14 +288,14 @@ export const ProRegistrationModal: React.FC<ProRegistrationModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="h-11 px-4 rounded-xl bg-[#f2fcf2] text-[#3e4942] font-semibold text-sm hover:bg-[#e6f1e7] transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
+              className="h-10 sm:h-11 landscape:h-9.5 px-4 rounded-xl bg-[#f2fcf2] text-[#3e4942] font-semibold text-xs sm:text-sm hover:bg-[#e6f1e7] transition-colors focus-visible:ring-2 focus-visible:ring-[#006946]"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 h-11 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
+              className="flex-1 h-10 sm:h-11 landscape:h-9.5 rounded-xl bg-[#006946] hover:bg-[#16845b] text-white font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-98 transition-all focus-visible:ring-2 focus-visible:ring-[#006946] disabled:opacity-70"
             >
               {submitting ? (
                 <>

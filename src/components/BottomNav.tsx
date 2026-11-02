@@ -30,9 +30,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   return (
     <nav
       aria-label="Navigation principale"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-[#f2fcf2]/95 backdrop-blur-xl border-t border-[#e1ebe1] shadow-[0_-1px_12px_rgba(0,0,0,0.05)] pb-safe"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-[#f2fcf2]/95 backdrop-blur-xl border-t border-[#e1ebe1] shadow-[0_-1px_12px_rgba(0,0,0,0.05)] pb-safe lg:hidden"
     >
-      <div className="max-w-md mx-auto flex items-center justify-around h-16 px-1">
+      <div className="max-w-md mx-auto flex items-center justify-around h-16 landscape:h-11 md:landscape:h-14 px-1 pl-safe pr-safe">
         {tabs.map((tab) => {
           const isActive = currentTab === tab.id;
           return (
@@ -40,15 +40,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               key={tab.id}
               type="button"
               onClick={() => onNavigate(tab.id)}
-              className={`relative flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors ${
+              className={`relative flex flex-col landscape:flex-row items-center justify-center min-w-[50px] min-h-[44px] landscape:min-h-[36px] gap-0.5 landscape:gap-1.5 transition-colors ${
                 isActive
                   ? 'text-[#006946] font-bold'
                   : 'text-[#3e4942] hover:text-[#151e18]'
               }`}
             >
-              <div className="relative">
+              <div className="relative flex items-center justify-center">
                 <span
-                  className="material-symbols-outlined text-[24px]"
+                  className="material-symbols-outlined text-[24px] landscape:text-[18px] md:landscape:text-[22px]"
                   style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
                 >
                   {tab.icon}
@@ -66,7 +66,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
                   </span>
                 )}
               </div>
-              <span className="text-[11px] font-medium leading-none tracking-tight">
+              <span className="text-[11px] landscape:text-[10px] md:landscape:text-[11px] font-medium leading-none tracking-tight">
                 {tab.label}
               </span>
             </button>

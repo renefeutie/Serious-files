@@ -697,7 +697,7 @@ export const NeighborhoodMapExplorer: React.FC<NeighborhoodMapExplorerProps> = (
       </div>
 
       {/* 2. Interactive Map (Explicit height & DEMO_MAP_ID with Zero-Legacy Advanced Markers) */}
-      <div className="relative w-full h-[440px] md:h-[500px] rounded-3xl overflow-hidden border border-[#dbe5dc] shadow-sm bg-[#e8f0e9]">
+      <div className="relative w-full h-[400px] sm:h-[460px] md:h-[500px] landscape:h-[280px] sm:landscape:h-[360px] md:landscape:h-[500px] rounded-3xl overflow-hidden border border-[#dbe5dc] shadow-sm bg-[#e8f0e9]">
         <Map
           defaultCenter={defaultCenter}
           defaultZoom={13}
@@ -929,7 +929,7 @@ export const NeighborhoodMapExplorer: React.FC<NeighborhoodMapExplorerProps> = (
         )}
 
         {/* Provider Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 lg:landscape:grid-cols-2 xl:landscape:grid-cols-3 gap-3.5">
           {unifiedResults.map((item) => (
             <article
               key={item.id}
@@ -1102,13 +1102,13 @@ export const NeighborhoodMapExplorer: React.FC<NeighborhoodMapExplorerProps> = (
 
       {/* 4. Explicit Geolocation Privacy & Consent Modal */}
       {isGeoConsentModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl space-y-4 border border-[#e1ebe1]">
-            <div className="w-12 h-12 rounded-2xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mx-auto">
-              <span className="material-symbols-outlined text-[28px]">my_location</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs">
+          <div className="w-full max-w-lg bg-white rounded-3xl p-5 landscape:p-3.5 shadow-2xl space-y-3 landscape:space-y-2 border border-[#e1ebe1] max-h-[92dvh] overflow-y-auto no-scrollbar">
+            <div className="w-11 h-11 landscape:w-8 landscape:h-8 rounded-2xl bg-[#bfecdc] text-[#006946] flex items-center justify-center mx-auto">
+              <span className="material-symbols-outlined text-[24px] landscape:text-[18px]">my_location</span>
             </div>
             <div className="text-center space-y-1">
-              <h3 className="text-base font-bold text-[#151e18]">
+              <h3 className="text-base landscape:text-sm font-bold text-[#151e18]">
                 Autoriser l’accès à votre position géographique ?
               </h3>
               <p className="text-xs text-[#3e4942] leading-relaxed">
